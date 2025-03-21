@@ -7,6 +7,7 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
@@ -18,59 +19,61 @@ module.exports = {
     browser: true,
     commonjs: true,
     es6: true,
+    node: true, // Added to support Node environment
   },
   ignorePatterns: ["!**/.server", "!**/.client"],
 
   // Base config
-  extends: ["eslint:recommended"],
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+  ],
+
+  plugins: ["react", "@typescript-eslint", "jsx-a11y", "import"],
+
+  rules: {
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+  },
+
+  settings: {
+    react: {
+      version: "detect",
+    },
+    "import/resolver": {
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+      typescript: {
+        alwaysTryTypes: true,
+      },
+    },
+  },
 
   overrides: [
     // React
     {
       files: ["**/*.{js,jsx,ts,tsx}"],
-      plugins: ["react", "jsx-a11y"],
-      extends: [
-        "plugin:react/recommended",
-        "plugin:react/jsx-runtime",
-        "plugin:react-hooks/recommended",
-        "plugin:jsx-a11y/recommended",
-      ],
+      extends: ["plugin:react/jsx-runtime", "plugin:jsx-a11y/recommended"],
       settings: {
-        react: {
-          version: "detect",
-        },
         formComponents: ["Form"],
         linkComponents: [
           { name: "Link", linkAttribute: "to" },
           { name: "NavLink", linkAttribute: "to" },
         ],
-        "import/resolver": {
-          typescript: {},
-        },
       },
     },
 
     // Typescript
     {
       files: ["**/*.{ts,tsx}"],
-      plugins: ["@typescript-eslint", "import"],
-      parser: "@typescript-eslint/parser",
+      plugins: ["import"],
       settings: {
         "import/internal-regex": "^~/",
-        "import/resolver": {
-          node: {
-            extensions: [".ts", ".tsx"],
-          },
-          typescript: {
-            alwaysTryTypes: true,
-          },
-        },
       },
-      extends: [
-        "plugin:@typescript-eslint/recommended",
-        "plugin:import/recommended",
-        "plugin:import/typescript",
-      ],
+      extends: ["plugin:import/recommended", "plugin:import/typescript"],
     },
 
     // Node
