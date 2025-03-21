@@ -1,5 +1,14 @@
 import * as React from "react";
 
+// Create a type extension for the HTMLInputElement to add directory attributes
+declare module "react" {
+  interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+    // Add directory and webkitdirectory attributes
+    directory?: string;
+    webkitdirectory?: string;
+  }
+}
+
 interface DropZoneProps extends React.HTMLAttributes<HTMLDivElement> {
   isDragging?: boolean;
   hasFiles?: boolean;
@@ -22,6 +31,34 @@ const DropZone = React.forwardRef<HTMLDivElement, DropZoneProps>(
     },
     ref
   ) => {
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+      // Prevent default behavior to allow drop
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Explicitly add dataTransfer.dropEffect
+      e.dataTransfer.dropEffect = "copy";
+
+      // Call the original handler
+      if (onDragOver) {
+        onDragOver(e);
+      }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+      // Simulate click on Space or Enter to help with keyboard accessibility
+      if (e.key === " " || e.key === "Enter") {
+        e.currentTarget.click();
+        e.preventDefault();
+      }
+
+      // Support Ctrl+V for paste
+      if (e.ctrlKey && e.key === "v") {
+        console.log("Keyboard paste detected");
+        // The actual paste event will be handled by the global handler
+      }
+    };
+
     return (
       <div
         ref={ref}
@@ -34,6 +71,10 @@ const DropZone = React.forwardRef<HTMLDivElement, DropZoneProps>(
           text-center 
           cursor-pointer 
           transition-all 
+          outline-none
+          focus:ring-2
+          focus:ring-blue-500
+          focus:border-blue-500
           ${isDragging ? "border-blue-600 bg-blue-50" : ""} 
           ${
             hasFiles
@@ -43,8 +84,12 @@ const DropZone = React.forwardRef<HTMLDivElement, DropZoneProps>(
           ${className || ""}
         `}
         onDrop={onDrop}
-        onDragOver={onDragOver}
+        onDragOver={handleDragOver}
         onDragLeave={onDragLeave}
+        onKeyDown={handleKeyDown}
+        // Add aria attributes for accessibility
+        role="button"
+        aria-label="Drop zone for image upload. You can also paste images here."
         {...props}
       >
         {children}

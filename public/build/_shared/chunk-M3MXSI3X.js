@@ -5327,7 +5327,7 @@ var init_dist = __esm({
   }
 });
 
-// node_modules/react-router-dom/dist/index.js
+// node_modules/@remix-run/react/node_modules/react-router-dom/dist/index.js
 var dist_exports2 = {};
 __export(dist_exports2, {
   AbortedDeferredError: () => AbortedDeferredError,
@@ -6315,7 +6315,7 @@ function useViewTransitionState(to, opts) {
 }
 var React2, ReactDOM, defaultMethod, defaultEncType, _formDataSupportsSubmitter, supportedFormEncTypes, _excluded, _excluded2, _excluded3, REACT_ROUTER_VERSION, ViewTransitionContext, FetchersContext, START_TRANSITION2, startTransitionImpl2, FLUSH_SYNC, flushSyncImpl, USE_ID, useIdImpl, Deferred, MemoizedDataRoutes, isBrowser, ABSOLUTE_URL_REGEX2, Link, NavLink, Form, DataRouterHook2, DataRouterStateHook2, fetcherId, getUniqueFetcherId, SCROLL_RESTORATION_STORAGE_KEY, savedScrollPositions;
 var init_dist2 = __esm({
-  "node_modules/react-router-dom/dist/index.js"() {
+  "node_modules/@remix-run/react/node_modules/react-router-dom/dist/index.js"() {
     React2 = __toESM(require_react());
     ReactDOM = __toESM(require_react_dom());
     init_dist();
@@ -6571,9 +6571,9 @@ var init_dist2 = __esm({
   }
 });
 
-// node_modules/react-router-dom/server.js
+// node_modules/@remix-run/react/node_modules/react-router-dom/server.js
 var require_server = __commonJS({
-  "node_modules/react-router-dom/server.js"(exports) {
+  "node_modules/@remix-run/react/node_modules/react-router-dom/server.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var React12 = require_react();
@@ -10286,4 +10286,4 @@ react-router-dom/dist/index.js:
    * @license MIT
    *)
 */
-//# sourceMappingURL=/build/_shared/chunk-DI2BQNBE.js.map
+//# sourceMappingURL=/build/_shared/chunk-M3MXSI3X.js.map

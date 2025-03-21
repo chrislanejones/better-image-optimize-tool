@@ -3,7 +3,7 @@ import {
 } from "/build/_shared/chunk-O4BRYNJ4.js";
 import {
   RemixBrowser
-} from "/build/_shared/chunk-DI2BQNBE.js";
+} from "/build/_shared/chunk-M3MXSI3X.js";
 import "/build/_shared/chunk-U4FRFQSK.js";
 import {
   require_jsx_dev_runtime
@@ -20,9 +20,9 @@ import {
 } from "/build/_shared/chunk-PNG5AS42.js";
 
 // app/entry.client.tsx
-var import_react2 = __toESM(require_react());
-var import_client = __toESM(require_client());
-var import_jsx_dev_runtime = __toESM(require_jsx_dev_runtime());
+var import_react2 = __toESM(require_react(), 1);
+var import_client = __toESM(require_client(), 1);
+var import_jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
 if (import.meta) {
   import.meta.hot = createHotContext(
     //@ts-expect-error
@@ -44,4 +44,4 @@ if (import.meta) {
     }, this)
   );
 });
-//# sourceMappingURL=/build/entry.client-GQE5UWOJ.js.map
+//# sourceMappingURL=/build/entry.client-RMN4F7PE.js.map

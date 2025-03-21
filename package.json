@@ -1,6 +1,7 @@
 {
   "name": "better-image-optimize-tool",
-  "private": true,
+  "version": "1.0.0",
+  "type": "module",
   "sideEffects": false,
   "scripts": {
     "build": "remix build",
@@ -9,9 +10,9 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@remix-run/node": "^2.0.0",
-    "@remix-run/react": "^2.0.0",
-    "@remix-run/serve": "^2.0.0",
+    "@remix-run/node": "^2.4.0",
+    "@remix-run/react": "^2.4.0",
+    "@remix-run/serve": "^2.4.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "isbot": "^3.6.8",
@@ -23,7 +24,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.0.0",
+    "@remix-run/dev": "^2.4.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "typescript": "^5.1.6",
