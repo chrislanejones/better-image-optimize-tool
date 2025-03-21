@@ -9,6 +9,15 @@ import {
 } from "~/components/ui/Card";
 import { Button } from "~/components/ui/Button";
 import { DropZone } from "~/components/ui/DropZone";
+import { PolaroidSvg } from "~/components/polaroidsvg";
+import { UploadIcon } from "~/components/uploadicon";
+import { ThemeToggle } from "~/components/theme-toggle";
+import {
+  filterImageFiles,
+  createFileData,
+  createFileFromPaste,
+  storeFileData,
+} from "~/utils/fileUtils";
 
 export interface FileData {
   name: string;
@@ -21,7 +30,9 @@ export default function Index(): JSX.Element {
   const [files, setFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [pasteEnabled, setPasteEnabled] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const dropZoneRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   // Debug effect to log when files are added
@@ -49,12 +60,7 @@ export default function Index(): JSX.Element {
           if (items[i].type.indexOf("image") !== -1) {
             const blob = items[i].getAsFile();
             if (blob) {
-              // Create a File object from the Blob
-              // Use a timestamp to create a unique name for pasted images
-              const timestamp = new Date().toISOString().replace(/:/g, "-");
-              const file = new File([blob], `pasted-image-${timestamp}.png`, {
-                type: blob.type,
-              });
+              const file = createFileFromPaste(blob);
               imageItems.push(file);
             }
           }
@@ -101,9 +107,6 @@ export default function Index(): JSX.Element {
     setIsDragging(false);
   };
 
-  // State for error messages
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   // Helper function to process files and navigate to gallery
   const processFilesAndNavigate = (newFiles: File[]): void => {
     // Clear any previous errors
@@ -118,9 +121,7 @@ export default function Index(): JSX.Element {
 
     try {
       // Validate that all files are images
-      const validImageFiles = newFiles.filter((file) =>
-        file.type.startsWith("image/")
-      );
+      const validImageFiles = filterImageFiles(newFiles);
 
       if (validImageFiles.length === 0) {
         setErrorMessage("Please select valid image files only.");
@@ -132,18 +133,12 @@ export default function Index(): JSX.Element {
       }
 
       // Create file data objects for each file
-      const fileData: FileData[] = validImageFiles.map((file) => ({
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        // Create temporary URL for preview
-        url: URL.createObjectURL(file),
-      }));
+      const fileData = createFileData(validImageFiles);
 
       console.log("File data created:", fileData.length);
 
       // Store file info in sessionStorage to pass to next page
-      sessionStorage.setItem("uploadedImages", JSON.stringify(fileData));
+      storeFileData(fileData);
       console.log("Session storage updated");
 
       // Navigate to gallery page - use setTimeout to ensure storage is set
@@ -172,9 +167,7 @@ export default function Index(): JSX.Element {
     try {
       if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
         const allFiles = Array.from(e.dataTransfer.files);
-        const newFiles = allFiles.filter((file) =>
-          file.type.startsWith("image/")
-        );
+        const newFiles = filterImageFiles(allFiles);
 
         if (newFiles.length === 0) {
           console.log("No valid image files found in drop");
@@ -216,9 +209,7 @@ export default function Index(): JSX.Element {
 
     if (e.target.files && e.target.files.length > 0) {
       try {
-        const newFiles = Array.from(e.target.files).filter((file) =>
-          file.type.startsWith("image/")
-        );
+        const newFiles = filterImageFiles(Array.from(e.target.files));
 
         if (newFiles.length === 0) {
           console.log("No valid image files selected");
@@ -241,6 +232,13 @@ export default function Index(): JSX.Element {
     }
   };
 
+  // Trigger file input dialog
+  const handleButtonClick = (): void => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     console.log("Form submitted");
@@ -259,137 +257,131 @@ export default function Index(): JSX.Element {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4 md:p-8">
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle className="text-center">Photo Upload</CardTitle>
-        </CardHeader>
+    <div className="min-h-screen bg-background transition-colors">
+      {/* Header with theme toggle */}
+      <header className="border-b border-border">
+        <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+          <h1 className="text-xl font-bold text-foreground">Photo Upload</h1>
+          <ThemeToggle />
+        </div>
+      </header>
 
-        <CardContent>
-          <div className="flex justify-center mb-8">
-            {/* SVG Polaroid embedded inline */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 300 350"
-              className="w-56 md:w-72 h-auto filter drop-shadow transition-transform duration-300 hover:scale-105"
-            >
-              <rect
-                x="20"
-                y="20"
-                width="260"
-                height="310"
-                rx="5"
-                ry="5"
-                fill="white"
-                stroke="#e0e0e0"
-                strokeWidth="2"
-              />
-              <rect
-                x="40"
-                y="40"
-                width="220"
-                height="220"
-                fill="#f5f5f5"
-                stroke="#e0e0e0"
-                strokeWidth="1"
-              />
-              <rect x="40" y="260" width="220" height="50" fill="white" />
-              <rect
-                x="25"
-                y="25"
-                width="260"
-                height="310"
-                rx="5"
-                ry="5"
-                fill="none"
-                stroke="#d0d0d0"
-                strokeWidth="1"
-                opacity="0.5"
-              />
-              <path
-                d="M40,40 L50,50 M260,40 L250,50 M40,260 L50,250 M260,260 L250,250"
-                stroke="#e0e0e0"
-                strokeWidth="1"
-              />
-            </svg>
-          </div>
+      <div className="max-w-4xl mx-auto p-4 md:p-8">
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-center">Photo Upload</CardTitle>
+          </CardHeader>
 
-          <Form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            <DropZone
-              ref={dropZoneRef}
-              isDragging={isDragging}
-              hasFiles={files.length > 0}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-              onClick={focusDropZone}
-              tabIndex={0}
-            >
-              <div className="flex flex-col items-center justify-center space-y-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-10 text-slate-400 mb-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                  />
-                </svg>
-                <p className="text-slate-600 font-medium">
-                  Drag & drop images here
-                </p>
-                <p className="text-slate-500 text-sm">— or —</p>
-                <p className="text-slate-500 text-sm">
-                  Paste an image (Ctrl+V)
-                </p>
-              </div>
-            </DropZone>
+          <CardContent>
+            <div className="flex justify-center mb-8">
+              <PolaroidSvg />
+            </div>
 
-            {files.length > 0 && (
-              <Card>
-                <CardContent className="pt-6">
-                  <h3 className="text-lg font-medium text-slate-800 mb-4">
-                    Selected Images ({files.length})
-                  </h3>
-                  <ul className="list-none p-0 max-h-48 overflow-y-auto divide-y divide-slate-200">
-                    {files.map((file, index) => (
-                      <li
-                        key={index}
-                        className="py-2 flex items-center justify-between"
-                      >
-                        <span className="truncate max-w-xs">{file.name}</span>
-                        <span className="text-sm text-slate-500">
-                          ({Math.round(file.size / 1024)} KB)
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-                <CardFooter className="justify-end">
-                  <Button
-                    type="submit"
-                    variant="success"
-                    onClick={() => processFilesAndNavigate(files)}
-                  >
-                    Continue to Gallery
-                  </Button>
-                </CardFooter>
-              </Card>
-            )}
-          </Form>
-        </CardContent>
-        <CardFooter className="flex flex-col items-center justify-center text-sm text-slate-500">
-          <p>Click or tap anywhere in the drop zone to enable paste</p>
-          <p className="mt-1">
-            You can paste (Ctrl+V) an image from your clipboard
+            <Form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              {/* File input (hidden) */}
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileSelect}
+                className="hidden"
+                multiple
+                accept="image/*"
+              />
+
+              <DropZone
+                ref={dropZoneRef}
+                isDragging={isDragging}
+                hasFiles={files.length > 0}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                onClick={focusDropZone}
+                tabIndex={0}
+              >
+                <div className="flex flex-col items-center justify-center space-y-2">
+                  <UploadIcon className="h-10 w-10 text-slate-400 dark:text-slate-500 mb-2" />
+                  <p className="text-slate-600 dark:text-slate-300 font-medium">
+                    Drag & drop images here
+                  </p>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm">
+                    — or —
+                  </p>
+                  <p className="text-slate-500 dark:text-slate-400 text-sm">
+                    Paste an image (Ctrl+V)
+                  </p>
+
+                  {/* Upload Button */}
+                  <div className="mt-4">
+                    <Button
+                      type="button"
+                      variant="primary"
+                      onClick={handleButtonClick}
+                      className="flex items-center space-x-2"
+                    >
+                      <UploadIcon />
+                      <span>Upload Files</span>
+                    </Button>
+                  </div>
+                </div>
+              </DropZone>
+
+              {/* Error message display */}
+              {errorMessage && (
+                <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 rounded-md">
+                  <p>{errorMessage}</p>
+                </div>
+              )}
+
+              {files.length > 0 && (
+                <Card>
+                  <CardContent className="pt-6">
+                    <h3 className="text-lg font-medium text-slate-800 dark:text-slate-200 mb-4">
+                      Selected Images ({files.length})
+                    </h3>
+                    <ul className="list-none p-0 max-h-48 overflow-y-auto divide-y divide-slate-200 dark:divide-slate-700">
+                      {files.map((file, index) => (
+                        <li
+                          key={index}
+                          className="py-2 flex items-center justify-between"
+                        >
+                          <span className="truncate max-w-xs">{file.name}</span>
+                          <span className="text-sm text-slate-500 dark:text-slate-400">
+                            ({Math.round(file.size / 1024)} KB)
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                  <CardFooter className="justify-end">
+                    <Button
+                      type="submit"
+                      variant="success"
+                      onClick={() => processFilesAndNavigate(files)}
+                    >
+                      Continue to Gallery
+                    </Button>
+                  </CardFooter>
+                </Card>
+              )}
+            </Form>
+          </CardContent>
+          <CardFooter className="flex flex-col items-center justify-center text-sm text-slate-500 dark:text-slate-400">
+            <p>Click or tap anywhere in the drop zone to enable paste</p>
+            <p className="mt-1">
+              You can paste (Ctrl+V) an image from your clipboard
+            </p>
+          </CardFooter>
+        </Card>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t border-border py-6 mt-8">
+        <div className="container mx-auto px-4 text-center text-muted-foreground text-sm">
+          <p>
+            © {new Date().getFullYear()} Photo Gallery. All rights reserved.
           </p>
-        </CardFooter>
-      </Card>
+        </div>
+      </footer>
     </div>
   );
 }
