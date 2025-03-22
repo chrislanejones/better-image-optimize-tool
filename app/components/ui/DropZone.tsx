@@ -75,11 +75,11 @@ const DropZone = React.forwardRef<HTMLDivElement, DropZoneProps>(
           focus:ring-2
           focus:ring-blue-500
           focus:border-blue-500
-          ${isDragging ? "border-blue-600 bg-blue-50" : ""} 
+          ${isDragging ? "border-blue-600 bg-blue-50 dark:bg-blue-900/20" : ""} 
           ${
             hasFiles
-              ? "border-green-600 bg-green-50"
-              : "border-slate-300 bg-slate-50"
+              ? "border-green-600 bg-green-50 dark:bg-green-900/20"
+              : "border-slate-300 bg-slate-50 dark:border-slate-700 dark:bg-slate-800"
           } 
           ${className || ""}
         `}

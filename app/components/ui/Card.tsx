@@ -6,9 +6,7 @@ const Card = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={`rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm ${
-      className || ""
-    }`}
+    className={`rounded-lg border shadow-sm ${className || ""}`}
     {...props}
   />
 ));
@@ -48,7 +46,7 @@ const CardDescription = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <p
     ref={ref}
-    className={`text-sm text-slate-500 ${className || ""}`}
+    className={`text-sm text-slate-500 dark:text-slate-300 ${className || ""}`}
     {...props}
   >
     {children}
@@ -76,6 +74,51 @@ const CardFooter = React.forwardRef<
 ));
 CardFooter.displayName = "CardFooter";
 
+// Card With Border Title
+interface CardWithBorderTitleProps {
+  title: React.ReactNode;
+  children: React.ReactNode;
+  titleClassName?: string;
+  cardClassName?: string;
+  contentClassName?: string;
+}
+
+const CardWithBorderTitle = React.forwardRef<
+  HTMLDivElement,
+  CardWithBorderTitleProps &
+    Omit<React.HTMLAttributes<HTMLDivElement>, keyof CardWithBorderTitleProps>
+>(
+  (
+    {
+      title,
+      children,
+      titleClassName = "",
+      cardClassName = "",
+      contentClassName = "",
+      ...props
+    },
+    ref
+  ) => (
+    <div
+      ref={ref}
+      className={`relative mt-6 rounded-lg border shadow-sm ${cardClassName}`}
+      {...props}
+    >
+      {/* Title positioned on the border */}
+      <div
+        className={`absolute -top-3 left-4 px-2 bg-white dark:bg-black ${titleClassName}`}
+      >
+        {title}
+      </div>
+
+      {/* Card content with increased top padding */}
+      <div className={`p-6 pt-8 ${contentClassName}`}>{children}</div>
+    </div>
+  )
+);
+
+CardWithBorderTitle.displayName = "CardWithBorderTitle";
+
 export {
   Card,
   CardHeader,
@@ -83,4 +126,5 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
+  CardWithBorderTitle,
 };

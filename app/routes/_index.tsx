@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Upload } from "lucide-react";
 import { Form, useNavigate } from "@remix-run/react";
 import {
   Card,
@@ -9,9 +10,7 @@ import {
 } from "~/components/ui/Card";
 import { Button } from "~/components/ui/Button";
 import { DropZone } from "~/components/ui/DropZone";
-import { PolaroidSvg } from "~/components/polaroidsvg";
-import { UploadIcon } from "~/components/uploadicon";
-import { ThemeToggle } from "~/components/theme-toggle";
+import { ThemeToggle } from "~/components/ThemeToggle";
 import {
   filterImageFiles,
   createFileData,
@@ -269,12 +268,12 @@ export default function Index(): JSX.Element {
       <div className="max-w-4xl mx-auto p-4 md:p-8">
         <Card className="w-full">
           <CardHeader>
-            <CardTitle className="text-center">Photo Upload</CardTitle>
+            <CardTitle className="text-center">Upload Images</CardTitle>
           </CardHeader>
 
           <CardContent>
             <div className="flex justify-center mb-8">
-              <PolaroidSvg />
+              Compress Mutiple Images at a Time
             </div>
 
             <Form onSubmit={handleSubmit} className="flex flex-col gap-6">
@@ -299,7 +298,7 @@ export default function Index(): JSX.Element {
                 tabIndex={0}
               >
                 <div className="flex flex-col items-center justify-center space-y-2">
-                  <UploadIcon className="h-10 w-10 text-slate-400 dark:text-slate-500 mb-2" />
+                  <Upload className="h-10 w-10 text-primary/60 mb-4" />
                   <p className="text-slate-600 dark:text-slate-300 font-medium">
                     Drag & drop images here
                   </p>
@@ -316,9 +315,8 @@ export default function Index(): JSX.Element {
                       type="button"
                       variant="primary"
                       onClick={handleButtonClick}
-                      className="flex items-center space-x-2"
+                      className="flex items-center space-x-4 space-y-4"
                     >
-                      <UploadIcon />
                       <span>Upload Files</span>
                     </Button>
                   </div>
@@ -365,12 +363,7 @@ export default function Index(): JSX.Element {
               )}
             </Form>
           </CardContent>
-          <CardFooter className="flex flex-col items-center justify-center text-sm text-slate-500 dark:text-slate-400">
-            <p>Click or tap anywhere in the drop zone to enable paste</p>
-            <p className="mt-1">
-              You can paste (Ctrl+V) an image from your clipboard
-            </p>
-          </CardFooter>
+          <CardFooter className="flex flex-col items-center justify-center text-sm text-slate-500 dark:text-slate-400"></CardFooter>
         </Card>
       </div>
 

@@ -37,10 +37,10 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222.2 47.4% 2%; /* slate-950 */
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 215 25% 10%; /* slate-900 */
     --card-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;

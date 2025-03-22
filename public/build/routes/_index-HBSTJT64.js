@@ -6,11 +6,12 @@ import {
   CardHeader,
   CardTitle,
   ThemeToggle,
+  Upload,
   createFileData,
   createFileFromPaste,
   filterImageFiles,
   storeFileData
-} from "/build/_shared/chunk-UW2A6EOQ.js";
+} from "/build/_shared/chunk-HWBSHH4V.js";
 import {
   Form,
   useNavigate
@@ -53,7 +54,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/ui/DropZone.tsx"
   );
-  import.meta.hot.lastModified = "1742547617867.552";
+  import.meta.hot.lastModified = "1742620147393.089";
 }
 var DropZone = React.forwardRef(_c = ({
   className,
@@ -99,8 +100,8 @@ var DropZone = React.forwardRef(_c = ({
           focus:ring-2
           focus:ring-blue-500
           focus:border-blue-500
-          ${isDragging ? "border-blue-600 bg-blue-50" : ""} 
-          ${hasFiles ? "border-green-600 bg-green-50" : "border-slate-300 bg-slate-50"} 
+          ${isDragging ? "border-blue-600 bg-blue-50 dark:bg-blue-900/20" : ""} 
+          ${hasFiles ? "border-green-600 bg-green-50 dark:bg-green-900/20" : "border-slate-300 bg-slate-50 dark:border-slate-700 dark:bg-slate-800"} 
           ${className || ""}
         `,
       onDrop,
@@ -131,106 +132,8 @@ $RefreshReg$(_c2, "DropZone");
 window.$RefreshReg$ = prevRefreshReg;
 window.$RefreshSig$ = prevRefreshSig;
 
-// app/components/polaroidsvg.tsx
-var import_jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
-if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
-  console.warn("remix:hmr: React Fast Refresh only works when the Remix compiler is running in development mode.");
-} else {
-  prevRefreshReg = window.$RefreshReg$;
-  prevRefreshSig = window.$RefreshSig$;
-  window.$RefreshReg$ = (type, id) => {
-    window.$RefreshRuntime$.register(type, '"app/components/polaroidsvg.tsx"' + id);
-  };
-  window.$RefreshSig$ = window.$RefreshRuntime$.createSignatureFunctionForTransform;
-}
-var prevRefreshReg;
-var prevRefreshSig;
-if (import.meta) {
-  import.meta.hot = createHotContext(
-    //@ts-expect-error
-    "app/components/polaroidsvg.tsx"
-  );
-  import.meta.hot.lastModified = "1742549613101.194";
-}
-var PolaroidSvg = (props) => {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 300 350", className: `w-56 md:w-72 h-auto filter drop-shadow transition-transform duration-300 hover:scale-105 ${props.className || ""}`, ...props, children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("rect", { x: "20", y: "20", width: "260", height: "310", rx: "5", ry: "5", fill: "white", stroke: "#e0e0e0", strokeWidth: "2" }, void 0, false, {
-      fileName: "app/components/polaroidsvg.tsx",
-      lineNumber: 24,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("rect", { x: "40", y: "40", width: "220", height: "220", fill: "#f5f5f5", stroke: "#e0e0e0", strokeWidth: "1" }, void 0, false, {
-      fileName: "app/components/polaroidsvg.tsx",
-      lineNumber: 25,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("rect", { x: "40", y: "260", width: "220", height: "50", fill: "white" }, void 0, false, {
-      fileName: "app/components/polaroidsvg.tsx",
-      lineNumber: 26,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("rect", { x: "25", y: "25", width: "260", height: "310", rx: "5", ry: "5", fill: "none", stroke: "#d0d0d0", strokeWidth: "1", opacity: "0.5" }, void 0, false, {
-      fileName: "app/components/polaroidsvg.tsx",
-      lineNumber: 27,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("path", { d: "M40,40 L50,50 M260,40 L250,50 M40,260 L50,250 M260,260 L250,250", stroke: "#e0e0e0", strokeWidth: "1" }, void 0, false, {
-      fileName: "app/components/polaroidsvg.tsx",
-      lineNumber: 28,
-      columnNumber: 7
-    }, this)
-  ] }, void 0, true, {
-    fileName: "app/components/polaroidsvg.tsx",
-    lineNumber: 23,
-    columnNumber: 10
-  }, this);
-};
-_c3 = PolaroidSvg;
-var _c3;
-$RefreshReg$(_c3, "PolaroidSvg");
-window.$RefreshReg$ = prevRefreshReg;
-window.$RefreshSig$ = prevRefreshSig;
-
-// app/components/uploadicon.tsx
-var import_jsx_dev_runtime3 = __toESM(require_jsx_dev_runtime(), 1);
-if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
-  console.warn("remix:hmr: React Fast Refresh only works when the Remix compiler is running in development mode.");
-} else {
-  prevRefreshReg = window.$RefreshReg$;
-  prevRefreshSig = window.$RefreshSig$;
-  window.$RefreshReg$ = (type, id) => {
-    window.$RefreshRuntime$.register(type, '"app/components/uploadicon.tsx"' + id);
-  };
-  window.$RefreshSig$ = window.$RefreshRuntime$.createSignatureFunctionForTransform;
-}
-var prevRefreshReg;
-var prevRefreshSig;
-if (import.meta) {
-  import.meta.hot = createHotContext(
-    //@ts-expect-error
-    "app/components/uploadicon.tsx"
-  );
-  import.meta.hot.lastModified = "1742549619961.1223";
-}
-var UploadIcon = (props) => {
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("svg", { xmlns: "http://www.w3.org/2000/svg", className: `h-5 w-5 ${props.className || ""}`, fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", ...props, children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" }, void 0, false, {
-    fileName: "app/components/uploadicon.tsx",
-    lineNumber: 24,
-    columnNumber: 7
-  }, this) }, void 0, false, {
-    fileName: "app/components/uploadicon.tsx",
-    lineNumber: 23,
-    columnNumber: 10
-  }, this);
-};
-_c4 = UploadIcon;
-var _c4;
-$RefreshReg$(_c4, "UploadIcon");
-window.$RefreshReg$ = prevRefreshReg;
-window.$RefreshSig$ = prevRefreshSig;
-
 // app/routes/_index.tsx
-var import_jsx_dev_runtime4 = __toESM(require_jsx_dev_runtime(), 1);
+var import_jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
 if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
   console.warn("remix:hmr: React Fast Refresh only works when the Remix compiler is running in development mode.");
 } else {
@@ -249,7 +152,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/routes/_index.tsx"
   );
-  import.meta.hot.lastModified = "1742551716356.6235";
+  import.meta.hot.lastModified = "1742620574123.025";
 }
 function Index() {
   _s();
@@ -406,233 +309,211 @@ function Index() {
       dropZoneRef.current.focus();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "min-h-screen bg-background transition-colors", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("header", { className: "border-b border-border", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "max-w-4xl mx-auto px-4 py-4 flex justify-between items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h1", { className: "text-xl font-bold text-foreground", children: "Photo Upload" }, void 0, false, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("div", { className: "min-h-screen bg-background transition-colors", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("header", { className: "border-b border-border", children: /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("div", { className: "max-w-4xl mx-auto px-4 py-4 flex justify-between items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("h1", { className: "text-xl font-bold text-foreground", children: "Photo Upload" }, void 0, false, {
         fileName: "app/routes/_index.tsx",
-        lineNumber: 230,
+        lineNumber: 229,
         columnNumber: 11
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(ThemeToggle, {}, void 0, false, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(ThemeToggle, {}, void 0, false, {
         fileName: "app/routes/_index.tsx",
-        lineNumber: 231,
+        lineNumber: 230,
         columnNumber: 11
       }, this)
     ] }, void 0, true, {
       fileName: "app/routes/_index.tsx",
-      lineNumber: 229,
+      lineNumber: 228,
       columnNumber: 9
     }, this) }, void 0, false, {
       fileName: "app/routes/_index.tsx",
-      lineNumber: 228,
+      lineNumber: 227,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "max-w-4xl mx-auto p-4 md:p-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { className: "w-full", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(CardHeader, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(CardTitle, { className: "text-center", children: "Photo Upload" }, void 0, false, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("div", { className: "max-w-4xl mx-auto p-4 md:p-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(Card, { className: "w-full", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(CardHeader, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(CardTitle, { className: "text-center", children: "Upload Images" }, void 0, false, {
         fileName: "app/routes/_index.tsx",
-        lineNumber: 238,
+        lineNumber: 237,
         columnNumber: 13
       }, this) }, void 0, false, {
         fileName: "app/routes/_index.tsx",
-        lineNumber: 237,
+        lineNumber: 236,
         columnNumber: 11
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(CardContent, { children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex justify-center mb-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(PolaroidSvg, {}, void 0, false, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(CardContent, { children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("div", { className: "flex justify-center mb-8", children: "Compress Mutiple Images at a Time" }, void 0, false, {
           fileName: "app/routes/_index.tsx",
-          lineNumber: 243,
-          columnNumber: 15
-        }, this) }, void 0, false, {
-          fileName: "app/routes/_index.tsx",
-          lineNumber: 242,
+          lineNumber: 241,
           columnNumber: 13
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Form, { onSubmit: handleSubmit, className: "flex flex-col gap-6", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("input", { type: "file", ref: fileInputRef, onChange: handleFileSelect, className: "hidden", multiple: true, accept: "image/*" }, void 0, false, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(Form, { onSubmit: handleSubmit, className: "flex flex-col gap-6", children: [
+          /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("input", { type: "file", ref: fileInputRef, onChange: handleFileSelect, className: "hidden", multiple: true, accept: "image/*" }, void 0, false, {
             fileName: "app/routes/_index.tsx",
-            lineNumber: 248,
+            lineNumber: 247,
             columnNumber: 15
           }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(DropZone, { ref: dropZoneRef, isDragging, hasFiles: files.length > 0, onDragOver: handleDragOver, onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: focusDropZone, tabIndex: 0, children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "flex flex-col items-center justify-center space-y-2", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(UploadIcon, { className: "h-10 w-10 text-slate-400 dark:text-slate-500 mb-2" }, void 0, false, {
+          /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(DropZone, { ref: dropZoneRef, isDragging, hasFiles: files.length > 0, onDragOver: handleDragOver, onDragLeave: handleDragLeave, onDrop: handleDrop, onClick: focusDropZone, tabIndex: 0, children: /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("div", { className: "flex flex-col items-center justify-center space-y-2", children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(Upload, { className: "h-10 w-10 text-primary/60 mb-4" }, void 0, false, {
+              fileName: "app/routes/_index.tsx",
+              lineNumber: 251,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("p", { className: "text-slate-600 dark:text-slate-300 font-medium", children: "Drag & drop images here" }, void 0, false, {
               fileName: "app/routes/_index.tsx",
               lineNumber: 252,
               columnNumber: 19
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-slate-600 dark:text-slate-300 font-medium", children: "Drag & drop images here" }, void 0, false, {
+            /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("p", { className: "text-slate-500 dark:text-slate-400 text-sm", children: "\u2014 or \u2014" }, void 0, false, {
               fileName: "app/routes/_index.tsx",
-              lineNumber: 253,
+              lineNumber: 255,
               columnNumber: 19
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-slate-500 dark:text-slate-400 text-sm", children: "\u2014 or \u2014" }, void 0, false, {
+            /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("p", { className: "text-slate-500 dark:text-slate-400 text-sm", children: "Paste an image (Ctrl+V)" }, void 0, false, {
               fileName: "app/routes/_index.tsx",
-              lineNumber: 256,
+              lineNumber: 258,
               columnNumber: 19
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "text-slate-500 dark:text-slate-400 text-sm", children: "Paste an image (Ctrl+V)" }, void 0, false, {
-              fileName: "app/routes/_index.tsx",
-              lineNumber: 259,
-              columnNumber: 19
-            }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "mt-4", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Button, { type: "button", variant: "primary", onClick: handleButtonClick, className: "flex items-center space-x-2", children: [
-              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(UploadIcon, {}, void 0, false, {
-                fileName: "app/routes/_index.tsx",
-                lineNumber: 266,
-                columnNumber: 23
-              }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { children: "Upload Files" }, void 0, false, {
-                fileName: "app/routes/_index.tsx",
-                lineNumber: 267,
-                columnNumber: 23
-              }, this)
-            ] }, void 0, true, {
+            /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("div", { className: "mt-4", children: /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(Button, { type: "button", variant: "primary", onClick: handleButtonClick, className: "flex items-center space-x-4 space-y-4", children: /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("span", { children: "Upload Files" }, void 0, false, {
               fileName: "app/routes/_index.tsx",
               lineNumber: 265,
-              columnNumber: 21
+              columnNumber: 23
             }, this) }, void 0, false, {
               fileName: "app/routes/_index.tsx",
               lineNumber: 264,
+              columnNumber: 21
+            }, this) }, void 0, false, {
+              fileName: "app/routes/_index.tsx",
+              lineNumber: 263,
               columnNumber: 19
             }, this)
           ] }, void 0, true, {
             fileName: "app/routes/_index.tsx",
-            lineNumber: 251,
+            lineNumber: 250,
             columnNumber: 17
           }, this) }, void 0, false, {
             fileName: "app/routes/_index.tsx",
-            lineNumber: 250,
+            lineNumber: 249,
             columnNumber: 15
           }, this),
-          errorMessage && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 rounded-md", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { children: errorMessage }, void 0, false, {
+          errorMessage && /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("div", { className: "p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 rounded-md", children: /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("p", { children: errorMessage }, void 0, false, {
             fileName: "app/routes/_index.tsx",
-            lineNumber: 275,
+            lineNumber: 273,
             columnNumber: 19
           }, this) }, void 0, false, {
             fileName: "app/routes/_index.tsx",
-            lineNumber: 274,
+            lineNumber: 272,
             columnNumber: 32
           }, this),
-          files.length > 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Card, { children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(CardContent, { className: "pt-6", children: [
-              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("h3", { className: "text-lg font-medium text-slate-800 dark:text-slate-200 mb-4", children: [
+          files.length > 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(Card, { children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(CardContent, { className: "pt-6", children: [
+              /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("h3", { className: "text-lg font-medium text-slate-800 dark:text-slate-200 mb-4", children: [
                 "Selected Images (",
                 files.length,
                 ")"
               ] }, void 0, true, {
                 fileName: "app/routes/_index.tsx",
-                lineNumber: 280,
+                lineNumber: 278,
                 columnNumber: 21
               }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("ul", { className: "list-none p-0 max-h-48 overflow-y-auto divide-y divide-slate-200 dark:divide-slate-700", children: files.map((file, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("li", { className: "py-2 flex items-center justify-between", children: [
-                /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { className: "truncate max-w-xs", children: file.name }, void 0, false, {
+              /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("ul", { className: "list-none p-0 max-h-48 overflow-y-auto divide-y divide-slate-200 dark:divide-slate-700", children: files.map((file, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("li", { className: "py-2 flex items-center justify-between", children: [
+                /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("span", { className: "truncate max-w-xs", children: file.name }, void 0, false, {
                   fileName: "app/routes/_index.tsx",
-                  lineNumber: 285,
+                  lineNumber: 283,
                   columnNumber: 27
                 }, this),
-                /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("span", { className: "text-sm text-slate-500 dark:text-slate-400", children: [
+                /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("span", { className: "text-sm text-slate-500 dark:text-slate-400", children: [
                   "(",
                   Math.round(file.size / 1024),
                   " KB)"
                 ] }, void 0, true, {
                   fileName: "app/routes/_index.tsx",
-                  lineNumber: 286,
+                  lineNumber: 284,
                   columnNumber: 27
                 }, this)
               ] }, index, true, {
                 fileName: "app/routes/_index.tsx",
-                lineNumber: 284,
+                lineNumber: 282,
                 columnNumber: 51
               }, this)) }, void 0, false, {
                 fileName: "app/routes/_index.tsx",
-                lineNumber: 283,
+                lineNumber: 281,
                 columnNumber: 21
               }, this)
             ] }, void 0, true, {
               fileName: "app/routes/_index.tsx",
-              lineNumber: 279,
+              lineNumber: 277,
               columnNumber: 19
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(CardFooter, { className: "justify-end", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(Button, { type: "submit", variant: "success", onClick: () => processFilesAndNavigate(files), children: "Continue to Gallery" }, void 0, false, {
+            /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(CardFooter, { className: "justify-end", children: /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(Button, { type: "submit", variant: "success", onClick: () => processFilesAndNavigate(files), children: "Continue to Gallery" }, void 0, false, {
               fileName: "app/routes/_index.tsx",
-              lineNumber: 293,
+              lineNumber: 291,
               columnNumber: 21
             }, this) }, void 0, false, {
               fileName: "app/routes/_index.tsx",
-              lineNumber: 292,
+              lineNumber: 290,
               columnNumber: 19
             }, this)
           ] }, void 0, true, {
             fileName: "app/routes/_index.tsx",
-            lineNumber: 278,
+            lineNumber: 276,
             columnNumber: 36
           }, this)
         ] }, void 0, true, {
           fileName: "app/routes/_index.tsx",
-          lineNumber: 246,
+          lineNumber: 245,
           columnNumber: 13
         }, this)
       ] }, void 0, true, {
         fileName: "app/routes/_index.tsx",
-        lineNumber: 241,
+        lineNumber: 240,
         columnNumber: 11
       }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)(CardFooter, { className: "flex flex-col items-center justify-center text-sm text-slate-500 dark:text-slate-400", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { children: "Click or tap anywhere in the drop zone to enable paste" }, void 0, false, {
-          fileName: "app/routes/_index.tsx",
-          lineNumber: 301,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { className: "mt-1", children: "You can paste (Ctrl+V) an image from your clipboard" }, void 0, false, {
-          fileName: "app/routes/_index.tsx",
-          lineNumber: 302,
-          columnNumber: 13
-        }, this)
-      ] }, void 0, true, {
+      /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)(CardFooter, { className: "flex flex-col items-center justify-center text-sm text-slate-500 dark:text-slate-400" }, void 0, false, {
         fileName: "app/routes/_index.tsx",
-        lineNumber: 300,
+        lineNumber: 298,
         columnNumber: 11
       }, this)
     ] }, void 0, true, {
       fileName: "app/routes/_index.tsx",
-      lineNumber: 236,
+      lineNumber: 235,
       columnNumber: 9
     }, this) }, void 0, false, {
       fileName: "app/routes/_index.tsx",
-      lineNumber: 235,
+      lineNumber: 234,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("footer", { className: "border-t border-border py-6 mt-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("div", { className: "container mx-auto px-4 text-center text-muted-foreground text-sm", children: /* @__PURE__ */ (0, import_jsx_dev_runtime4.jsxDEV)("p", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("footer", { className: "border-t border-border py-6 mt-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("div", { className: "container mx-auto px-4 text-center text-muted-foreground text-sm", children: /* @__PURE__ */ (0, import_jsx_dev_runtime2.jsxDEV)("p", { children: [
       "\xA9 ",
       (/* @__PURE__ */ new Date()).getFullYear(),
       " Photo Gallery. All rights reserved."
     ] }, void 0, true, {
       fileName: "app/routes/_index.tsx",
-      lineNumber: 312,
+      lineNumber: 305,
       columnNumber: 11
     }, this) }, void 0, false, {
       fileName: "app/routes/_index.tsx",
-      lineNumber: 311,
+      lineNumber: 304,
       columnNumber: 9
     }, this) }, void 0, false, {
       fileName: "app/routes/_index.tsx",
-      lineNumber: 310,
+      lineNumber: 303,
       columnNumber: 7
     }, this)
   ] }, void 0, true, {
     fileName: "app/routes/_index.tsx",
-    lineNumber: 226,
+    lineNumber: 225,
     columnNumber: 10
   }, this);
 }
 _s(Index, "D/H+JjQnbtw3blMpO3Y2bn9cDtg=", false, function() {
   return [useNavigate];
 });
-_c5 = Index;
-var _c5;
-$RefreshReg$(_c5, "Index");
+_c3 = Index;
+var _c3;
+$RefreshReg$(_c3, "Index");
 window.$RefreshReg$ = prevRefreshReg;
 window.$RefreshSig$ = prevRefreshSig;
 export {
   Index as default
 };
-//# sourceMappingURL=/build/routes/_index-YJBVXEZF.js.map
+//# sourceMappingURL=/build/routes/_index-HBSTJT64.js.map
