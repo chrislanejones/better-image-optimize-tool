@@ -8,6 +8,7 @@ import ImageDetails from "~/components/gallery/ImageDetails";
 import ErrorMessage from "~/components/gallery/ErrorMessage";
 import ImageModal from "~/components/gallery/ImageModal";
 import ControlsCard from "~/components/gallery/ControlsCard";
+import ImageControlBar from "~/components/gallery/ImageControlBar";
 
 interface ImageData {
   name: string;
@@ -374,7 +375,7 @@ export default function Gallery(): JSX.Element {
         </div>
       </header>
 
-      <main className="container mx-auto p-4 md:p-8">
+      <main className="container mx-auto p-4">
         {/* Error message display */}
         {loadError && <ErrorMessage message={loadError} redirecting={true} />}
 
@@ -394,12 +395,29 @@ export default function Gallery(): JSX.Element {
           />
         )}
 
+        {/* Control bar - NEW COMPONENT */}
+        {selectedImage && (
+          <ImageControlBar
+            formatOption={formatOption}
+            onFormatChange={setFormatOption}
+            compressionLevel={compressionLevel}
+            onCompressionChange={setCompressionLevel}
+            cropMode={cropMode}
+            onToggleCrop={toggleCropMode}
+            hasCropSelection={cropRect !== null}
+            onApplyCrop={applyCrop}
+            onApplyChanges={applyChanges}
+            onCancelChanges={cancelChanges}
+            onDownload={downloadImage}
+          />
+        )}
+
         {/* Selected Image Display and Controls */}
         {selectedImage && (
           <>
             {/* Image Preview */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="image-preview-container">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+              <div className="image-preview-container md:col-span-3">
                 <ImagePreview
                   image={selectedImage}
                   cropMode={cropMode}
@@ -411,20 +429,10 @@ export default function Gallery(): JSX.Element {
               </div>
 
               {/* Controls Card */}
-              <div>
+              <div className="md:col-span-1">
                 <ControlsCard
                   image={selectedImage}
-                  cropMode={cropMode}
-                  formatOption={formatOption}
-                  compressionLevel={compressionLevel}
-                  onToggleCrop={toggleCropMode}
-                  onFormatChange={setFormatOption}
-                  onCompressionChange={setCompressionLevel}
                   onDimensionsChange={handleDimensionsChange}
-                  onApplyChanges={applyChanges}
-                  onCancelChanges={cancelChanges}
-                  hasCropSelection={cropRect !== null}
-                  onApplyCrop={applyCrop}
                 />
 
                 {/* Image Details Card */}
@@ -435,7 +443,6 @@ export default function Gallery(): JSX.Element {
                       ? selectedImage
                       : undefined
                   }
-                  onDownload={downloadImage}
                 />
               </div>
             </div>

@@ -124,7 +124,7 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
     <div className="relative mt-6 mb-6">
       {/* Border title */}
       <div className="absolute -top-3 left-4 px-2 bg-white dark:bg-slate-900 z-10">
-        <h3 className="text-lg font-medium">Image Controls</h3>
+        <h3 className="text-lg font-medium">Image Dimensions</h3>
       </div>
 
       <Card className="pt-6">
@@ -132,7 +132,6 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
           {/* Image dimensions controls */}
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-              <h3 className="text-sm font-medium">Image Dimensions</h3>
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={toggleAspectRatio}

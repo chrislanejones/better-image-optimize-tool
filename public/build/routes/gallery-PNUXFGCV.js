@@ -6,10 +6,13 @@ import {
   CardHeader,
   CardTitle,
   CardWithBorderTitle,
+  Check,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  Crop,
   Download,
   Maximize,
   Ratio,
@@ -18,7 +21,7 @@ import {
   ThemeToggle,
   X,
   retrieveFileData
-} from "/build/_shared/chunk-HWBSHH4V.js";
+} from "/build/_shared/chunk-MOOF2TLF.js";
 import {
   Link,
   useNavigate
@@ -370,61 +373,60 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/gallery/ImageDetails.tsx"
   );
-  import.meta.hot.lastModified = "1742625167462.389";
+  import.meta.hot.lastModified = "1742627916301.9937";
 }
 var ImageDetails = ({
   originalImage,
-  editedImage,
-  onDownload
+  editedImage
 }) => {
   return /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "relative mt-6", children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "absolute -top-3 left-4 px-2 bg-white dark:bg-slate-900 z-10", children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("h3", { className: "text-base font-semibold", children: "Original Image" }, void 0, false, {
         fileName: "app/components/gallery/ImageDetails.tsx",
-        lineNumber: 35,
+        lineNumber: 32,
         columnNumber: 11
       }, this) }, void 0, false, {
         fileName: "app/components/gallery/ImageDetails.tsx",
-        lineNumber: 34,
+        lineNumber: 31,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(Card, { className: "pt-6", children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "p-6 space-y-4", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("h3", { className: "text-sm font-medium text-muted-foreground mb-1", children: "File name" }, void 0, false, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 41,
+            lineNumber: 38,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { className: "break-words", children: originalImage.name }, void 0, false, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 44,
+            lineNumber: 41,
             columnNumber: 15
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ImageDetails.tsx",
-          lineNumber: 40,
+          lineNumber: 37,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("h3", { className: "text-sm font-medium text-muted-foreground mb-1", children: "Type" }, void 0, false, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 47,
+            lineNumber: 44,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { children: originalImage.type }, void 0, false, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 50,
+            lineNumber: 47,
             columnNumber: 15
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ImageDetails.tsx",
-          lineNumber: 46,
+          lineNumber: 43,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("h3", { className: "text-sm font-medium text-muted-foreground mb-1", children: "Size" }, void 0, false, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 53,
+            lineNumber: 50,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { children: [
@@ -432,75 +434,75 @@ var ImageDetails = ({
             " KB"
           ] }, void 0, true, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 56,
+            lineNumber: 53,
             columnNumber: 15
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ImageDetails.tsx",
-          lineNumber: 52,
+          lineNumber: 49,
           columnNumber: 13
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/gallery/ImageDetails.tsx",
-        lineNumber: 39,
+        lineNumber: 36,
         columnNumber: 11
       }, this) }, void 0, false, {
         fileName: "app/components/gallery/ImageDetails.tsx",
-        lineNumber: 38,
+        lineNumber: 35,
         columnNumber: 9
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/gallery/ImageDetails.tsx",
-      lineNumber: 32,
+      lineNumber: 29,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "relative mt-6", children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "absolute -top-3 left-4 px-2 bg-white dark:bg-slate-900 z-10", children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("h3", { className: "text-base font-semibold", children: "Edited Image" }, void 0, false, {
         fileName: "app/components/gallery/ImageDetails.tsx",
-        lineNumber: 66,
+        lineNumber: 63,
         columnNumber: 11
       }, this) }, void 0, false, {
         fileName: "app/components/gallery/ImageDetails.tsx",
-        lineNumber: 65,
+        lineNumber: 62,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(Card, { className: "pt-6", children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "p-6 space-y-4", children: editedImage ? /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(import_jsx_dev_runtime3.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("h3", { className: "text-sm font-medium text-muted-foreground mb-1", children: "File name" }, void 0, false, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 73,
+            lineNumber: 70,
             columnNumber: 19
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { className: "break-words", children: editedImage.name }, void 0, false, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 76,
+            lineNumber: 73,
             columnNumber: 19
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ImageDetails.tsx",
-          lineNumber: 72,
+          lineNumber: 69,
           columnNumber: 17
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("h3", { className: "text-sm font-medium text-muted-foreground mb-1", children: "Type" }, void 0, false, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 79,
+            lineNumber: 76,
             columnNumber: 19
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { children: editedImage.type }, void 0, false, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 82,
+            lineNumber: 79,
             columnNumber: 19
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ImageDetails.tsx",
-          lineNumber: 78,
+          lineNumber: 75,
           columnNumber: 17
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("h3", { className: "text-sm font-medium text-muted-foreground mb-1", children: "Size" }, void 0, false, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 85,
+            lineNumber: 82,
             columnNumber: 19
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { children: [
@@ -508,33 +510,36 @@ var ImageDetails = ({
             " KB"
           ] }, void 0, true, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 88,
+            lineNumber: 85,
             columnNumber: 19
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ImageDetails.tsx",
-          lineNumber: 84,
+          lineNumber: 81,
           columnNumber: 17
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { className: "mt-4", children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(Button, { variant: "primary", onClick: onDownload, className: "flex items-center gap-2 w-full", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(Download, { size: 18 }, void 0, false, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("h3", { className: "text-sm font-medium text-muted-foreground mb-1", children: "Reduction" }, void 0, false, {
             fileName: "app/components/gallery/ImageDetails.tsx",
-            lineNumber: 92,
-            columnNumber: 21
+            lineNumber: 88,
+            columnNumber: 19
           }, this),
-          "Download Edited Image"
+          /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { className: "text-green-600 dark:text-green-400", children: [
+            Math.round((1 - editedImage.size / originalImage.size) * 100),
+            "% smaller"
+          ] }, void 0, true, {
+            fileName: "app/components/gallery/ImageDetails.tsx",
+            lineNumber: 91,
+            columnNumber: 19
+          }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ImageDetails.tsx",
-          lineNumber: 91,
-          columnNumber: 19
-        }, this) }, void 0, false, {
-          fileName: "app/components/gallery/ImageDetails.tsx",
-          lineNumber: 90,
+          lineNumber: 87,
           columnNumber: 17
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/gallery/ImageDetails.tsx",
-        lineNumber: 71,
+        lineNumber: 68,
         columnNumber: 28
       }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("p", { className: "text-muted-foreground text-center", children: "No edits made to the image" }, void 0, false, {
         fileName: "app/components/gallery/ImageDetails.tsx",
@@ -542,21 +547,21 @@ var ImageDetails = ({
         columnNumber: 21
       }, this) }, void 0, false, {
         fileName: "app/components/gallery/ImageDetails.tsx",
-        lineNumber: 70,
+        lineNumber: 67,
         columnNumber: 11
       }, this) }, void 0, false, {
         fileName: "app/components/gallery/ImageDetails.tsx",
-        lineNumber: 69,
+        lineNumber: 66,
         columnNumber: 9
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/gallery/ImageDetails.tsx",
-      lineNumber: 63,
+      lineNumber: 60,
       columnNumber: 7
     }, this)
   ] }, void 0, true, {
     fileName: "app/components/gallery/ImageDetails.tsx",
-    lineNumber: 30,
+    lineNumber: 27,
     columnNumber: 10
   }, this);
 };
@@ -767,7 +772,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/gallery/ControlsCard.tsx"
   );
-  import.meta.hot.lastModified = "1742624944442.4216";
+  import.meta.hot.lastModified = "1742626657682.1824";
 }
 var ControlsCard = ({
   image,
@@ -841,7 +846,7 @@ var ControlsCard = ({
     setIsResizing(true);
   };
   return /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "relative mt-6 mb-6", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "absolute -top-3 left-4 px-2 bg-white dark:bg-slate-900 z-10", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-lg font-medium", children: "Image Controls" }, void 0, false, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "absolute -top-3 left-4 px-2 bg-white dark:bg-slate-900 z-10", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-lg font-medium", children: "Image Dimensions" }, void 0, false, {
       fileName: "app/components/gallery/ControlsCard.tsx",
       lineNumber: 116,
       columnNumber: 9
@@ -852,70 +857,63 @@ var ControlsCard = ({
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Card, { className: "pt-6", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "p-6 space-y-6", children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "space-y-4", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-sm font-medium", children: "Image Dimensions" }, void 0, false, {
-            fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 124,
-            columnNumber: 15
-          }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex flex-wrap gap-2", children: [
-            /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("button", { onClick: toggleAspectRatio, className: `flex items-center gap-1.5 p-1.5 rounded text-xs ${maintainAspectRatio ? "bg-primary text-white" : "bg-slate-200 dark:bg-indigo-900 text-slate-700 dark:text-slate-300"}`, title: maintainAspectRatio ? "Aspect ratio locked" : "Aspect ratio unlocked", children: maintainAspectRatio ? /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_jsx_dev_runtime6.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Ratio, { size: 14 }, void 0, false, {
-                fileName: "app/components/gallery/ControlsCard.tsx",
-                lineNumber: 128,
-                columnNumber: 23
-              }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("span", { children: "Aspect Ratio Locked" }, void 0, false, {
-                fileName: "app/components/gallery/ControlsCard.tsx",
-                lineNumber: 129,
-                columnNumber: 23
-              }, this)
-            ] }, void 0, true, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2", children: /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex flex-wrap gap-2", children: [
+          /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("button", { onClick: toggleAspectRatio, className: `flex items-center gap-1.5 p-1.5 rounded text-xs ${maintainAspectRatio ? "bg-primary text-white" : "bg-slate-200 dark:bg-indigo-900 text-slate-700 dark:text-slate-300"}`, title: maintainAspectRatio ? "Aspect ratio locked" : "Aspect ratio unlocked", children: maintainAspectRatio ? /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_jsx_dev_runtime6.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Ratio, { size: 14 }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
               lineNumber: 127,
-              columnNumber: 42
-            }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_jsx_dev_runtime6.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Square, { size: 14 }, void 0, false, {
-                fileName: "app/components/gallery/ControlsCard.tsx",
-                lineNumber: 131,
-                columnNumber: 23
-              }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("span", { children: "Aspect Ratio Unlocked" }, void 0, false, {
-                fileName: "app/components/gallery/ControlsCard.tsx",
-                lineNumber: 132,
-                columnNumber: 23
-              }, this)
-            ] }, void 0, true, {
-              fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 130,
-              columnNumber: 27
-            }, this) }, void 0, false, {
-              fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 126,
-              columnNumber: 17
+              columnNumber: 23
             }, this),
-            /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("button", { onClick: resetDimensions, className: "flex items-center gap-1.5 p-1.5 rounded text-xs bg-slate-200 dark:bg-indigo-900 text-slate-700 dark:text-slate-300", title: "Reset to original dimensions", children: [
-              /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(RotateCcw, { size: 14 }, void 0, false, {
-                fileName: "app/components/gallery/ControlsCard.tsx",
-                lineNumber: 136,
-                columnNumber: 19
-              }, this),
-              /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("span", { children: "Reset Dimensions" }, void 0, false, {
-                fileName: "app/components/gallery/ControlsCard.tsx",
-                lineNumber: 137,
-                columnNumber: 19
-              }, this)
-            ] }, void 0, true, {
+            /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("span", { children: "Aspect Ratio Locked" }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 135,
-              columnNumber: 17
+              lineNumber: 128,
+              columnNumber: 23
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/gallery/ControlsCard.tsx",
+            lineNumber: 126,
+            columnNumber: 42
+          }, this) : /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_jsx_dev_runtime6.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Square, { size: 14 }, void 0, false, {
+              fileName: "app/components/gallery/ControlsCard.tsx",
+              lineNumber: 130,
+              columnNumber: 23
+            }, this),
+            /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("span", { children: "Aspect Ratio Unlocked" }, void 0, false, {
+              fileName: "app/components/gallery/ControlsCard.tsx",
+              lineNumber: 131,
+              columnNumber: 23
+            }, this)
+          ] }, void 0, true, {
+            fileName: "app/components/gallery/ControlsCard.tsx",
+            lineNumber: 129,
+            columnNumber: 27
+          }, this) }, void 0, false, {
+            fileName: "app/components/gallery/ControlsCard.tsx",
             lineNumber: 125,
-            columnNumber: 15
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("button", { onClick: resetDimensions, className: "flex items-center gap-1.5 p-1.5 rounded text-xs bg-slate-200 dark:bg-indigo-900 text-slate-700 dark:text-slate-300", title: "Reset to original dimensions", children: [
+            /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(RotateCcw, { size: 14 }, void 0, false, {
+              fileName: "app/components/gallery/ControlsCard.tsx",
+              lineNumber: 135,
+              columnNumber: 19
+            }, this),
+            /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("span", { children: "Reset Dimensions" }, void 0, false, {
+              fileName: "app/components/gallery/ControlsCard.tsx",
+              lineNumber: 136,
+              columnNumber: 19
+            }, this)
+          ] }, void 0, true, {
+            fileName: "app/components/gallery/ControlsCard.tsx",
+            lineNumber: 134,
+            columnNumber: 17
           }, this)
         ] }, void 0, true, {
+          fileName: "app/components/gallery/ControlsCard.tsx",
+          lineNumber: 124,
+          columnNumber: 15
+        }, this) }, void 0, false, {
           fileName: "app/components/gallery/ControlsCard.tsx",
           lineNumber: 123,
           columnNumber: 13
@@ -928,7 +926,7 @@ var ControlsCard = ({
               "px"
             ] }, void 0, true, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 145,
+              lineNumber: 144,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("span", { className: "text-xs text-muted-foreground", children: [
@@ -937,22 +935,22 @@ var ControlsCard = ({
               "px"
             ] }, void 0, true, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 146,
+              lineNumber: 145,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 144,
+            lineNumber: 143,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("input", { type: "range", min: 50, max: originalWidth * 2, value: width, onChange: handleWidthChange, className: "w-full" }, void 0, false, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 150,
+            lineNumber: 149,
             columnNumber: 15
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 143,
+          lineNumber: 142,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "space-y-1", children: [
@@ -963,7 +961,7 @@ var ControlsCard = ({
               "px"
             ] }, void 0, true, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 156,
+              lineNumber: 155,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("span", { className: "text-xs text-muted-foreground", children: [
@@ -972,27 +970,27 @@ var ControlsCard = ({
               "px"
             ] }, void 0, true, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 157,
+              lineNumber: 156,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 155,
+            lineNumber: 154,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("input", { type: "range", min: 50, max: originalHeight * 2, value: height, onChange: handleHeightChange, className: "w-full" }, void 0, false, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 161,
+            lineNumber: 160,
             columnNumber: 15
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 154,
+          lineNumber: 153,
           columnNumber: 13
         }, this),
         isResizing && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Button, { variant: "primary", size: "sm", onClick: applyDimensionsChange, className: "w-full", children: "Apply Dimensions" }, void 0, false, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 164,
+          lineNumber: 163,
           columnNumber: 28
         }, this)
       ] }, void 0, true, {
@@ -1002,40 +1000,40 @@ var ControlsCard = ({
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("hr", { className: "border-slate-200 dark:border-indigo-800" }, void 0, false, {
         fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 170,
+        lineNumber: 169,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "space-y-4", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-sm font-medium", children: "Image Format" }, void 0, false, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 174,
+          lineNumber: 173,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex flex-wrap items-center gap-2", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("label", { className: "text-xs", children: "Format:" }, void 0, false, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 177,
+            lineNumber: 176,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("select", { value: formatOption, onChange: handleFormatChange, className: "py-1 px-3 rounded bg-slate-100 dark:bg-indigo-900 border border-slate-300 dark:border-indigo-700 text-sm", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("option", { value: "original", children: "Original" }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 179,
+              lineNumber: 178,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("option", { value: "jpeg", children: "JPEG" }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 180,
+              lineNumber: 179,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("option", { value: "webp", children: "WebP" }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 181,
+              lineNumber: 180,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 178,
+            lineNumber: 177,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "w-full mt-3 space-y-1", children: [
@@ -1045,84 +1043,84 @@ var ControlsCard = ({
               "%"
             ] }, void 0, true, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 187,
+              lineNumber: 186,
               columnNumber: 19
             }, this) }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 186,
+              lineNumber: 185,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("input", { type: "range", min: "10", max: "100", value: compressionLevel, onChange: handleCompressionChange, className: "w-full" }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 191,
+              lineNumber: 190,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 185,
+            lineNumber: 184,
             columnNumber: 15
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 176,
+          lineNumber: 175,
           columnNumber: 13
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 173,
+        lineNumber: 172,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("hr", { className: "border-slate-200 dark:border-indigo-800" }, void 0, false, {
         fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 197,
+        lineNumber: 196,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "space-y-4", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-sm font-medium", children: "Crop Image" }, void 0, false, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 201,
+          lineNumber: 200,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex gap-2", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Button, { variant: cropMode ? "primary" : "secondary", onClick: onToggleCrop, className: "flex-1", size: "sm", children: cropMode ? "Cancel Crop" : "Start Cropping" }, void 0, false, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 204,
+            lineNumber: 203,
             columnNumber: 15
           }, this),
           hasCropSelection && cropMode && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Button, { variant: "primary", onClick: onApplyCrop, className: "flex-1", size: "sm", children: "Apply Crop" }, void 0, false, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 208,
+            lineNumber: 207,
             columnNumber: 48
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 203,
+          lineNumber: 202,
           columnNumber: 13
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 200,
+        lineNumber: 199,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("hr", { className: "border-slate-200 dark:border-indigo-800" }, void 0, false, {
         fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 215,
+        lineNumber: 214,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex gap-2", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Button, { variant: "outline", onClick: onCancelChanges, className: "flex-1", children: "Reset All" }, void 0, false, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 219,
+          lineNumber: 218,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Button, { variant: "primary", onClick: onApplyChanges, className: "flex-1", disabled: cropMode, children: "Apply All Changes" }, void 0, false, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 222,
+          lineNumber: 221,
           columnNumber: 13
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 218,
+        lineNumber: 217,
         columnNumber: 11
       }, this)
     ] }, void 0, true, {
@@ -1148,8 +1146,273 @@ $RefreshReg$(_c6, "ControlsCard");
 window.$RefreshReg$ = prevRefreshReg;
 window.$RefreshSig$ = prevRefreshSig;
 
-// app/routes/gallery.tsx
+// app/components/ui/SimpleSelect.tsx
 var import_jsx_dev_runtime7 = __toESM(require_jsx_dev_runtime(), 1);
+if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
+  console.warn("remix:hmr: React Fast Refresh only works when the Remix compiler is running in development mode.");
+} else {
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = (type, id) => {
+    window.$RefreshRuntime$.register(type, '"app/components/ui/SimpleSelect.tsx"' + id);
+  };
+  window.$RefreshSig$ = window.$RefreshRuntime$.createSignatureFunctionForTransform;
+}
+var prevRefreshReg;
+var prevRefreshSig;
+if (import.meta) {
+  import.meta.hot = createHotContext(
+    //@ts-expect-error
+    "app/components/ui/SimpleSelect.tsx"
+  );
+  import.meta.hot.lastModified = "1742628670011.8904";
+}
+var SimpleSelect = ({
+  options,
+  value,
+  onChange,
+  placeholder = "Select an option",
+  label,
+  className = "",
+  disabled = false
+}) => {
+  const selectedOption = options.find((option) => option.value === value);
+  const displayText = selectedOption ? selectedOption.label : placeholder;
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("div", { className: `relative inline-block ${className}`, children: [
+    label && /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("label", { htmlFor: "select", className: "block mb-1 text-sm font-medium", children: label }, void 0, false, {
+      fileName: "app/components/ui/SimpleSelect.tsx",
+      lineNumber: 37,
+      columnNumber: 17
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("div", { className: "relative", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("select", { id: "select", value, onChange: (e) => onChange(e.target.value), disabled, className: "block w-full h-9 appearance-none rounded-md border border-slate-200 bg-white px-3 py-2 text-sm pr-8 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:focus:ring-slate-300", children: [
+        !selectedOption && /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("option", { value: "", disabled: true, children: placeholder }, void 0, false, {
+          fileName: "app/components/ui/SimpleSelect.tsx",
+          lineNumber: 42,
+          columnNumber: 31
+        }, this),
+        options.map((option) => /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("option", { value: option.value, children: option.label }, option.value, false, {
+          fileName: "app/components/ui/SimpleSelect.tsx",
+          lineNumber: 45,
+          columnNumber: 34
+        }, this))
+      ] }, void 0, true, {
+        fileName: "app/components/ui/SimpleSelect.tsx",
+        lineNumber: 41,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)(ChevronDown, { className: "pointer-events-none absolute right-2.5 top-2.5 h-4 w-4 opacity-50" }, void 0, false, {
+        fileName: "app/components/ui/SimpleSelect.tsx",
+        lineNumber: 49,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "app/components/ui/SimpleSelect.tsx",
+      lineNumber: 40,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "app/components/ui/SimpleSelect.tsx",
+    lineNumber: 36,
+    columnNumber: 10
+  }, this);
+};
+_c7 = SimpleSelect;
+var SimpleSelect_default = SimpleSelect;
+var _c7;
+$RefreshReg$(_c7, "SimpleSelect");
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+// app/components/gallery/ImageControlBar.tsx
+var import_jsx_dev_runtime8 = __toESM(require_jsx_dev_runtime(), 1);
+if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
+  console.warn("remix:hmr: React Fast Refresh only works when the Remix compiler is running in development mode.");
+} else {
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = (type, id) => {
+    window.$RefreshRuntime$.register(type, '"app/components/gallery/ImageControlBar.tsx"' + id);
+  };
+  window.$RefreshSig$ = window.$RefreshRuntime$.createSignatureFunctionForTransform;
+}
+var prevRefreshReg;
+var prevRefreshSig;
+if (import.meta) {
+  import.meta.hot = createHotContext(
+    //@ts-expect-error
+    "app/components/gallery/ImageControlBar.tsx"
+  );
+  import.meta.hot.lastModified = "1742629663171.754";
+}
+var ImageControlBar = ({
+  formatOption,
+  onFormatChange,
+  compressionLevel,
+  onCompressionChange,
+  cropMode,
+  onToggleCrop,
+  hasCropSelection,
+  onApplyCrop,
+  onApplyChanges,
+  onCancelChanges,
+  onDownload
+}) => {
+  const formatOptions = [{
+    value: "original",
+    label: "Original"
+  }, {
+    value: "jpeg",
+    label: "JPEG"
+  }, {
+    value: "webp",
+    label: "WebP"
+  }];
+  const handleCompressionChange = (e) => {
+    onCompressionChange(Number(e.target.value));
+  };
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Card, { className: "my-2", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(CardContent, { className: "p-4", children: /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex flex-wrap items-center gap-3 justify-between py-4", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex flex-wrap items-center gap-3", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "text-sm font-medium", children: "Format:" }, void 0, false, {
+          fileName: "app/components/gallery/ImageControlBar.tsx",
+          lineNumber: 61,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(SimpleSelect_default, { options: formatOptions, value: formatOption, onChange: onFormatChange, className: "w-28" }, void 0, false, {
+          fileName: "app/components/gallery/ImageControlBar.tsx",
+          lineNumber: 62,
+          columnNumber: 15
+        }, this)
+      ] }, void 0, true, {
+        fileName: "app/components/gallery/ImageControlBar.tsx",
+        lineNumber: 60,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center gap-2 min-w-48", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "text-sm font-medium", children: "Quality:" }, void 0, false, {
+          fileName: "app/components/gallery/ImageControlBar.tsx",
+          lineNumber: 67,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("input", { type: "range", min: "10", max: "100", value: compressionLevel, onChange: handleCompressionChange, className: "w-28" }, void 0, false, {
+          fileName: "app/components/gallery/ImageControlBar.tsx",
+          lineNumber: 68,
+          columnNumber: 15
+        }, this),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("span", { className: "text-xs text-muted-foreground w-8", children: [
+          compressionLevel,
+          "%"
+        ] }, void 0, true, {
+          fileName: "app/components/gallery/ImageControlBar.tsx",
+          lineNumber: 69,
+          columnNumber: 15
+        }, this)
+      ] }, void 0, true, {
+        fileName: "app/components/gallery/ImageControlBar.tsx",
+        lineNumber: 66,
+        columnNumber: 13
+      }, this)
+    ] }, void 0, true, {
+      fileName: "app/components/gallery/ImageControlBar.tsx",
+      lineNumber: 59,
+      columnNumber: 11
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center gap-2", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Button, { variant: cropMode ? "primary" : "secondary", size: "sm", onClick: onToggleCrop, className: "flex items-center gap-1", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Crop, { size: 16 }, void 0, false, {
+          fileName: "app/components/gallery/ImageControlBar.tsx",
+          lineNumber: 78,
+          columnNumber: 15
+        }, this),
+        cropMode ? "Cancel Crop" : "Crop"
+      ] }, void 0, true, {
+        fileName: "app/components/gallery/ImageControlBar.tsx",
+        lineNumber: 77,
+        columnNumber: 13
+      }, this),
+      cropMode && hasCropSelection && /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Button, { variant: "primary", size: "sm", onClick: onApplyCrop, className: "flex items-center gap-1", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Check, { size: 16 }, void 0, false, {
+          fileName: "app/components/gallery/ImageControlBar.tsx",
+          lineNumber: 83,
+          columnNumber: 17
+        }, this),
+        "Apply Crop"
+      ] }, void 0, true, {
+        fileName: "app/components/gallery/ImageControlBar.tsx",
+        lineNumber: 82,
+        columnNumber: 46
+      }, this)
+    ] }, void 0, true, {
+      fileName: "app/components/gallery/ImageControlBar.tsx",
+      lineNumber: 76,
+      columnNumber: 11
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)("div", { className: "flex items-center gap-2", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Button, { variant: "outline", size: "sm", onClick: onCancelChanges, className: "flex items-center gap-1", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(RotateCcw, { size: 16 }, void 0, false, {
+          fileName: "app/components/gallery/ImageControlBar.tsx",
+          lineNumber: 91,
+          columnNumber: 15
+        }, this),
+        "Reset"
+      ] }, void 0, true, {
+        fileName: "app/components/gallery/ImageControlBar.tsx",
+        lineNumber: 90,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Button, { variant: "primary", size: "sm", onClick: onApplyChanges, disabled: cropMode, className: "flex items-center gap-1", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Check, { size: 16 }, void 0, false, {
+          fileName: "app/components/gallery/ImageControlBar.tsx",
+          lineNumber: 96,
+          columnNumber: 15
+        }, this),
+        "Apply Changes"
+      ] }, void 0, true, {
+        fileName: "app/components/gallery/ImageControlBar.tsx",
+        lineNumber: 95,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Button, { variant: "secondary", size: "sm", onClick: onDownload, className: "flex items-center gap-1", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime8.jsxDEV)(Download, { size: 16 }, void 0, false, {
+          fileName: "app/components/gallery/ImageControlBar.tsx",
+          lineNumber: 101,
+          columnNumber: 15
+        }, this),
+        "Download"
+      ] }, void 0, true, {
+        fileName: "app/components/gallery/ImageControlBar.tsx",
+        lineNumber: 100,
+        columnNumber: 13
+      }, this)
+    ] }, void 0, true, {
+      fileName: "app/components/gallery/ImageControlBar.tsx",
+      lineNumber: 89,
+      columnNumber: 11
+    }, this)
+  ] }, void 0, true, {
+    fileName: "app/components/gallery/ImageControlBar.tsx",
+    lineNumber: 57,
+    columnNumber: 9
+  }, this) }, void 0, false, {
+    fileName: "app/components/gallery/ImageControlBar.tsx",
+    lineNumber: 56,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "app/components/gallery/ImageControlBar.tsx",
+    lineNumber: 55,
+    columnNumber: 10
+  }, this);
+};
+_c8 = ImageControlBar;
+var ImageControlBar_default = ImageControlBar;
+var _c8;
+$RefreshReg$(_c8, "ImageControlBar");
+window.$RefreshReg$ = prevRefreshReg;
+window.$RefreshSig$ = prevRefreshSig;
+
+// app/routes/gallery.tsx
+var import_jsx_dev_runtime9 = __toESM(require_jsx_dev_runtime(), 1);
 if (!window.$RefreshReg$ || !window.$RefreshSig$ || !window.$RefreshRuntime$) {
   console.warn("remix:hmr: React Fast Refresh only works when the Remix compiler is running in development mode.");
 } else {
@@ -1168,7 +1431,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/routes/gallery.tsx"
   );
-  import.meta.hot.lastModified = "1742555513585.9375";
+  import.meta.hot.lastModified = "1742627930371.9941";
 }
 function Gallery() {
   _s5();
@@ -1397,115 +1660,120 @@ function Gallery() {
     };
     img.src = newUrl;
   };
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("div", { className: "bg-background transition-colors", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("header", { className: "border-b border-border", children: /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("div", { className: "container mx-auto px-4 py-4 flex justify-between items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("h1", { className: "text-xl font-bold text-foreground", children: "Photo Gallery" }, void 0, false, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 340,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)(ThemeToggle, {}, void 0, false, {
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "bg-background transition-colors", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("header", { className: "border-b border-border", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "container mx-auto px-4 py-4 flex justify-between items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("h1", { className: "text-xl font-bold text-foreground", children: "Photo Gallery" }, void 0, false, {
         fileName: "app/routes/gallery.tsx",
         lineNumber: 341,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ThemeToggle, {}, void 0, false, {
+        fileName: "app/routes/gallery.tsx",
+        lineNumber: 342,
         columnNumber: 11
       }, this)
     ] }, void 0, true, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 339,
+      lineNumber: 340,
       columnNumber: 9
     }, this) }, void 0, false, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 338,
+      lineNumber: 339,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("main", { className: "container mx-auto p-4 md:p-8", children: [
-      loadError && /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)(ErrorMessage_default, { message: loadError, redirecting: true }, void 0, false, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("main", { className: "container mx-auto p-4", children: [
+      loadError && /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ErrorMessage_default, { message: loadError, redirecting: true }, void 0, false, {
         fileName: "app/routes/gallery.tsx",
-        lineNumber: 347,
+        lineNumber: 348,
         columnNumber: 23
       }, this),
-      selectedImage && /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)(ThumbnailGallery_default, { images, selectedImage, onSelectImage: handleImageSelect, onRemoveImage: removeImage, onExpandImage: expandImage, onClearAll: clearAllImages, onNext: navigateNext, onPrevious: navigatePrevious, currentIndex: currentImageIndex, totalImages: images.length }, void 0, false, {
+      selectedImage && /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ThumbnailGallery_default, { images, selectedImage, onSelectImage: handleImageSelect, onRemoveImage: removeImage, onExpandImage: expandImage, onClearAll: clearAllImages, onNext: navigateNext, onPrevious: navigatePrevious, currentIndex: currentImageIndex, totalImages: images.length }, void 0, false, {
         fileName: "app/routes/gallery.tsx",
-        lineNumber: 350,
+        lineNumber: 351,
         columnNumber: 27
       }, this),
-      selectedImage && /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)(import_jsx_dev_runtime7.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6 mb-6", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("div", { className: "image-preview-container", children: /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)(ImagePreview_default, { image: selectedImage, cropMode, cropRect, onCropStart: handleCropStart, onCropMove: handleCropMove, onCropEnd: handleCropEnd }, void 0, false, {
+      selectedImage && /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ImageControlBar_default, { formatOption, onFormatChange: setFormatOption, compressionLevel, onCompressionChange: setCompressionLevel, cropMode, onToggleCrop: toggleCropMode, hasCropSelection: cropRect !== null, onApplyCrop: applyCrop, onApplyChanges: applyChanges, onCancelChanges: cancelChanges, onDownload: downloadImage }, void 0, false, {
+        fileName: "app/routes/gallery.tsx",
+        lineNumber: 354,
+        columnNumber: 27
+      }, this),
+      selectedImage && /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(import_jsx_dev_runtime9.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-6 mb-6", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "image-preview-container md:col-span-3", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ImagePreview_default, { image: selectedImage, cropMode, cropRect, onCropStart: handleCropStart, onCropMove: handleCropMove, onCropEnd: handleCropEnd }, void 0, false, {
           fileName: "app/routes/gallery.tsx",
-          lineNumber: 357,
+          lineNumber: 361,
           columnNumber: 17
         }, this) }, void 0, false, {
           fileName: "app/routes/gallery.tsx",
-          lineNumber: 356,
+          lineNumber: 360,
           columnNumber: 15
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)(ControlsCard_default, { image: selectedImage, cropMode, formatOption, compressionLevel, onToggleCrop: toggleCropMode, onFormatChange: setFormatOption, onCompressionChange: setCompressionLevel, onDimensionsChange: handleDimensionsChange, onApplyChanges: applyChanges, onCancelChanges: cancelChanges, hasCropSelection: cropRect !== null, onApplyCrop: applyCrop }, void 0, false, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "md:col-span-1", children: [
+          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ControlsCard_default, { image: selectedImage, onDimensionsChange: handleDimensionsChange }, void 0, false, {
             fileName: "app/routes/gallery.tsx",
-            lineNumber: 362,
+            lineNumber: 366,
             columnNumber: 17
           }, this),
-          /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)(ImageDetails_default, { originalImage: images[currentImageIndex], editedImage: selectedImage !== images[currentImageIndex] ? selectedImage : void 0, onDownload: downloadImage }, void 0, false, {
+          /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ImageDetails_default, { originalImage: images[currentImageIndex], editedImage: selectedImage !== images[currentImageIndex] ? selectedImage : void 0 }, void 0, false, {
             fileName: "app/routes/gallery.tsx",
-            lineNumber: 365,
+            lineNumber: 369,
             columnNumber: 17
           }, this)
         ] }, void 0, true, {
           fileName: "app/routes/gallery.tsx",
-          lineNumber: 361,
+          lineNumber: 365,
           columnNumber: 15
         }, this)
       ] }, void 0, true, {
         fileName: "app/routes/gallery.tsx",
-        lineNumber: 355,
+        lineNumber: 359,
         columnNumber: 13
       }, this) }, void 0, false, {
         fileName: "app/routes/gallery.tsx",
-        lineNumber: 353,
+        lineNumber: 357,
         columnNumber: 27
       }, this)
     ] }, void 0, true, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 345,
+      lineNumber: 346,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)(ImageModal_default, { image: expandedImage, onClose: () => setExpandedImage(null) }, void 0, false, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ImageModal_default, { image: expandedImage, onClose: () => setExpandedImage(null) }, void 0, false, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 372,
+      lineNumber: 376,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("footer", { className: "border-t border-border py-6 mt-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("div", { className: "container mx-auto px-4 text-center text-muted-foreground text-sm", children: /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("p", { children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("footer", { className: "border-t border-border py-6 mt-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "container mx-auto px-4 text-center text-muted-foreground text-sm", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("p", { children: [
       "\xA9 ",
       (/* @__PURE__ */ new Date()).getFullYear(),
       " Photo Gallery. All rights reserved."
     ] }, void 0, true, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 377,
+      lineNumber: 381,
       columnNumber: 11
     }, this) }, void 0, false, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 376,
+      lineNumber: 380,
       columnNumber: 9
     }, this) }, void 0, false, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 375,
+      lineNumber: 379,
       columnNumber: 7
     }, this)
   ] }, void 0, true, {
     fileName: "app/routes/gallery.tsx",
-    lineNumber: 336,
+    lineNumber: 337,
     columnNumber: 10
   }, this);
 }
 _s5(Gallery, "sN9LdK0B+7QyWFa+p7y3fzSk4tE=", false, function() {
   return [useNavigate];
 });
-_c7 = Gallery;
-var _c7;
-$RefreshReg$(_c7, "Gallery");
+_c9 = Gallery;
+var _c9;
+$RefreshReg$(_c9, "Gallery");
 window.$RefreshReg$ = prevRefreshReg;
 window.$RefreshSig$ = prevRefreshSig;
 export {
   Gallery as default
 };
-//# sourceMappingURL=/build/routes/gallery-YK7HB5QE.js.map
+//# sourceMappingURL=/build/routes/gallery-PNUXFGCV.js.map

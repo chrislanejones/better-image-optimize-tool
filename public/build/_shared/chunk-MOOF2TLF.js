@@ -557,6 +557,16 @@ var ArrowLeftToLine = createLucideIcon$1("ArrowLeftToLine", [
   ["path", { d: "M7 12h14", key: "uoisry" }]
 ]);
 
+// node_modules/lucide-react/dist/esm/icons/check.mjs
+var Check = createLucideIcon$1("Check", [
+  ["polyline", { points: "20 6 9 17 4 12", key: "10jjfj" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/chevron-down.mjs
+var ChevronDown = createLucideIcon$1("ChevronDown", [
+  ["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]
+]);
+
 // node_modules/lucide-react/dist/esm/icons/chevron-left.mjs
 var ChevronLeft = createLucideIcon$1("ChevronLeft", [
   ["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]
@@ -577,6 +587,12 @@ var ChevronsLeft = createLucideIcon$1("ChevronsLeft", [
 var ChevronsRight = createLucideIcon$1("ChevronsRight", [
   ["path", { d: "m6 17 5-5-5-5", key: "xnjwq" }],
   ["path", { d: "m13 17 5-5-5-5", key: "17xmmf" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/crop.mjs
+var Crop = createLucideIcon$1("Crop", [
+  ["path", { d: "M6 2v14a2 2 0 0 0 2 2h14", key: "ron5a4" }],
+  ["path", { d: "M18 22V8a2 2 0 0 0-2-2H2", key: "7s9ehn" }]
 ]);
 
 // node_modules/lucide-react/dist/esm/icons/download.mjs
@@ -644,10 +660,13 @@ export {
   CardFooter,
   CardWithBorderTitle,
   ArrowLeftToLine,
+  Check,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  Crop,
   Download,
   Maximize,
   Ratio,
@@ -656,4 +675,4 @@ export {
   Upload,
   X
 };
-//# sourceMappingURL=/build/_shared/chunk-HWBSHH4V.js.map
+//# sourceMappingURL=/build/_shared/chunk-MOOF2TLF.js.map

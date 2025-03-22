@@ -1,7 +1,5 @@
 import React from "react";
 import { Card } from "~/components/ui/Card";
-import { Button } from "~/components/ui/Button";
-import { Download } from "lucide-react";
 
 interface ImageData {
   name: string;
@@ -13,13 +11,11 @@ interface ImageData {
 interface ImageDetailsProps {
   originalImage: ImageData;
   editedImage?: ImageData;
-  onDownload: () => void;
 }
 
 export const ImageDetails: React.FC<ImageDetailsProps> = ({
   originalImage,
   editedImage,
-  onDownload,
 }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -83,15 +79,16 @@ export const ImageDetails: React.FC<ImageDetailsProps> = ({
                   </h3>
                   <p>{Math.round(editedImage.size / 1024)} KB</p>
                 </div>
-                <div className="mt-4">
-                  <Button
-                    variant="primary"
-                    onClick={onDownload}
-                    className="flex items-center gap-2 w-full"
-                  >
-                    <Download size={18} />
-                    Download Edited Image
-                  </Button>
+                <div>
+                  <h3 className="text-sm font-medium text-muted-foreground mb-1">
+                    Reduction
+                  </h3>
+                  <p className="text-green-600 dark:text-green-400">
+                    {Math.round(
+                      (1 - editedImage.size / originalImage.size) * 100
+                    )}
+                    % smaller
+                  </p>
                 </div>
               </>
             ) : (
