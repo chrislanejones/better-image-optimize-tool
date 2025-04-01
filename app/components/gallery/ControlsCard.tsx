@@ -11,7 +11,7 @@ import {
   Save,
   Image as ImageIcon,
 } from "lucide-react";
-import { downloadImage as downloadImageUtil } from "~/utils/uploadUtils"; // Changed to uploadUtils
+import { downloadImage as downloadImageUtil } from "~/utils/uploadUtils";
 import {
   Select,
   SelectContent,
@@ -19,47 +19,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { Slider } from "~/components/ui/slider";
+import { useGallery } from "./GalleryContext";
 
-interface ImageData {
-  name: string;
-  type: string;
-  size: number;
-  url: string;
-}
+export const ControlsCard: React.FC = () => {
+  const {
+    selectedImage,
+    cropMode,
+    formatOption,
+    compressionLevel,
+    cropRect,
+    toggleCropMode,
+    setFormatOption,
+    setCompressionLevel,
+    handleDimensionsChange,
+    applyChanges,
+    cancelChanges,
+    applyCrop,
+  } = useGallery();
 
-interface ControlsCardProps {
-  image: ImageData;
-  cropMode: boolean;
-  formatOption: string;
-  compressionLevel: number;
-  onToggleCrop: () => void;
-  onFormatChange: (format: string) => void;
-  onCompressionChange: (level: number) => void;
-  onDimensionsChange: (
-    width: number,
-    height: number,
-    maintainAspectRatio: boolean
-  ) => void;
-  onApplyChanges: () => void;
-  onCancelChanges: () => void;
-  hasCropSelection: boolean;
-  onApplyCrop: () => void;
-}
-
-export const ControlsCard: React.FC<ControlsCardProps> = ({
-  image,
-  cropMode,
-  formatOption,
-  compressionLevel,
-  onToggleCrop,
-  onFormatChange,
-  onCompressionChange,
-  onDimensionsChange,
-  onApplyChanges,
-  onCancelChanges,
-  hasCropSelection,
-  onApplyCrop,
-}) => {
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
   const [originalWidth, setOriginalWidth] = useState<number>(0);
@@ -70,6 +48,8 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
 
   // Load image dimensions when image changes
   useEffect(() => {
+    if (!selectedImage) return;
+
     const img = new Image();
     img.onload = () => {
       const w = img.naturalWidth;
@@ -80,12 +60,12 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
       setOriginalHeight(h);
       setAspectRatio(w / h);
     };
-    img.src = image.url;
-  }, [image.url]);
+    img.src = selectedImage.url;
+  }, [selectedImage]);
 
   // Width slider change handler
-  const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newWidth = Number(e.target.value);
+  const handleWidthChange = (value: number[]) => {
+    const newWidth = value[0];
     setWidth(newWidth);
 
     if (maintainAspectRatio) {
@@ -97,8 +77,8 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
   };
 
   // Height slider change handler
-  const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newHeight = Number(e.target.value);
+  const handleHeightChange = (value: number[]) => {
+    const newHeight = value[0];
     setHeight(newHeight);
 
     if (maintainAspectRatio) {
@@ -111,7 +91,7 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
 
   // Apply dimensions changes
   const applyDimensionsChange = () => {
-    onDimensionsChange(width, height, maintainAspectRatio);
+    handleDimensionsChange(width, height, maintainAspectRatio);
     setIsResizing(false);
   };
 
@@ -129,116 +109,127 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
 
   // Handle download
   const handleDownload = () => {
-    if (image) {
-      downloadImageUtil(image);
+    if (selectedImage) {
+      downloadImageUtil(selectedImage);
     }
   };
 
   // Handle compression slider change
-  const handleCompressionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onCompressionChange(Number(e.target.value));
+  const handleCompressionChange = (value: number[]) => {
+    setCompressionLevel(value[0]);
   };
 
   // Handle format change
   const handleFormatChange = (value: string) => {
-    onFormatChange(value);
+    setFormatOption(value);
   };
 
   // Handle reset all changes
   const handleResetAll = () => {
-    // Reset dimensions to original
+    // Reset all local state
     setWidth(originalWidth);
     setHeight(originalHeight);
     setIsResizing(false);
+    setMaintainAspectRatio(true);
+
+    // Reset format and compression in context
+    setFormatOption("original");
+    setCompressionLevel(90);
 
     // Call the parent's reset function
-    onCancelChanges();
+    cancelChanges();
+
+    console.log("Reset All clicked - resetting all image editing settings");
   };
+
+  if (!selectedImage) return null;
 
   return (
     <CardWithBorderTitle
       title={<span className="text-lg font-medium">Image Controls</span>}
-      cardClassName="bg-card"
+      cardClassName="bg-card mb-6"
     >
       <div className="space-y-6">
-        {/* Quick actions */}
-        <div className="flex flex-wrap gap-2 justify-between">
-          <div className="flex items-center gap-2">
-            <Button
-              variant={cropMode ? "primary" : "secondary"}
-              size="sm"
-              onClick={onToggleCrop}
-              className="flex items-center gap-1"
-            >
-              <Crop size={16} />
-              {cropMode ? "Cancel Crop" : "Crop"}
-            </Button>
+        {/* Quick actions - Now stacked vertically */}
+        <div className="space-y-3">
+          <Button
+            variant={cropMode ? "primary" : "secondary"}
+            size="sm"
+            onClick={toggleCropMode}
+            className="w-full flex items-center justify-center gap-1"
+          >
+            <Crop size={16} />
+            {cropMode ? "Cancel Crop" : "Crop"}
+          </Button>
 
-            {cropMode && hasCropSelection && (
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={onApplyCrop}
-                className="flex items-center gap-1"
-              >
-                <Check size={16} />
-                Apply Crop
-              </Button>
-            )}
-          </div>
+          {cropMode && cropRect && (
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={applyCrop}
+              className="w-full flex items-center justify-center gap-1"
+            >
+              <Check size={16} />
+              Apply Crop
+            </Button>
+          )}
 
           <Button
             variant="secondary"
             size="sm"
             onClick={handleDownload}
-            className="flex items-center gap-1"
+            className="w-full flex items-center justify-center gap-1"
           >
             <Download size={16} />
             Download
           </Button>
         </div>
 
+        <hr className="border-slate-200 dark:border-slate-700" />
         {/* Image dimensions controls */}
         <div>
           <h3 className="text-sm font-medium mb-3">Dimensions</h3>
           <div className="space-y-4">
-            {/* Width control */}
-            <div className="space-y-1">
+            {/* Width control with shadcn/ui Slider */}
+            <div className="space-y-3">
               <div className="flex justify-between">
                 <label className="text-xs">Width: {width}px</label>
                 <span className="text-xs text-muted-foreground">
                   Original: {originalWidth}px
                 </span>
               </div>
-              <input
-                type="range"
+              <Slider
+                defaultValue={[width]}
+                value={[width]}
                 min={50}
                 max={originalWidth * 2}
-                value={width}
-                onChange={handleWidthChange}
+                step={1}
+                onValueChange={handleWidthChange}
                 className="w-full"
               />
             </div>
 
-            {/* Height control */}
-            <div className="space-y-1">
+            {/* Height control with shadcn/ui Slider */}
+            <div className="space-y-3">
               <div className="flex justify-between">
                 <label className="text-xs">Height: {height}px</label>
                 <span className="text-xs text-muted-foreground">
                   Original: {originalHeight}px
                 </span>
               </div>
-              <input
-                type="range"
+              <Slider
+                defaultValue={[height]}
+                value={[height]}
                 min={50}
                 max={originalHeight * 2}
-                value={height}
-                onChange={handleHeightChange}
+                step={1}
+                onValueChange={handleHeightChange}
                 className="w-full"
               />
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            {/* Aspect ratio buttons - Now stacked */}
+            <div className="space-y-3">
               <Button
                 onClick={toggleAspectRatio}
                 variant={maintainAspectRatio ? "primary" : "secondary"}
@@ -248,7 +239,7 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
                     ? "Aspect ratio locked"
                     : "Aspect ratio unlocked"
                 }
-                className="flex items-center gap-1.5"
+                className="w-full flex items-center justify-center gap-1.5"
               >
                 {maintainAspectRatio ? (
                   <>
@@ -268,7 +259,7 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
                 variant="secondary"
                 size="sm"
                 title="Reset to original dimensions"
-                className="flex items-center gap-1.5"
+                className="w-full flex items-center justify-center gap-1.5"
               >
                 <RotateCcw size={14} />
                 <span>Reset Dimensions</span>
@@ -280,9 +271,9 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
                 variant="primary"
                 size="sm"
                 onClick={applyDimensionsChange}
-                className="w-full mt-2"
+                className="w-full mt-2 flex items-center justify-center gap-1"
               >
-                <Save size={14} className="mr-1" />
+                <Save size={14} />
                 Apply Dimensions
               </Button>
             )}
@@ -300,7 +291,7 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium">Format:</span>
               <Select value={formatOption} onValueChange={handleFormatChange}>
-                <SelectTrigger className="w-28">
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select format" />
                 </SelectTrigger>
                 <SelectContent>
@@ -311,20 +302,21 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
               </Select>
             </div>
 
-            {/* Quality slider */}
-            <div className="space-y-1">
+            {/* Quality slider with shadcn/ui Slider */}
+            <div className="space-y-3">
               <div className="flex justify-between">
                 <label className="text-xs">Quality: {compressionLevel}%</label>
                 <span className="text-xs text-muted-foreground">
                   Higher = Better Quality
                 </span>
               </div>
-              <input
-                type="range"
-                min="10"
-                max="100"
-                value={compressionLevel}
-                onChange={handleCompressionChange}
+              <Slider
+                defaultValue={[compressionLevel]}
+                value={[compressionLevel]}
+                min={10}
+                max={100}
+                step={1}
+                onValueChange={handleCompressionChange}
                 className="w-full"
               />
             </div>
@@ -334,13 +326,14 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
         {/* Divider */}
         <hr className="border-slate-200 dark:border-slate-700" />
 
-        {/* Action buttons */}
-        <div className="flex justify-between">
+        {/* Action buttons - Now stacked */}
+        <div className="space-y-3">
           <Button
             variant="outline"
             size="sm"
             onClick={handleResetAll}
-            className="flex items-center gap-1"
+            className="w-full flex items-center justify-center gap-1"
+            id="reset-all-button"
           >
             <RotateCcw size={16} />
             Reset All
@@ -349,9 +342,9 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
           <Button
             variant="primary"
             size="sm"
-            onClick={onApplyChanges}
+            onClick={applyChanges}
             disabled={cropMode}
-            className="flex items-center gap-1"
+            className="w-full flex items-center justify-center gap-1"
           >
             <Check size={16} />
             Apply Changes
@@ -362,11 +355,11 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
         <div className="mt-4 text-xs text-muted-foreground">
           <p>
             <ImageIcon size={12} className="inline mr-1" />
-            {image.name} ({(image.size / 1024).toFixed(1)} KB)
+            {selectedImage.name} ({(selectedImage.size / 1024).toFixed(1)} KB)
           </p>
           <p className="mt-1">
             {width && height ? `${width} × ${height}px` : ""} •{" "}
-            {image.type.split("/")[1].toUpperCase()}
+            {selectedImage.type.split("/")[1].toUpperCase()}
           </p>
         </div>
       </div>

@@ -11,6 +11,14 @@ import { Button } from "~/components/ui/Button";
 import { DropZone } from "~/components/ui/DropZone";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { useImageUpload } from "~/hooks/useImageUpload";
+import { MetaFunction } from "@remix-run/node";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Image Optimizer - Upload" },
+    { name: "description", content: "Upload and optimize your images" },
+  ];
+};
 
 export interface FileData {
   name: string;
@@ -151,18 +159,13 @@ export default function Index(): JSX.Element {
               )}
             </Form>
           </CardContent>
-          <CardFooter className="flex flex-col items-center justify-center text-sm text-slate-500 dark:text-slate-400"></CardFooter>
+          <CardFooter className="flex flex-col items-center justify-center text-sm text-slate-500 dark:text-slate-400">
+            <p>
+              © {new Date().getFullYear()} Image Optimizer. All rights reserved.
+            </p>
+          </CardFooter>
         </Card>
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-border py-6">
-        <div className="container mx-auto px-4 text-center text-muted-foreground text-sm">
-          <p>
-            © {new Date().getFullYear()} Photo Gallery. All rights reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

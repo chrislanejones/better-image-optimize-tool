@@ -114,7 +114,7 @@ const CardWithBorderTitle = React.forwardRef<
       </div>
 
       {/* Card content with increased top padding */}
-      <div className={`p-6 pt-8 ${contentClassName}`}>{children}</div>
+      <div className={`p-4 pt-8 ${contentClassName}`}>{children}</div>
     </div>
   )
 );

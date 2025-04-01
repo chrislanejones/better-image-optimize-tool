@@ -10,49 +10,30 @@ import {
   ChevronsRight,
   X,
   Maximize,
+  UploadCloud,
+  User,
 } from "lucide-react";
 import { ThemeToggle } from "~/components/ThemeToggle";
-import { User } from "lucide-react";
+import { useGallery } from "./GalleryContext";
 
-interface ImageData {
-  name: string;
-  type: string;
-  size: number;
-  url: string;
-}
-
-interface ThumbnailGalleryProps {
-  images: ImageData[];
-  selectedImage: ImageData | null;
-  onSelectImage: (image: ImageData, index: number) => void;
-  onRemoveImage: (index: number) => void;
-  onExpandImage: (image: ImageData) => void;
-  onClearAll: () => void;
-  onNext: () => void;
-  onPrevious: () => void;
-  currentIndex: number;
-  totalImages: number;
-  currentPage: number;
-  totalPages: number;
-  onChangePage: (page: number) => void;
-}
-
-export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
-  images,
-  selectedImage,
-  onSelectImage,
-  onRemoveImage,
-  onExpandImage,
-  onClearAll,
-  onNext,
-  onPrevious,
-  currentIndex,
-  totalImages,
-  currentPage,
-  totalPages,
-  onChangePage,
-}) => {
+export const ThumbnailGallery: React.FC = () => {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const {
+    images,
+    selectedImage,
+    currentImageIndex,
+    selectImage,
+    removeImage,
+    expandImage,
+    clearAllImages,
+    navigateNext,
+    navigatePrevious,
+    currentPage,
+    totalPages,
+    changePage,
+  } = useGallery();
+
+  const totalImages = images.length;
 
   return (
     <header className="mb-6">
@@ -68,27 +49,27 @@ export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
                 </Link>
               </Button>
 
-              {images.length > 0 ? (
-                <Button variant="destructive" size="sm" onClick={onClearAll}>
+              {images.length > 0 && (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={clearAllImages}
+                >
                   Clear All
                 </Button>
-              ) : (
-                <span className="text-sm text-zinc-500 flex items-center ml-2">
-                  Please add images 😢
-                </span>
               )}
             </div>
 
-            {/* Center aligned: Pagination */}
+            {/* Center aligned: Pagination - only show when there's a selected image */}
             <div className="justify-self-center flex items-center">
               {selectedImage && (
                 <div className="flex items-center">
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => onSelectImage(images[0], 0)}
+                    onClick={() => selectImage(images[0], 0)}
                     aria-label="First image"
-                    disabled={currentIndex === 0 || images.length === 0}
+                    disabled={currentImageIndex === 0}
                     className="mr-1"
                   >
                     <ChevronsLeft className="h-4 w-4" />
@@ -97,25 +78,23 @@ export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={onPrevious}
+                    onClick={navigatePrevious}
                     aria-label="Previous image"
-                    disabled={currentIndex === 0 || images.length === 0}
+                    disabled={currentImageIndex === 0}
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
 
                   <span className="text-sm text-muted-foreground px-3">
-                    Image {currentIndex + 1} of {totalImages}
+                    Image {currentImageIndex + 1} of {totalImages}
                   </span>
 
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={onNext}
+                    onClick={navigateNext}
                     aria-label="Next image"
-                    disabled={
-                      currentIndex === totalImages - 1 || images.length === 0
-                    }
+                    disabled={currentImageIndex === totalImages - 1}
                   >
                     <ChevronRight className="h-4 w-4" />
                   </Button>
@@ -124,12 +103,10 @@ export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
                     variant="outline"
                     size="sm"
                     onClick={() =>
-                      onSelectImage(images[totalImages - 1], totalImages - 1)
+                      selectImage(images[totalImages - 1], totalImages - 1)
                     }
                     aria-label="Last image"
-                    disabled={
-                      currentIndex === totalImages - 1 || images.length === 0
-                    }
+                    disabled={currentImageIndex === totalImages - 1}
                     className="ml-1"
                   >
                     <ChevronsRight className="h-4 w-4" />
@@ -159,12 +136,12 @@ export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
                       ? "ring-2 ring-primary shadow-md"
                       : "ring-2 ring-transparent"
                   }`}
-                  onClick={() => onSelectImage(image, index)}
+                  onClick={() => selectImage(image, index)}
                   onMouseEnter={() => setHoverIndex(index)}
                   onMouseLeave={() => setHoverIndex(null)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
-                      onSelectImage(image, index);
+                      selectImage(image, index);
                     }
                   }}
                   tabIndex={0}
@@ -186,7 +163,7 @@ export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
                         className="absolute top-0 left-0 p-1 bg-black/50 text-white rounded-br"
                         onClick={(e) => {
                           e.stopPropagation();
-                          onExpandImage(image);
+                          expandImage(image);
                         }}
                         aria-label="Expand image"
                       >
@@ -198,7 +175,7 @@ export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
                         className="absolute top-0 right-0 p-1 bg-black/50 text-white rounded-bl"
                         onClick={(e) => {
                           e.stopPropagation();
-                          onRemoveImage(index);
+                          removeImage(index);
                         }}
                         aria-label="Remove image"
                       >
@@ -209,8 +186,9 @@ export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
                 </div>
               ))
             ) : (
-              <div className="w-full text-center text-muted-foreground py-4">
-                <p>No images uploaded</p>
+              <div className="w-full flex flex-col items-center justify-center text-muted-foreground py-6 space-y-2">
+                <UploadCloud size={24} />
+                <p>Drag & drop images here or upload from the home page</p>
               </div>
             )}
           </div>

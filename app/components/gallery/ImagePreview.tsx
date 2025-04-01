@@ -1,31 +1,19 @@
 import React, { useRef } from "react";
 import { CardWithBorderTitle } from "~/components/ui/Card";
+import { useGallery } from "./GalleryContext";
 
-interface ImageData {
-  name: string;
-  type: string;
-  size: number;
-  url: string;
-}
-
-interface ImagePreviewProps {
-  image: ImageData;
-  cropMode: boolean;
-  cropRect: { x: number; y: number; width: number; height: number } | null;
-  onCropStart: (x: number, y: number) => void;
-  onCropMove: (x: number, y: number) => void;
-  onCropEnd: () => void;
-}
-
-export const ImagePreview: React.FC<ImagePreviewProps> = ({
-  image,
-  cropMode,
-  cropRect,
-  onCropStart,
-  onCropMove,
-  onCropEnd,
-}) => {
+export const ImagePreview: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const {
+    selectedImage,
+    cropMode,
+    cropRect,
+    handleCropStart,
+    handleCropMove,
+    handleCropEnd,
+  } = useGallery();
+
+  if (!selectedImage) return null;
 
   // Handle crop start
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -35,7 +23,7 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    onCropStart(x, y);
+    handleCropStart(x, y);
   };
 
   // Handle crop drag
@@ -46,13 +34,13 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    onCropMove(x, y);
+    handleCropMove(x, y);
   };
 
   // Handle crop end
   const handleMouseUp = () => {
     if (!cropMode) return;
-    onCropEnd();
+    handleCropEnd();
   };
 
   // Using CardWithBorderTitle instead of Card with CardHeader
@@ -64,16 +52,15 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
             Image Preview
           </span>
           <span className="block text-sm text-slate-500 dark:text-slate-300 truncate mt-1">
-            {image.name}
+            {selectedImage.name}
           </span>
         </>
       }
-      cardClassName="md:col-span-2"
       contentClassName="p-4"
     >
       <div
         ref={containerRef}
-        className={`rounded-md flex items-center justify-center p-2 h-64 md:h-72 lg:h-96 relative ${
+        className={`rounded-md flex items-center justify-center p-2 h-80 md:h-96 lg:h-[500px] xl:h-[600px] relative ${
           cropMode ? "cursor-crosshair" : ""
         }`}
         onMouseDown={handleMouseDown}
@@ -82,8 +69,8 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
         onMouseLeave={handleMouseUp}
       >
         <img
-          src={image.url}
-          alt={image.name}
+          src={selectedImage.url}
+          alt={selectedImage.name}
           className="max-w-full max-h-full object-contain"
         />
 
