@@ -6,10 +6,10 @@ import {
   Square,
   RotateCcw,
   Download,
-  Crop,
-  Check,
   Save,
   Image as ImageIcon,
+  Edit,
+  Check, // Added Check icon back for Apply Changes button
 } from "lucide-react";
 import { downloadImage as downloadImageUtil } from "~/utils/uploadUtils";
 import {
@@ -25,17 +25,14 @@ import { useGallery } from "./GalleryContext";
 export const ControlsCard: React.FC = () => {
   const {
     selectedImage,
-    cropMode,
     formatOption,
     compressionLevel,
-    cropRect,
-    toggleCropMode,
     setFormatOption,
     setCompressionLevel,
     handleDimensionsChange,
     applyChanges,
     cancelChanges,
-    applyCrop,
+    toggleEditorBar,
   } = useGallery();
 
   const [width, setWidth] = useState<number>(0);
@@ -150,30 +147,19 @@ export const ControlsCard: React.FC = () => {
       cardClassName="bg-card mb-6"
     >
       <div className="space-y-6">
+        {/* Edit mode button (new) */}
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={toggleEditorBar}
+          className="w-full flex items-center justify-center gap-1"
+        >
+          <Edit size={16} />
+          Advanced Editor
+        </Button>
+
         {/* Quick actions - Now stacked vertically */}
         <div className="space-y-3">
-          <Button
-            variant={cropMode ? "primary" : "secondary"}
-            size="sm"
-            onClick={toggleCropMode}
-            className="w-full flex items-center justify-center gap-1"
-          >
-            <Crop size={16} />
-            {cropMode ? "Cancel Crop" : "Crop"}
-          </Button>
-
-          {cropMode && cropRect && (
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={applyCrop}
-              className="w-full flex items-center justify-center gap-1"
-            >
-              <Check size={16} />
-              Apply Crop
-            </Button>
-          )}
-
           <Button
             variant="secondary"
             size="sm"
@@ -343,7 +329,6 @@ export const ControlsCard: React.FC = () => {
             variant="primary"
             size="sm"
             onClick={applyChanges}
-            disabled={cropMode}
             className="w-full flex items-center justify-center gap-1"
           >
             <Check size={16} />

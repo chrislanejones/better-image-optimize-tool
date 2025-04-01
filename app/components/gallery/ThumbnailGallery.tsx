@@ -12,6 +12,7 @@ import {
   Maximize,
   UploadCloud,
   User,
+  Lock,
 } from "lucide-react";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { useGallery } from "./GalleryContext";
@@ -31,18 +32,24 @@ export const ThumbnailGallery: React.FC = () => {
     currentPage,
     totalPages,
     changePage,
+    editorBarActive, // Add this to check editor state
   } = useGallery();
 
   const totalImages = images.length;
 
   return (
     <header className="mb-6">
-      <Card>
+      <Card className={editorBarActive ? "opacity-75" : ""}>
         <CardHeader className="px-6 py-4">
           <div className="grid grid-cols-3 items-center w-full">
             {/* Left aligned: Back button and Clear All */}
             <div className="flex items-center gap-2 justify-self-start">
-              <Button variant="secondary" size="sm" asChild>
+              <Button
+                variant="secondary"
+                size="sm"
+                asChild
+                disabled={editorBarActive}
+              >
                 <Link to="/">
                   <ArrowLeftToLine className="mr-1 h-4 w-4" />
                   Back to Upload
@@ -54,6 +61,7 @@ export const ThumbnailGallery: React.FC = () => {
                   variant="destructive"
                   size="sm"
                   onClick={clearAllImages}
+                  disabled={editorBarActive}
                 >
                   Clear All
                 </Button>
@@ -69,7 +77,7 @@ export const ThumbnailGallery: React.FC = () => {
                     size="sm"
                     onClick={() => selectImage(images[0], 0)}
                     aria-label="First image"
-                    disabled={currentImageIndex === 0}
+                    disabled={currentImageIndex === 0 || editorBarActive}
                     className="mr-1"
                   >
                     <ChevronsLeft className="h-4 w-4" />
@@ -80,7 +88,7 @@ export const ThumbnailGallery: React.FC = () => {
                     size="sm"
                     onClick={navigatePrevious}
                     aria-label="Previous image"
-                    disabled={currentImageIndex === 0}
+                    disabled={currentImageIndex === 0 || editorBarActive}
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
@@ -94,7 +102,9 @@ export const ThumbnailGallery: React.FC = () => {
                     size="sm"
                     onClick={navigateNext}
                     aria-label="Next image"
-                    disabled={currentImageIndex === totalImages - 1}
+                    disabled={
+                      currentImageIndex === totalImages - 1 || editorBarActive
+                    }
                   >
                     <ChevronRight className="h-4 w-4" />
                   </Button>
@@ -106,7 +116,9 @@ export const ThumbnailGallery: React.FC = () => {
                       selectImage(images[totalImages - 1], totalImages - 1)
                     }
                     aria-label="Last image"
-                    disabled={currentImageIndex === totalImages - 1}
+                    disabled={
+                      currentImageIndex === totalImages - 1 || editorBarActive
+                    }
                     className="ml-1"
                   >
                     <ChevronsRight className="h-4 w-4" />
@@ -126,7 +138,7 @@ export const ThumbnailGallery: React.FC = () => {
         </CardHeader>
 
         <CardContent>
-          <div className="flex gap-4 overflow-x-auto p-4 min-h-24 items-center scrollbar-thin well rounded-md">
+          <div className="flex gap-4 overflow-x-auto p-4 min-h-24 items-center scrollbar-thin well rounded-md relative">
             {images.length > 0 ? (
               images.map((image, index) => (
                 <div
@@ -135,16 +147,19 @@ export const ThumbnailGallery: React.FC = () => {
                     selectedImage === image
                       ? "ring-2 ring-primary shadow-md"
                       : "ring-2 ring-transparent"
-                  }`}
+                  } ${editorBarActive ? "opacity-50 pointer-events-none" : ""}`}
                   onClick={() => selectImage(image, index)}
-                  onMouseEnter={() => setHoverIndex(index)}
-                  onMouseLeave={() => setHoverIndex(null)}
+                  onMouseEnter={() => !editorBarActive && setHoverIndex(index)}
+                  onMouseLeave={() => !editorBarActive && setHoverIndex(null)}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
+                    if (
+                      !editorBarActive &&
+                      (e.key === "Enter" || e.key === " ")
+                    ) {
                       selectImage(image, index);
                     }
                   }}
-                  tabIndex={0}
+                  tabIndex={editorBarActive ? -1 : 0}
                   role="button"
                   aria-label={`Select image ${image.name}`}
                   aria-selected={selectedImage === image}
@@ -155,8 +170,8 @@ export const ThumbnailGallery: React.FC = () => {
                     className="w-full h-full object-cover rounded"
                   />
 
-                  {/* Hover controls */}
-                  {hoverIndex === index && (
+                  {/* Hover controls - only show when not in editor mode */}
+                  {hoverIndex === index && !editorBarActive && (
                     <>
                       {/* Expand button */}
                       <button
@@ -189,6 +204,13 @@ export const ThumbnailGallery: React.FC = () => {
               <div className="w-full flex flex-col items-center justify-center text-muted-foreground py-6 space-y-2">
                 <UploadCloud size={24} />
                 <p>Drag & drop images here or upload from the home page</p>
+              </div>
+            )}
+
+            {/* Simple lock icon when editor is active */}
+            {editorBarActive && images.length > 0 && (
+              <div className="absolute right-4 top-4">
+                <Lock className="h-6 w-6 text-amber-500" />
               </div>
             )}
           </div>

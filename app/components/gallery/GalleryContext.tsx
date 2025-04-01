@@ -15,6 +15,10 @@ import {
   resizeImage,
   createEditedFileData,
   downloadImage,
+  DrawingPoint,
+  DrawingPath,
+  mergeDrawingsWithImage,
+  clearDrawingCanvas,
 } from "~/utils/uploadUtils";
 
 interface ImageData {
@@ -45,6 +49,10 @@ interface GalleryContextType {
   currentPage: number;
   totalPages: number;
   imagesPerPage: number;
+  editorBarActive: boolean;
+  activeTool: string | null;
+  markerColor: string;
+  markerSize: number;
 
   // Actions
   selectImage: (image: ImageData, index: number) => void;
@@ -68,6 +76,19 @@ interface GalleryContextType {
   setCompressionLevel: (level: number) => void;
   cancelChanges: () => void;
   changePage: (page: number) => void;
+  toggleEditorBar: () => void;
+
+  // Drawing functionality
+  setActiveTool: (tool: string | null) => void;
+  setMarkerColor: (color: string) => void;
+  setMarkerSize: (size: number) => void;
+  startDrawing: (x: number, y: number, color: string, size: number) => void;
+  continueDrawing: (x: number, y: number) => void;
+  endDrawing: () => void;
+  clearDrawings: () => void;
+  applyDrawings: () => Promise<void>;
+  undoDrawing: () => void;
+  redoDrawing: () => void;
 }
 
 const GalleryContext = createContext<GalleryContextType | undefined>(undefined);
@@ -98,6 +119,19 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
   const [formatOption, setFormatOption] = useState<string>("original");
   const [compressionLevel, setCompressionLevel] = useState<number>(90);
 
+  // Editor bar and drawing state
+  const [editorBarActive, setEditorBarActive] = useState<boolean>(false);
+  const [activeTool, setActiveTool] = useState<string | null>("crop");
+  const [markerColor, setMarkerColor] = useState<string>("#FF0000");
+  const [markerSize, setMarkerSize] = useState<number>(5);
+  const [isDrawing, setIsDrawing] = useState<boolean>(false);
+  const [currentDrawingPoints, setCurrentDrawingPoints] = useState<
+    DrawingPoint[]
+  >([]);
+  const [drawingPaths, setDrawingPaths] = useState<DrawingPath[]>([]);
+  const [undoStack, setUndoStack] = useState<DrawingPath[]>([]);
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imageElementRef = useRef<HTMLImageElement | null>(null);
   const navigate = useNavigate();
 
@@ -132,19 +166,29 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
 
   // GalleryContext actions
   const selectImage = (image: ImageData, index: number) => {
+    // Prevent image selection when editor bar is active
+    if (editorBarActive) return;
+
     setSelectedImage(image);
     setCurrentImageIndex(index);
+
+    // Reset drawing state when selecting a new image
+    setDrawingPaths([]);
+    setUndoStack([]);
+    setCurrentDrawingPoints([]);
   };
 
   const navigateNext = () => {
-    if (images.length === 0) return;
+    // Prevent navigation when editor bar is active
+    if (images.length === 0 || editorBarActive) return;
     const nextIndex = (currentImageIndex + 1) % images.length;
     setSelectedImage(images[nextIndex]);
     setCurrentImageIndex(nextIndex);
   };
 
   const navigatePrevious = () => {
-    if (images.length === 0) return;
+    // Prevent navigation when editor bar is active
+    if (images.length === 0 || editorBarActive) return;
     const prevIndex = (currentImageIndex - 1 + images.length) % images.length;
     setSelectedImage(images[prevIndex]);
     setCurrentImageIndex(prevIndex);
@@ -296,6 +340,147 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
 
   const changePage = (page: number) => setCurrentPage(page);
 
+  // Toggle editor bar
+  const toggleEditorBar = () => {
+    setEditorBarActive(!editorBarActive);
+    // If turning off editor bar, also turn off crop mode
+    if (editorBarActive) {
+      setCropMode(false);
+      setCropRect(null);
+    } else {
+      // Reset active tool when activating the editor
+      setActiveTool("crop");
+    }
+  };
+
+  // Tool management
+  const handleSetActiveTool = (tool: string | null) => {
+    // If switching to crop, turn on crop mode
+    if (tool === "crop") {
+      setCropMode(true);
+    } else if (activeTool === "crop" && tool !== "crop") {
+      // If switching away from crop, turn off crop mode
+      setCropMode(false);
+      setCropRect(null);
+    }
+
+    setActiveTool(tool);
+  };
+
+  // Drawing functionality
+  const startDrawing = (x: number, y: number, color: string, size: number) => {
+    if (!activeTool || activeTool === "crop") return;
+
+    setIsDrawing(true);
+    const newPoint = { x, y, color: markerColor, size: markerSize };
+    setCurrentDrawingPoints([newPoint]);
+  };
+
+  const continueDrawing = (x: number, y: number) => {
+    if (!isDrawing || !activeTool || activeTool === "crop") return;
+
+    const lastPoint = currentDrawingPoints[currentDrawingPoints.length - 1];
+    if (!lastPoint) return;
+
+    const newPoint = { x, y, color: lastPoint.color, size: lastPoint.size };
+    setCurrentDrawingPoints((prev) => [...prev, newPoint]);
+  };
+
+  const endDrawing = () => {
+    if (!isDrawing || !activeTool || activeTool === "crop") return;
+
+    setIsDrawing(false);
+
+    if (currentDrawingPoints.length > 1) {
+      // Add new path to paths array
+      const newPath: DrawingPath = {
+        points: [...currentDrawingPoints],
+        tool: activeTool,
+      };
+
+      setDrawingPaths((prev) => [...prev, newPath]);
+
+      // Clear undo stack when adding new drawings
+      setUndoStack([]);
+    }
+
+    setCurrentDrawingPoints([]);
+  };
+
+  const clearDrawings = () => {
+    // Save current paths to undo stack before clearing
+    if (drawingPaths.length > 0) {
+      setUndoStack((prev) => [...prev, ...drawingPaths]);
+    }
+
+    setDrawingPaths([]);
+
+    if (canvasRef.current) {
+      clearDrawingCanvas(canvasRef.current);
+    }
+  };
+
+  const undoDrawing = () => {
+    if (drawingPaths.length === 0) return;
+
+    // Pop the last path and add to undo stack
+    const updatedPaths = [...drawingPaths];
+    const removedPath = updatedPaths.pop();
+
+    if (removedPath) {
+      setDrawingPaths(updatedPaths);
+      setUndoStack((prev) => [...prev, removedPath]);
+
+      // Redraw all paths after undo
+      if (canvasRef.current) {
+        clearDrawingCanvas(canvasRef.current);
+        updatedPaths.forEach((path) => {
+          if (canvasRef.current) {
+            // TODO: Draw the path
+          }
+        });
+      }
+    }
+  };
+
+  const redoDrawing = () => {
+    if (undoStack.length === 0) return;
+
+    // Pop the last path from undo stack and add back to drawing paths
+    const updatedUndoStack = [...undoStack];
+    const restoredPath = updatedUndoStack.pop();
+
+    if (restoredPath) {
+      setUndoStack(updatedUndoStack);
+      setDrawingPaths((prev) => [...prev, restoredPath]);
+
+      // Draw the restored path
+      if (canvasRef.current) {
+        // TODO: Draw the path
+      }
+    }
+  };
+
+  const applyDrawings = async () => {
+    if (!imageElementRef.current || !canvasRef.current || !selectedImage)
+      return;
+
+    try {
+      const editedBlob = await mergeDrawingsWithImage(
+        imageElementRef.current,
+        canvasRef.current,
+        formatOption,
+        compressionLevel
+      );
+
+      saveEditedImage(editedBlob);
+      setDrawingPaths([]);
+      setUndoStack([]);
+    } catch (error) {
+      console.error("Error applying drawings:", error);
+    }
+  };
+
   const contextValue = {
     // State
     images,
@@ -310,6 +495,10 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
     currentPage,
     totalPages,
     imagesPerPage,
+    editorBarActive,
+    activeTool,
+    markerColor,
+    markerSize,
 
     // Actions
     selectImage,
@@ -329,6 +518,19 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
     setCompressionLevel,
     cancelChanges,
     changePage,
+    toggleEditorBar,
+
+    // Drawing functionality
+    setActiveTool: handleSetActiveTool,
+    setMarkerColor,
+    setMarkerSize,
+    startDrawing,
+    continueDrawing,
+    endDrawing,
+    clearDrawings,
+    applyDrawings,
+    undoDrawing,
+    redoDrawing,
   };
 
   return (
