@@ -11,8 +11,14 @@ import {
   Save,
   Image as ImageIcon,
 } from "lucide-react";
-import { downloadImage as downloadImageUtil } from "~/utils/fileUtils";
-import SimpleSelect from "~/components/ui/SimpleSelect";
+import { downloadImage as downloadImageUtil } from "~/utils/uploadUtils"; // Changed to uploadUtils
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 
 interface ImageData {
   name: string;
@@ -61,13 +67,6 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
   const [aspectRatio, setAspectRatio] = useState<number>(1);
   const [maintainAspectRatio, setMaintainAspectRatio] = useState<boolean>(true);
   const [isResizing, setIsResizing] = useState<boolean>(false);
-
-  // Define format options for SimpleSelect
-  const formatOptions = [
-    { value: "original", label: "Original" },
-    { value: "jpeg", label: "JPEG" },
-    { value: "webp", label: "WebP" },
-  ];
 
   // Load image dimensions when image changes
   useEffect(() => {
@@ -141,8 +140,8 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
   };
 
   // Handle format change
-  const handleFormatChange = (format: string) => {
-    onFormatChange(format);
+  const handleFormatChange = (value: string) => {
+    onFormatChange(value);
   };
 
   // Handle reset all changes
@@ -300,12 +299,16 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium">Format:</span>
-              <SimpleSelect
-                options={formatOptions}
-                value={formatOption}
-                onChange={handleFormatChange}
-                className="w-28"
-              />
+              <Select value={formatOption} onValueChange={handleFormatChange}>
+                <SelectTrigger className="w-28">
+                  <SelectValue placeholder="Select format" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="original">Original</SelectItem>
+                  <SelectItem value="jpeg">JPEG</SelectItem>
+                  <SelectItem value="webp">WebP</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Quality slider */}

@@ -22,7 +22,7 @@ export const ImageDetails: React.FC<ImageDetailsProps> = ({
       {/* Original Image Details */}
       <div className="relative mt-6">
         {/* Border title */}
-        <div className="absolute -top-3 left-4 px-2 bg-white dark:bg-slate-900 z-10">
+        <div className="absolute -top-3 left-4 px-2 z-10">
           <h3 className="text-base font-semibold">Original Image</h3>
         </div>
 
@@ -53,7 +53,7 @@ export const ImageDetails: React.FC<ImageDetailsProps> = ({
       {/* Edited Image Details */}
       <div className="relative mt-6">
         {/* Border title */}
-        <div className="absolute -top-3 left-4 px-2 bg-white dark:bg-slate-900 z-10">
+        <div className="absolute -top-3 left-4 px-2 z-10">
           <h3 className="text-base font-semibold">Edited Image</h3>
         </div>
 

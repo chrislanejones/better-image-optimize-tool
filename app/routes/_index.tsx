@@ -46,7 +46,7 @@ export default function Index(): JSX.Element {
   };
 
   return (
-    <div className="min-h-screen bg-background transition-colors">
+    <div className="min-h-screen flex flex-col bg-background transition-colors">
       {/* Header with theme toggle */}
       <header className="border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -55,8 +55,8 @@ export default function Index(): JSX.Element {
         </div>
       </header>
 
-      <div className="container mx-auto p-4">
-        <Card className="w-full bg-card">
+      <main className="container mx-auto p-4 flex-grow flex items-center justify-center">
+        <Card className="w-full max-w-2xl bg-card">
           <CardHeader>
             <CardTitle className="text-center">Upload Images</CardTitle>
           </CardHeader>
@@ -90,15 +90,11 @@ export default function Index(): JSX.Element {
               >
                 <div className="flex flex-col items-center justify-center space-y-2">
                   <Upload className="h-10 w-10 text-primary/60 mb-4" />
-                  <p className="text-slate-600 dark:text-slate-300 font-medium">
+                  <p className="text-lg">
                     Drag & drop images here or click to select files
                   </p>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm">
-                    — or —
-                  </p>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm">
-                    Paste an image (Ctrl+V)
-                  </p>
+                  <p className="text-lg">— or —</p>
+                  <p className="text-lg">Paste an image (Ctrl+V)</p>
 
                   {/* Upload Button */}
                   <div className="mt-4">
@@ -116,56 +112,51 @@ export default function Index(): JSX.Element {
 
               {/* Error message display */}
               {errorMessage && (
-                <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 rounded-md">
+                <div className="p-4 well border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 rounded-md">
                   <p>{errorMessage}</p>
                 </div>
               )}
 
               {files.length > 0 && (
-                <div className="flex items-center justify-center min-h-screen bg-background transition-colors">
-                  <Card className="w-96 h-auto bg-card">
-                    {" "}
-                    {/* Set a fixed width for the card */}
-                    <CardContent className="pt-6">
-                      <h3 className="text-lg font-medium text-foreground mb-4">
-                        Selected Images ({files.length})
-                      </h3>
-                      <ul className="list-none p-0 max-h-48 overflow-y-auto divide-y divide-slate-200 dark:divide-slate-700">
-                        {files.map((file, index) => (
-                          <li
-                            key={index}
-                            className="py-2 flex items-center justify-between"
-                          >
-                            <span className="truncate max-w-xs">
-                              {file.name}
-                            </span>
-                            <span className="text-sm text-slate-500 dark:text-slate-400">
-                              ({Math.round(file.size / 1024)} KB)
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                    <CardFooter className="justify-end">
-                      <Button
-                        type="submit"
-                        variant="success"
-                        onClick={() => navigateToGallery(files)}
-                      >
-                        Continue to Gallery
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                </div>
+                <Card className="bg-card">
+                  {/* Set a fixed width for the card */}
+                  <CardContent className="pt-6">
+                    <h3 className="text-lg font-medium text-foreground mb-4">
+                      Selected Images ({files.length})
+                    </h3>
+                    <ul className="list-none p-0 max-h-48 overflow-y-auto divide-y divide-slate-200 dark:divide-slate-700">
+                      {files.map((file, index) => (
+                        <li
+                          key={index}
+                          className="py-2 flex items-center justify-between"
+                        >
+                          <span className="truncate max-w-xs">{file.name}</span>
+                          <span className="text-sm text-slate-500 dark:text-slate-400">
+                            ({Math.round(file.size / 1024)} KB)
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                  <CardFooter className="justify-end">
+                    <Button
+                      type="submit"
+                      variant="success"
+                      onClick={() => navigateToGallery(files)}
+                    >
+                      Continue to Gallery
+                    </Button>
+                  </CardFooter>
+                </Card>
               )}
             </Form>
           </CardContent>
           <CardFooter className="flex flex-col items-center justify-center text-sm text-slate-500 dark:text-slate-400"></CardFooter>
         </Card>
-      </div>
+      </main>
 
       {/* Footer */}
-      <footer className="border-t border-border py-6 mt-8">
+      <footer className="border-t border-border py-6">
         <div className="container mx-auto px-4 text-center text-muted-foreground text-sm">
           <p>
             © {new Date().getFullYear()} Photo Gallery. All rights reserved.
