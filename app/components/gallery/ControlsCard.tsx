@@ -216,10 +216,8 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
               </Button>
             )}
           </div>
-
           {/* Divider */}
           <hr className="border-slate-200 dark:border-indigo-800" />
-
           {/* Format controls */}
           <div className="space-y-4">
             <h3 className="text-sm font-medium">Image Format</h3>
@@ -254,10 +252,8 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
               </div>
             </div>
           </div>
-
           {/* Divider */}
           <hr className="border-slate-200 dark:border-indigo-800" />
-
           {/* Crop controls */}
           <div className="space-y-4">
             <h3 className="text-sm font-medium">Crop Image</h3>
@@ -283,28 +279,6 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
                 </Button>
               )}
             </div>
-          </div>
-
-          {/* Divider */}
-          <hr className="border-slate-200 dark:border-indigo-800" />
-
-          {/* Action buttons */}
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={onCancelChanges}
-              className="flex-1"
-            >
-              Reset All
-            </Button>
-            <Button
-              variant="primary"
-              onClick={onApplyChanges}
-              className="flex-1"
-              disabled={cropMode}
-            >
-              Apply All Changes
-            </Button>
           </div>
         </div>
       </Card>

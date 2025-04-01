@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "@remix-run/react";
-import { ThemeToggle } from "~/components/ThemeToggle";
+import { Link } from "@remix-run/react";
 import { retrieveFileData } from "~/utils/fileUtils";
 import ThumbnailGallery from "~/components/gallery/ThumbnailGallery";
 import ImagePreview from "~/components/gallery/ImagePreview";
@@ -23,6 +23,8 @@ export default function Gallery(): JSX.Element {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [expandedImage, setExpandedImage] = useState<ImageData | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const imagesPerPage = 9;
 
   // Image editing state
   const [cropMode, setCropMode] = useState<boolean>(false);
@@ -41,6 +43,14 @@ export default function Gallery(): JSX.Element {
   const imageElementRef = useRef<HTMLImageElement | null>(null);
 
   const navigate = useNavigate();
+
+  // Calculate pagination
+  const indexOfLastImage = currentPage * imagesPerPage;
+  const indexOfFirstImage = indexOfLastImage - imagesPerPage;
+  const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
+  const totalPages = Math.ceil(images.length / imagesPerPage);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     // Retrieve images from sessionStorage
@@ -367,18 +377,11 @@ export default function Gallery(): JSX.Element {
 
   return (
     <div className="bg-background transition-colors">
-      {/* Header with theme toggle */}
-      <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold text-foreground">Photo Gallery</h1>
-          <ThemeToggle />
-        </div>
-      </header>
+      {/* Error message display */}
+      {loadError && <ErrorMessage message={loadError} redirecting={true} />}
 
-      <main className="container mx-auto p-4">
-        {/* Error message display */}
-        {loadError && <ErrorMessage message={loadError} redirecting={true} />}
-
+      {/* Gallery Content */}
+      <div className="container mx-auto p-4">
         {/* Thumbnail Gallery with integrated navigation */}
         {selectedImage && (
           <ThumbnailGallery
@@ -448,22 +451,48 @@ export default function Gallery(): JSX.Element {
             </div>
           </>
         )}
-      </main>
+
+        {/* Grid view of images for the current page */}
+        {images.length > 0 && !selectedImage && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {currentImages.map((image, index) => (
+              <div
+                className="relative cursor-pointer"
+                key={index}
+                onClick={() =>
+                  handleImageSelect(image, indexOfFirstImage + index)
+                }
+              >
+                <img
+                  src={image.url}
+                  alt={`Gallery image ${indexOfFirstImage + index + 1}`}
+                  className="w-full h-64 object-cover rounded shadow-sm"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* No images message - positioned below gallery section with zinc-600 background */}
+      {images.length === 0 && (
+        <div className="mt-10 w-full bg-zinc-600 text-white">
+          <div className="container mx-auto px-4 py-10 text-center">
+            <p className="text-xl mb-4">Please add images 😢</p>
+            <Link to="/">
+              <button className="px-4 py-2 bg-white text-zinc-800 rounded">
+                Go to Upload
+              </button>
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Image Modal for expanded view */}
       <ImageModal
         image={expandedImage}
         onClose={() => setExpandedImage(null)}
       />
-
-      {/* Footer */}
-      <footer className="border-t border-border py-6 mt-8">
-        <div className="container mx-auto px-4 text-center text-muted-foreground text-sm">
-          <p>
-            © {new Date().getFullYear()} Photo Gallery. All rights reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

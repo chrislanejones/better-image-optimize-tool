@@ -26,7 +26,7 @@ import {
 var import_react = __toESM(require_react(), 1);
 
 // app/styles/app.css
-var app_default = "/build/_assets/app-3KFC7GRV.css";
+var app_default = "/build/_assets/app-WF4TYUHP.css";
 
 // app/root.tsx
 var import_jsx_dev_runtime = __toESM(require_jsx_dev_runtime(), 1);
@@ -140,4 +140,4 @@ export {
   App as default,
   links
 };
-//# sourceMappingURL=/build/root-SC7GSV2A.js.map
+//# sourceMappingURL=/build/root-ZWTFFYRG.js.map

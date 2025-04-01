@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CardTitle,
   CardWithBorderTitle,
   Check,
   ChevronDown,
@@ -19,9 +18,10 @@ import {
   RotateCcw,
   Square,
   ThemeToggle,
+  User,
   X,
   retrieveFileData
-} from "/build/_shared/chunk-MOOF2TLF.js";
+} from "/build/_shared/chunk-T3P6NCQY.js";
 import {
   Link,
   useNavigate
@@ -65,7 +65,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/gallery/ThumbnailGallery.tsx"
   );
-  import.meta.hot.lastModified = "1742622638582.7456";
+  import.meta.hot.lastModified = "1743472106005.0793";
 }
 var ThumbnailGallery = ({
   images,
@@ -81,100 +81,119 @@ var ThumbnailGallery = ({
 }) => {
   _s();
   const [hoverIndex, setHoverIndex] = (0, import_react.useState)(null);
-  return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Card, { className: "mb-6", children: [
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("header", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Card, { className: "mb-6", children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(CardHeader, { className: "px-6 py-4", children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: "grid grid-cols-3 items-center w-full", children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: "flex items-center gap-2 justify-self-start", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { variant: "outline", size: "sm", asChild: true, children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Link, { to: "/", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { variant: "secondary", size: "sm", asChild: true, children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Link, { to: "/", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(ArrowLeftToLine, { className: "mr-1 h-4 w-4" }, void 0, false, {
             fileName: "app/components/gallery/ThumbnailGallery.tsx",
-            lineNumber: 48,
-            columnNumber: 17
+            lineNumber: 51,
+            columnNumber: 19
           }, this),
           "Back to Upload"
         ] }, void 0, true, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 47,
-          columnNumber: 15
-        }, this) }, void 0, false, {
-          fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 46,
-          columnNumber: 13
-        }, this),
-        images.length > 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { variant: "destructive", size: "sm", onClick: onClearAll, children: "Clear All" }, void 0, false, {
-          fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 53,
-          columnNumber: 35
-        }, this)
-      ] }, void 0, true, {
-        fileName: "app/components/gallery/ThumbnailGallery.tsx",
-        lineNumber: 45,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(CardTitle, { className: "justify-self-center", children: "Thumbnail Gallery" }, void 0, false, {
-        fileName: "app/components/gallery/ThumbnailGallery.tsx",
-        lineNumber: 59,
-        columnNumber: 11
-      }, this),
-      images.length > 1 && /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: "flex items-center gap-2 justify-self-end", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { variant: "default", size: "sm", onClick: () => onSelectImage(images[0], 0), "aria-label": "First image", disabled: currentIndex === 0, children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(ChevronsLeft, { className: "h-4 w-4" }, void 0, false, {
-          fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 66,
+          lineNumber: 50,
           columnNumber: 17
         }, this) }, void 0, false, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 65,
+          lineNumber: 49,
+          columnNumber: 15
+        }, this),
+        images.length > 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { variant: "destructive", size: "sm", onClick: onClearAll, children: "Clear All" }, void 0, false, {
+          fileName: "app/components/gallery/ThumbnailGallery.tsx",
+          lineNumber: 56,
+          columnNumber: 37
+        }, this)
+      ] }, void 0, true, {
+        fileName: "app/components/gallery/ThumbnailGallery.tsx",
+        lineNumber: 48,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: "justify-self-center", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { variant: "default", size: "sm", onClick: () => onSelectImage(images[0], 0), "aria-label": "First image", disabled: currentIndex === 0, children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(ChevronsLeft, { className: "h-4 w-4" }, void 0, false, {
+          fileName: "app/components/gallery/ThumbnailGallery.tsx",
+          lineNumber: 64,
+          columnNumber: 17
+        }, this) }, void 0, false, {
+          fileName: "app/components/gallery/ThumbnailGallery.tsx",
+          lineNumber: 63,
           columnNumber: 15
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { variant: "default", size: "sm", onClick: onPrevious, "aria-label": "Previous image", disabled: currentIndex === 0, children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(ChevronLeft, { className: "h-4 w-4" }, void 0, false, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 70,
+          lineNumber: 68,
           columnNumber: 17
         }, this) }, void 0, false, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 69,
+          lineNumber: 67,
           columnNumber: 15
         }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", { className: "text-md text-muted-foreground", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("span", { className: "text-md text-muted-foreground px-3", children: [
           "Image ",
           currentIndex + 1,
           " of ",
           totalImages
         ] }, void 0, true, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 73,
+          lineNumber: 71,
           columnNumber: 15
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { variant: "default", size: "sm", onClick: onNext, "aria-label": "Next image", disabled: currentIndex === totalImages - 1, children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(ChevronRight, { className: "h-4 w-4" }, void 0, false, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 78,
+          lineNumber: 76,
           columnNumber: 17
         }, this) }, void 0, false, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 77,
+          lineNumber: 75,
           columnNumber: 15
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { variant: "default", size: "sm", onClick: () => onSelectImage(images[totalImages - 1], totalImages - 1), "aria-label": "Last image", disabled: currentIndex === totalImages - 1, children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(ChevronsRight, { className: "h-4 w-4" }, void 0, false, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 82,
+          lineNumber: 80,
           columnNumber: 17
         }, this) }, void 0, false, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 81,
+          lineNumber: 79,
           columnNumber: 15
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/gallery/ThumbnailGallery.tsx",
-        lineNumber: 64,
-        columnNumber: 33
+        lineNumber: 62,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: "justify-self-end", children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: "flex items-center gap-2 justify-self-end", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(ThemeToggle, {}, void 0, false, {
+          fileName: "app/components/gallery/ThumbnailGallery.tsx",
+          lineNumber: 87,
+          columnNumber: 17
+        }, this),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Button, { variant: "secondary", size: "sm", children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(User, { size: 18 }, void 0, false, {
+          fileName: "app/components/gallery/ThumbnailGallery.tsx",
+          lineNumber: 89,
+          columnNumber: 19
+        }, this) }, void 0, false, {
+          fileName: "app/components/gallery/ThumbnailGallery.tsx",
+          lineNumber: 88,
+          columnNumber: 17
+        }, this)
+      ] }, void 0, true, {
+        fileName: "app/components/gallery/ThumbnailGallery.tsx",
+        lineNumber: 86,
+        columnNumber: 15
+      }, this) }, void 0, false, {
+        fileName: "app/components/gallery/ThumbnailGallery.tsx",
+        lineNumber: 83,
+        columnNumber: 13
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/gallery/ThumbnailGallery.tsx",
-      lineNumber: 43,
-      columnNumber: 9
+      lineNumber: 46,
+      columnNumber: 11
     }, this) }, void 0, false, {
       fileName: "app/components/gallery/ThumbnailGallery.tsx",
-      lineNumber: 42,
-      columnNumber: 7
+      lineNumber: 45,
+      columnNumber: 9
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(CardContent, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: "flex gap-4 overflow-x-auto p-4 min-h-24 items-center scrollbar-thin bg-slate-100 dark:bg-slate-900 rounded-md", children: images.length > 0 ? images.map((image, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: `relative flex-none w-20 h-20 rounded cursor-pointer transition-all hover:-translate-y-1 ${selectedImage === image ? "ring-2 ring-primary shadow-md" : "ring-2 ring-transparent"}`, onClick: () => onSelectImage(image, index), onMouseEnter: () => setHoverIndex(index), onMouseLeave: () => setHoverIndex(null), onKeyDown: (e) => {
       if (e.key === "Enter" || e.key === " ") {
@@ -183,8 +202,8 @@ var ThumbnailGallery = ({
     }, tabIndex: 0, role: "button", "aria-label": `Select image ${image.name}`, "aria-selected": selectedImage === image, children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("img", { src: image.url, alt: image.name, className: "w-full h-full object-cover" }, void 0, false, {
         fileName: "app/components/gallery/ThumbnailGallery.tsx",
-        lineNumber: 94,
-        columnNumber: 17
+        lineNumber: 102,
+        columnNumber: 19
       }, this),
       hoverIndex === index && /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(import_jsx_dev_runtime.Fragment, { children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", { className: "absolute top-0 left-0 p-1 bg-black/50 text-white rounded-br", onClick: (e) => {
@@ -192,54 +211,58 @@ var ThumbnailGallery = ({
           onExpandImage(image);
         }, "aria-label": "Expand image", children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(Maximize, { className: "h-4 w-4" }, void 0, false, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 103,
-          columnNumber: 23
+          lineNumber: 111,
+          columnNumber: 25
         }, this) }, void 0, false, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 99,
-          columnNumber: 21
+          lineNumber: 107,
+          columnNumber: 23
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("button", { className: "absolute top-0 right-0 p-1 bg-black/50 text-white rounded-bl", onClick: (e) => {
           e.stopPropagation();
           onRemoveImage(index);
         }, "aria-label": "Remove image", children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)(X, { className: "h-4 w-4" }, void 0, false, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 111,
-          columnNumber: 23
+          lineNumber: 119,
+          columnNumber: 25
         }, this) }, void 0, false, {
           fileName: "app/components/gallery/ThumbnailGallery.tsx",
-          lineNumber: 107,
-          columnNumber: 21
+          lineNumber: 115,
+          columnNumber: 23
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/gallery/ThumbnailGallery.tsx",
-        lineNumber: 97,
-        columnNumber: 42
+        lineNumber: 105,
+        columnNumber: 44
       }, this)
     ] }, index, true, {
       fileName: "app/components/gallery/ThumbnailGallery.tsx",
-      lineNumber: 89,
-      columnNumber: 61
+      lineNumber: 97,
+      columnNumber: 63
     }, this)) : /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: "w-full text-center text-muted-foreground py-4", children: /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", { children: "No images uploaded" }, void 0, false, {
       fileName: "app/components/gallery/ThumbnailGallery.tsx",
-      lineNumber: 115,
-      columnNumber: 15
+      lineNumber: 123,
+      columnNumber: 17
     }, this) }, void 0, false, {
       fileName: "app/components/gallery/ThumbnailGallery.tsx",
-      lineNumber: 114,
-      columnNumber: 25
+      lineNumber: 122,
+      columnNumber: 27
     }, this) }, void 0, false, {
       fileName: "app/components/gallery/ThumbnailGallery.tsx",
-      lineNumber: 88,
+      lineNumber: 96,
+      columnNumber: 11
+    }, this) }, void 0, false, {
+      fileName: "app/components/gallery/ThumbnailGallery.tsx",
+      lineNumber: 95,
       columnNumber: 9
-    }, this) }, void 0, false, {
-      fileName: "app/components/gallery/ThumbnailGallery.tsx",
-      lineNumber: 87,
-      columnNumber: 7
     }, this)
   ] }, void 0, true, {
     fileName: "app/components/gallery/ThumbnailGallery.tsx",
-    lineNumber: 41,
+    lineNumber: 44,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "app/components/gallery/ThumbnailGallery.tsx",
+    lineNumber: 43,
     columnNumber: 10
   }, this);
 };
@@ -272,7 +295,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/gallery/ImagePreview.tsx"
   );
-  import.meta.hot.lastModified = "1742623866862.5728";
+  import.meta.hot.lastModified = "1743470621565.0933";
 }
 var ImagePreview = ({
   image,
@@ -772,7 +795,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/gallery/ControlsCard.tsx"
   );
-  import.meta.hot.lastModified = "1742626657682.1824";
+  import.meta.hot.lastModified = "1742630130531.6956";
 }
 var ControlsCard = ({
   image,
@@ -1000,40 +1023,40 @@ var ControlsCard = ({
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("hr", { className: "border-slate-200 dark:border-indigo-800" }, void 0, false, {
         fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 169,
+        lineNumber: 168,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "space-y-4", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-sm font-medium", children: "Image Format" }, void 0, false, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 173,
+          lineNumber: 171,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex flex-wrap items-center gap-2", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("label", { className: "text-xs", children: "Format:" }, void 0, false, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 176,
+            lineNumber: 174,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("select", { value: formatOption, onChange: handleFormatChange, className: "py-1 px-3 rounded bg-slate-100 dark:bg-indigo-900 border border-slate-300 dark:border-indigo-700 text-sm", children: [
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("option", { value: "original", children: "Original" }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 178,
+              lineNumber: 176,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("option", { value: "jpeg", children: "JPEG" }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 179,
+              lineNumber: 177,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("option", { value: "webp", children: "WebP" }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 180,
+              lineNumber: 178,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 177,
+            lineNumber: 175,
             columnNumber: 15
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "w-full mt-3 space-y-1", children: [
@@ -1043,84 +1066,63 @@ var ControlsCard = ({
               "%"
             ] }, void 0, true, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 186,
+              lineNumber: 184,
               columnNumber: 19
             }, this) }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 185,
+              lineNumber: 183,
               columnNumber: 17
             }, this),
             /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("input", { type: "range", min: "10", max: "100", value: compressionLevel, onChange: handleCompressionChange, className: "w-full" }, void 0, false, {
               fileName: "app/components/gallery/ControlsCard.tsx",
-              lineNumber: 190,
+              lineNumber: 188,
               columnNumber: 17
             }, this)
           ] }, void 0, true, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 184,
+            lineNumber: 182,
             columnNumber: 15
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 175,
+          lineNumber: 173,
           columnNumber: 13
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 172,
+        lineNumber: 170,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("hr", { className: "border-slate-200 dark:border-indigo-800" }, void 0, false, {
         fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 196,
+        lineNumber: 193,
         columnNumber: 11
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "space-y-4", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("h3", { className: "text-sm font-medium", children: "Crop Image" }, void 0, false, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 200,
+          lineNumber: 196,
           columnNumber: 13
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex gap-2", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Button, { variant: cropMode ? "primary" : "secondary", onClick: onToggleCrop, className: "flex-1", size: "sm", children: cropMode ? "Cancel Crop" : "Start Cropping" }, void 0, false, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 203,
+            lineNumber: 199,
             columnNumber: 15
           }, this),
           hasCropSelection && cropMode && /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Button, { variant: "primary", onClick: onApplyCrop, className: "flex-1", size: "sm", children: "Apply Crop" }, void 0, false, {
             fileName: "app/components/gallery/ControlsCard.tsx",
-            lineNumber: 207,
+            lineNumber: 203,
             columnNumber: 48
           }, this)
         ] }, void 0, true, {
           fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 202,
+          lineNumber: 198,
           columnNumber: 13
         }, this)
       ] }, void 0, true, {
         fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 199,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("hr", { className: "border-slate-200 dark:border-indigo-800" }, void 0, false, {
-        fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 214,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("div", { className: "flex gap-2", children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Button, { variant: "outline", onClick: onCancelChanges, className: "flex-1", children: "Reset All" }, void 0, false, {
-          fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 218,
-          columnNumber: 13
-        }, this),
-        /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(Button, { variant: "primary", onClick: onApplyChanges, className: "flex-1", disabled: cropMode, children: "Apply All Changes" }, void 0, false, {
-          fileName: "app/components/gallery/ControlsCard.tsx",
-          lineNumber: 221,
-          columnNumber: 13
-        }, this)
-      ] }, void 0, true, {
-        fileName: "app/components/gallery/ControlsCard.tsx",
-        lineNumber: 217,
+        lineNumber: 195,
         columnNumber: 11
       }, this)
     ] }, void 0, true, {
@@ -1431,7 +1433,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/routes/gallery.tsx"
   );
-  import.meta.hot.lastModified = "1742627930371.9941";
+  import.meta.hot.lastModified = "1743471922055.0913";
 }
 function Gallery() {
   _s5();
@@ -1440,6 +1442,8 @@ function Gallery() {
   const [currentImageIndex, setCurrentImageIndex] = (0, import_react6.useState)(0);
   const [loadError, setLoadError] = (0, import_react6.useState)(null);
   const [expandedImage, setExpandedImage] = (0, import_react6.useState)(null);
+  const [currentPage, setCurrentPage] = (0, import_react6.useState)(1);
+  const imagesPerPage = 9;
   const [cropMode, setCropMode] = (0, import_react6.useState)(false);
   const [cropStartX, setCropStartX] = (0, import_react6.useState)(null);
   const [cropStartY, setCropStartY] = (0, import_react6.useState)(null);
@@ -1448,6 +1452,11 @@ function Gallery() {
   const [compressionLevel, setCompressionLevel] = (0, import_react6.useState)(90);
   const imageElementRef = (0, import_react6.useRef)(null);
   const navigate = useNavigate();
+  const indexOfLastImage = currentPage * imagesPerPage;
+  const indexOfFirstImage = indexOfLastImage - imagesPerPage;
+  const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
+  const totalPages = Math.ceil(images.length / imagesPerPage);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   (0, import_react6.useEffect)(() => {
     console.log("Gallery component mounted, retrieving stored images");
     const storedImages = retrieveFileData();
@@ -1661,111 +1670,111 @@ function Gallery() {
     img.src = newUrl;
   };
   return /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "bg-background transition-colors", children: [
-    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("header", { className: "border-b border-border", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "container mx-auto px-4 py-4 flex justify-between items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("h1", { className: "text-xl font-bold text-foreground", children: "Photo Gallery" }, void 0, false, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 341,
-        columnNumber: 11
-      }, this),
-      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ThemeToggle, {}, void 0, false, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 342,
-        columnNumber: 11
-      }, this)
-    ] }, void 0, true, {
+    loadError && /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ErrorMessage_default, { message: loadError, redirecting: true }, void 0, false, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 340,
-      columnNumber: 9
-    }, this) }, void 0, false, {
-      fileName: "app/routes/gallery.tsx",
-      lineNumber: 339,
-      columnNumber: 7
+      lineNumber: 348,
+      columnNumber: 21
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("main", { className: "container mx-auto p-4", children: [
-      loadError && /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ErrorMessage_default, { message: loadError, redirecting: true }, void 0, false, {
-        fileName: "app/routes/gallery.tsx",
-        lineNumber: 348,
-        columnNumber: 23
-      }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "container mx-auto p-4", children: [
       selectedImage && /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ThumbnailGallery_default, { images, selectedImage, onSelectImage: handleImageSelect, onRemoveImage: removeImage, onExpandImage: expandImage, onClearAll: clearAllImages, onNext: navigateNext, onPrevious: navigatePrevious, currentIndex: currentImageIndex, totalImages: images.length }, void 0, false, {
         fileName: "app/routes/gallery.tsx",
-        lineNumber: 351,
+        lineNumber: 353,
         columnNumber: 27
       }, this),
       selectedImage && /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ImageControlBar_default, { formatOption, onFormatChange: setFormatOption, compressionLevel, onCompressionChange: setCompressionLevel, cropMode, onToggleCrop: toggleCropMode, hasCropSelection: cropRect !== null, onApplyCrop: applyCrop, onApplyChanges: applyChanges, onCancelChanges: cancelChanges, onDownload: downloadImage }, void 0, false, {
         fileName: "app/routes/gallery.tsx",
-        lineNumber: 354,
+        lineNumber: 356,
         columnNumber: 27
       }, this),
       selectedImage && /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(import_jsx_dev_runtime9.Fragment, { children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-6 mb-6", children: [
         /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "image-preview-container md:col-span-3", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ImagePreview_default, { image: selectedImage, cropMode, cropRect, onCropStart: handleCropStart, onCropMove: handleCropMove, onCropEnd: handleCropEnd }, void 0, false, {
           fileName: "app/routes/gallery.tsx",
-          lineNumber: 361,
+          lineNumber: 363,
           columnNumber: 17
         }, this) }, void 0, false, {
           fileName: "app/routes/gallery.tsx",
-          lineNumber: 360,
+          lineNumber: 362,
           columnNumber: 15
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "md:col-span-1", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ControlsCard_default, { image: selectedImage, onDimensionsChange: handleDimensionsChange }, void 0, false, {
             fileName: "app/routes/gallery.tsx",
-            lineNumber: 366,
+            lineNumber: 368,
             columnNumber: 17
           }, this),
           /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ImageDetails_default, { originalImage: images[currentImageIndex], editedImage: selectedImage !== images[currentImageIndex] ? selectedImage : void 0 }, void 0, false, {
             fileName: "app/routes/gallery.tsx",
-            lineNumber: 369,
+            lineNumber: 371,
             columnNumber: 17
           }, this)
         ] }, void 0, true, {
           fileName: "app/routes/gallery.tsx",
-          lineNumber: 365,
+          lineNumber: 367,
           columnNumber: 15
         }, this)
       ] }, void 0, true, {
         fileName: "app/routes/gallery.tsx",
-        lineNumber: 359,
+        lineNumber: 361,
         columnNumber: 13
       }, this) }, void 0, false, {
         fileName: "app/routes/gallery.tsx",
-        lineNumber: 357,
+        lineNumber: 359,
         columnNumber: 27
+      }, this),
+      images.length > 0 && !selectedImage && /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4", children: currentImages.map((image, index) => /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "relative cursor-pointer", onClick: () => handleImageSelect(image, indexOfFirstImage + index), children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("img", { src: image.url, alt: `Gallery image ${indexOfFirstImage + index + 1}`, className: "w-full h-64 object-cover rounded shadow-sm" }, void 0, false, {
+        fileName: "app/routes/gallery.tsx",
+        lineNumber: 379,
+        columnNumber: 17
+      }, this) }, index, false, {
+        fileName: "app/routes/gallery.tsx",
+        lineNumber: 378,
+        columnNumber: 50
+      }, this)) }, void 0, false, {
+        fileName: "app/routes/gallery.tsx",
+        lineNumber: 377,
+        columnNumber: 49
       }, this)
     ] }, void 0, true, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 346,
+      lineNumber: 351,
       columnNumber: 7
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ImageModal_default, { image: expandedImage, onClose: () => setExpandedImage(null) }, void 0, false, {
-      fileName: "app/routes/gallery.tsx",
-      lineNumber: 376,
-      columnNumber: 7
-    }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("footer", { className: "border-t border-border py-6 mt-8", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "container mx-auto px-4 text-center text-muted-foreground text-sm", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("p", { children: [
-      "\xA9 ",
-      (/* @__PURE__ */ new Date()).getFullYear(),
-      " Photo Gallery. All rights reserved."
+    images.length === 0 && /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "mt-10 w-full bg-zinc-600 text-white", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("div", { className: "container mx-auto px-4 py-10 text-center", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("p", { className: "text-xl mb-4", children: "Please add images \u{1F622}" }, void 0, false, {
+        fileName: "app/routes/gallery.tsx",
+        lineNumber: 387,
+        columnNumber: 13
+      }, this),
+      /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(Link, { to: "/", children: /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)("button", { className: "px-4 py-2 bg-white text-zinc-800 rounded", children: "Go to Upload" }, void 0, false, {
+        fileName: "app/routes/gallery.tsx",
+        lineNumber: 389,
+        columnNumber: 15
+      }, this) }, void 0, false, {
+        fileName: "app/routes/gallery.tsx",
+        lineNumber: 388,
+        columnNumber: 13
+      }, this)
     ] }, void 0, true, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 381,
+      lineNumber: 386,
       columnNumber: 11
     }, this) }, void 0, false, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 380,
-      columnNumber: 9
-    }, this) }, void 0, false, {
+      lineNumber: 385,
+      columnNumber: 31
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime9.jsxDEV)(ImageModal_default, { image: expandedImage, onClose: () => setExpandedImage(null) }, void 0, false, {
       fileName: "app/routes/gallery.tsx",
-      lineNumber: 379,
+      lineNumber: 397,
       columnNumber: 7
     }, this)
   ] }, void 0, true, {
     fileName: "app/routes/gallery.tsx",
-    lineNumber: 337,
+    lineNumber: 346,
     columnNumber: 10
   }, this);
 }
-_s5(Gallery, "sN9LdK0B+7QyWFa+p7y3fzSk4tE=", false, function() {
+_s5(Gallery, "JMzqTfFa191seNgRcp/4hNPB7Kc=", false, function() {
   return [useNavigate];
 });
 _c9 = Gallery;
@@ -1776,4 +1785,4 @@ window.$RefreshSig$ = prevRefreshSig;
 export {
   Gallery as default
 };
-//# sourceMappingURL=/build/routes/gallery-PNUXFGCV.js.map
+//# sourceMappingURL=/build/routes/gallery-66OCORSH.js.map
