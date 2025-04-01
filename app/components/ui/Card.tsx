@@ -6,7 +6,9 @@ const Card = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={`rounded-lg border shadow-sm ${className || ""}`}
+    className={`rounded-lg border shadow-sm bg-card text-card-foreground ${
+      className || ""
+    }`}
     {...props}
   />
 ));
@@ -46,7 +48,7 @@ const CardDescription = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <p
     ref={ref}
-    className={`text-sm text-slate-500 dark:text-slate-300 ${className || ""}`}
+    className={`text-sm text-muted-foreground ${className || ""}`}
     {...props}
   >
     {children}
@@ -101,12 +103,12 @@ const CardWithBorderTitle = React.forwardRef<
   ) => (
     <div
       ref={ref}
-      className={`relative mt-6 rounded-lg border shadow-sm ${cardClassName}`}
+      className={`relative mt-6 rounded-lg border shadow-sm bg-card text-card-foreground ${cardClassName}`}
       {...props}
     >
       {/* Title positioned on the border */}
       <div
-        className={`absolute -top-3 left-4 px-2 bg-white dark:bg-black ${titleClassName}`}
+        className={`absolute -top-3 left-4 px-2 bg-background ${titleClassName}`}
       >
         {title}
       </div>

@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "~/components/ui/Card";
+import { CardWithBorderTitle } from "~/components/ui/Card";
 import { Button } from "~/components/ui/Button";
-import { Ratio, Square, RotateCcw } from "lucide-react";
+import {
+  Ratio,
+  Square,
+  RotateCcw,
+  Download,
+  Crop,
+  Check,
+  Save,
+  Image as ImageIcon,
+} from "lucide-react";
+import { downloadImage as downloadImageUtil } from "~/utils/fileUtils";
+import SimpleSelect from "~/components/ui/SimpleSelect";
 
 interface ImageData {
   name: string;
@@ -51,6 +62,13 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
   const [maintainAspectRatio, setMaintainAspectRatio] = useState<boolean>(true);
   const [isResizing, setIsResizing] = useState<boolean>(false);
 
+  // Define format options for SimpleSelect
+  const formatOptions = [
+    { value: "original", label: "Original" },
+    { value: "jpeg", label: "JPEG" },
+    { value: "webp", label: "WebP" },
+  ];
+
   // Load image dimensions when image changes
   useEffect(() => {
     const img = new Image();
@@ -65,16 +83,6 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
     };
     img.src = image.url;
   }, [image.url]);
-
-  // Format change handler
-  const handleFormatChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onFormatChange(e.target.value);
-  };
-
-  // Compression slider change handler
-  const handleCompressionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onCompressionChange(Number(e.target.value));
-  };
 
   // Width slider change handler
   const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,55 +128,81 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
     setIsResizing(true);
   };
 
+  // Handle download
+  const handleDownload = () => {
+    if (image) {
+      downloadImageUtil(image);
+    }
+  };
+
+  // Handle compression slider change
+  const handleCompressionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onCompressionChange(Number(e.target.value));
+  };
+
+  // Handle format change
+  const handleFormatChange = (format: string) => {
+    onFormatChange(format);
+  };
+
+  // Handle reset all changes
+  const handleResetAll = () => {
+    // Reset dimensions to original
+    setWidth(originalWidth);
+    setHeight(originalHeight);
+    setIsResizing(false);
+
+    // Call the parent's reset function
+    onCancelChanges();
+  };
+
   return (
-    <div className="relative mt-6 mb-6">
-      {/* Border title */}
-      <div className="absolute -top-3 left-4 px-2 bg-white dark:bg-slate-900 z-10">
-        <h3 className="text-lg font-medium">Image Dimensions</h3>
-      </div>
+    <CardWithBorderTitle
+      title={<span className="text-lg font-medium">Image Controls</span>}
+      cardClassName="bg-card"
+    >
+      <div className="space-y-6">
+        {/* Quick actions */}
+        <div className="flex flex-wrap gap-2 justify-between">
+          <div className="flex items-center gap-2">
+            <Button
+              variant={cropMode ? "primary" : "secondary"}
+              size="sm"
+              onClick={onToggleCrop}
+              className="flex items-center gap-1"
+            >
+              <Crop size={16} />
+              {cropMode ? "Cancel Crop" : "Crop"}
+            </Button>
 
-      <Card className="pt-6">
-        <div className="p-6 space-y-6">
-          {/* Image dimensions controls */}
+            {cropMode && hasCropSelection && (
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={onApplyCrop}
+                className="flex items-center gap-1"
+              >
+                <Check size={16} />
+                Apply Crop
+              </Button>
+            )}
+          </div>
+
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={handleDownload}
+            className="flex items-center gap-1"
+          >
+            <Download size={16} />
+            Download
+          </Button>
+        </div>
+
+        {/* Image dimensions controls */}
+        <div>
+          <h3 className="text-sm font-medium mb-3">Dimensions</h3>
           <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={toggleAspectRatio}
-                  className={`flex items-center gap-1.5 p-1.5 rounded text-xs ${
-                    maintainAspectRatio
-                      ? "bg-primary text-white"
-                      : "bg-slate-200 dark:bg-indigo-900 text-slate-700 dark:text-slate-300"
-                  }`}
-                  title={
-                    maintainAspectRatio
-                      ? "Aspect ratio locked"
-                      : "Aspect ratio unlocked"
-                  }
-                >
-                  {maintainAspectRatio ? (
-                    <>
-                      <Ratio size={14} />
-                      <span>Aspect Ratio Locked</span>
-                    </>
-                  ) : (
-                    <>
-                      <Square size={14} />
-                      <span>Aspect Ratio Unlocked</span>
-                    </>
-                  )}
-                </button>
-                <button
-                  onClick={resetDimensions}
-                  className="flex items-center gap-1.5 p-1.5 rounded text-xs bg-slate-200 dark:bg-indigo-900 text-slate-700 dark:text-slate-300"
-                  title="Reset to original dimensions"
-                >
-                  <RotateCcw size={14} />
-                  <span>Reset Dimensions</span>
-                </button>
-              </div>
-            </div>
-
             {/* Width control */}
             <div className="space-y-1">
               <div className="flex justify-between">
@@ -205,84 +239,135 @@ export const ControlsCard: React.FC<ControlsCardProps> = ({
               />
             </div>
 
+            <div className="flex flex-wrap gap-2">
+              <Button
+                onClick={toggleAspectRatio}
+                variant={maintainAspectRatio ? "primary" : "secondary"}
+                size="sm"
+                title={
+                  maintainAspectRatio
+                    ? "Aspect ratio locked"
+                    : "Aspect ratio unlocked"
+                }
+                className="flex items-center gap-1.5"
+              >
+                {maintainAspectRatio ? (
+                  <>
+                    <Ratio size={14} />
+                    <span>Aspect Ratio Locked</span>
+                  </>
+                ) : (
+                  <>
+                    <Square size={14} />
+                    <span>Aspect Ratio Unlocked</span>
+                  </>
+                )}
+              </Button>
+
+              <Button
+                onClick={resetDimensions}
+                variant="secondary"
+                size="sm"
+                title="Reset to original dimensions"
+                className="flex items-center gap-1.5"
+              >
+                <RotateCcw size={14} />
+                <span>Reset Dimensions</span>
+              </Button>
+            </div>
+
             {isResizing && (
               <Button
                 variant="primary"
                 size="sm"
                 onClick={applyDimensionsChange}
-                className="w-full"
+                className="w-full mt-2"
               >
+                <Save size={14} className="mr-1" />
                 Apply Dimensions
               </Button>
             )}
           </div>
-          {/* Divider */}
-          <hr className="border-slate-200 dark:border-indigo-800" />
-          {/* Format controls */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium">Image Format</h3>
+        </div>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <label className="text-xs">Format:</label>
-              <select
+        {/* Divider */}
+        <hr className="border-slate-200 dark:border-slate-700" />
+
+        {/* Format and quality controls */}
+        <div>
+          <h3 className="text-sm font-medium mb-3">Format & Quality</h3>
+
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">Format:</span>
+              <SimpleSelect
+                options={formatOptions}
                 value={formatOption}
                 onChange={handleFormatChange}
-                className="py-1 px-3 rounded bg-slate-100 dark:bg-indigo-900 border border-slate-300 dark:border-indigo-700 text-sm"
-              >
-                <option value="original">Original</option>
-                <option value="jpeg">JPEG</option>
-                <option value="webp">WebP</option>
-              </select>
-
-              {/* Compression slider */}
-              <div className="w-full mt-3 space-y-1">
-                <div className="flex justify-between">
-                  <label className="text-xs">
-                    Quality: {compressionLevel}%
-                  </label>
-                </div>
-                <input
-                  type="range"
-                  min="10"
-                  max="100"
-                  value={compressionLevel}
-                  onChange={handleCompressionChange}
-                  className="w-full"
-                />
-              </div>
+                className="w-28"
+              />
             </div>
-          </div>
-          {/* Divider */}
-          <hr className="border-slate-200 dark:border-indigo-800" />
-          {/* Crop controls */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-medium">Crop Image</h3>
 
-            <div className="flex gap-2">
-              <Button
-                variant={cropMode ? "primary" : "secondary"}
-                onClick={onToggleCrop}
-                className="flex-1"
-                size="sm"
-              >
-                {cropMode ? "Cancel Crop" : "Start Cropping"}
-              </Button>
-
-              {hasCropSelection && cropMode && (
-                <Button
-                  variant="primary"
-                  onClick={onApplyCrop}
-                  className="flex-1"
-                  size="sm"
-                >
-                  Apply Crop
-                </Button>
-              )}
+            {/* Quality slider */}
+            <div className="space-y-1">
+              <div className="flex justify-between">
+                <label className="text-xs">Quality: {compressionLevel}%</label>
+                <span className="text-xs text-muted-foreground">
+                  Higher = Better Quality
+                </span>
+              </div>
+              <input
+                type="range"
+                min="10"
+                max="100"
+                value={compressionLevel}
+                onChange={handleCompressionChange}
+                className="w-full"
+              />
             </div>
           </div>
         </div>
-      </Card>
-    </div>
+
+        {/* Divider */}
+        <hr className="border-slate-200 dark:border-slate-700" />
+
+        {/* Action buttons */}
+        <div className="flex justify-between">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleResetAll}
+            className="flex items-center gap-1"
+          >
+            <RotateCcw size={16} />
+            Reset All
+          </Button>
+
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={onApplyChanges}
+            disabled={cropMode}
+            className="flex items-center gap-1"
+          >
+            <Check size={16} />
+            Apply Changes
+          </Button>
+        </div>
+
+        {/* Technical details */}
+        <div className="mt-4 text-xs text-muted-foreground">
+          <p>
+            <ImageIcon size={12} className="inline mr-1" />
+            {image.name} ({(image.size / 1024).toFixed(1)} KB)
+          </p>
+          <p className="mt-1">
+            {width && height ? `${width} × ${height}px` : ""} •{" "}
+            {image.type.split("/")[1].toUpperCase()}
+          </p>
+        </div>
+      </div>
+    </CardWithBorderTitle>
   );
 };
 

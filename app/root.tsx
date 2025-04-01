@@ -24,24 +24,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function App() {
-  const { theme } = useLoaderData<typeof loader>();
-
-  // Set up theme on initial page load
-  useEffect(() => {
-    // Check for stored theme preference
-    const storedTheme = localStorage.getItem("theme") || theme;
-
-    if (
-      storedTheme === "dark" ||
-      (storedTheme === "system" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>

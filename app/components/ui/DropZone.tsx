@@ -1,97 +1,54 @@
-import * as React from "react";
-
-// Create a type extension for the HTMLInputElement to add directory attributes
-declare module "react" {
-  interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
-    // Add directory and webkitdirectory attributes
-    directory?: string;
-    webkitdirectory?: string;
-  }
-}
+import React, { forwardRef } from "react";
 
 interface DropZoneProps extends React.HTMLAttributes<HTMLDivElement> {
-  isDragging?: boolean;
-  hasFiles?: boolean;
-  onDrop?: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDragLeave?: (e: React.DragEvent<HTMLDivElement>) => void;
+  isDragging: boolean;
+  hasFiles: boolean;
+  onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
+  onDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
+  onDrop: (e: React.DragEvent<HTMLDivElement>) => void;
+  className?: string;
 }
 
-const DropZone = React.forwardRef<HTMLDivElement, DropZoneProps>(
+export const DropZone = forwardRef<HTMLDivElement, DropZoneProps>(
   (
     {
-      className,
       isDragging,
       hasFiles,
-      onDrop,
       onDragOver,
       onDragLeave,
+      onDrop,
+      className = "",
       children,
       ...props
     },
     ref
   ) => {
-    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-      // Prevent default behavior to allow drop
-      e.preventDefault();
-      e.stopPropagation();
-
-      // Explicitly add dataTransfer.dropEffect
-      e.dataTransfer.dropEffect = "copy";
-
-      // Call the original handler
-      if (onDragOver) {
-        onDragOver(e);
-      }
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-      // Simulate click on Space or Enter to help with keyboard accessibility
-      if (e.key === " " || e.key === "Enter") {
-        e.currentTarget.click();
-        e.preventDefault();
-      }
-
-      // Support Ctrl+V for paste
-      if (e.ctrlKey && e.key === "v") {
-        console.log("Keyboard paste detected");
-        // The actual paste event will be handled by the global handler
-      }
-    };
-
     return (
       <div
         ref={ref}
         className={`
-          w-full 
-          border-2 
-          border-dashed 
-          rounded-lg 
-          p-8 
-          text-center 
-          cursor-pointer 
-          transition-all 
-          outline-none
-          focus:ring-2
-          focus:ring-blue-500
-          focus:border-blue-500
-          ${isDragging ? "border-blue-600 bg-blue-50 dark:bg-blue-900/20" : ""} 
+          relative flex flex-col items-center justify-center w-full h-64 
+          border-2 border-dashed rounded-lg p-4 
+          transition-colors duration-200 well
+          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
           ${
-            hasFiles
-              ? "border-green-600 bg-green-50 dark:bg-green-900/20"
-              : "border-slate-300 bg-slate-50 dark:border-slate-700 dark:bg-slate-800"
-          } 
-          ${className || ""}
+            isDragging
+              ? "border-primary/70"
+              : "border-slate-300 dark:border-slate-600"
+          }
+          ${hasFiles ? "border-success bg-success/5" : ""}
+          ${className}
         `}
-        onDrop={onDrop}
-        onDragOver={handleDragOver}
+        onDragOver={onDragOver}
         onDragLeave={onDragLeave}
-        onKeyDown={handleKeyDown}
-        // Add aria attributes for accessibility
-        role="button"
-        aria-label="Drop zone for image upload. You can also paste images here."
+        onDrop={onDrop}
         {...props}
       >
+        {isDragging && (
+          <div className="absolute inset-0 bg-primary/10 rounded-lg flex items-center justify-center">
+            <span className="text-primary font-medium">Drop files here...</span>
+          </div>
+        )}
         {children}
       </div>
     );
@@ -100,4 +57,4 @@ const DropZone = React.forwardRef<HTMLDivElement, DropZoneProps>(
 
 DropZone.displayName = "DropZone";
 
-export { DropZone };
+export default DropZone;

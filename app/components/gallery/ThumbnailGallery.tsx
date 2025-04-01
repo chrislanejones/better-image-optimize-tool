@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "@remix-run/react";
-import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/Card";
+import { Card, CardHeader, CardContent } from "~/components/ui/Card";
 import { Button } from "~/components/ui/Button";
 import {
   ArrowLeftToLine,
@@ -32,6 +32,9 @@ interface ThumbnailGalleryProps {
   onPrevious: () => void;
   currentIndex: number;
   totalImages: number;
+  currentPage: number;
+  totalPages: number;
+  onChangePage: (page: number) => void;
 }
 
 export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
@@ -45,12 +48,15 @@ export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
   onPrevious,
   currentIndex,
   totalImages,
+  currentPage,
+  totalPages,
+  onChangePage,
 }) => {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
   return (
-    <header>
-      <Card className="mb-6">
+    <header className="mb-6">
+      <Card>
         <CardHeader className="px-6 py-4">
           <div className="grid grid-cols-3 items-center w-full">
             {/* Left aligned: Back button and Clear All */}
@@ -62,75 +68,88 @@ export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
                 </Link>
               </Button>
 
-              {images.length > 0 && (
+              {images.length > 0 ? (
                 <Button variant="destructive" size="sm" onClick={onClearAll}>
                   Clear All
                 </Button>
+              ) : (
+                <span className="text-sm text-zinc-500 flex items-center ml-2">
+                  Please add images 😢
+                </span>
               )}
             </div>
 
-            {/* Center aligned: Title */}
-            <div className="justify-self-center">
-              <Button
-                variant="default"
-                size="sm"
-                onClick={() => onSelectImage(images[0], 0)}
-                aria-label="First image"
-                disabled={currentIndex === 0}
-              >
-                <ChevronsLeft className="h-4 w-4" />
-              </Button>
+            {/* Center aligned: Pagination */}
+            <div className="justify-self-center flex items-center">
+              {selectedImage && (
+                <div className="flex items-center">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onSelectImage(images[0], 0)}
+                    aria-label="First image"
+                    disabled={currentIndex === 0 || images.length === 0}
+                    className="mr-1"
+                  >
+                    <ChevronsLeft className="h-4 w-4" />
+                  </Button>
 
-              <Button
-                variant="default"
-                size="sm"
-                onClick={onPrevious}
-                aria-label="Previous image"
-                disabled={currentIndex === 0}
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={onPrevious}
+                    aria-label="Previous image"
+                    disabled={currentIndex === 0 || images.length === 0}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
 
-              <span className="text-md text-muted-foreground px-3">
-                Image {currentIndex + 1} of {totalImages}
-              </span>
+                  <span className="text-sm text-muted-foreground px-3">
+                    Image {currentIndex + 1} of {totalImages}
+                  </span>
 
-              <Button
-                variant="default"
-                size="sm"
-                onClick={onNext}
-                aria-label="Next image"
-                disabled={currentIndex === totalImages - 1}
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={onNext}
+                    aria-label="Next image"
+                    disabled={
+                      currentIndex === totalImages - 1 || images.length === 0
+                    }
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
 
-              <Button
-                variant="default"
-                size="sm"
-                onClick={() =>
-                  onSelectImage(images[totalImages - 1], totalImages - 1)
-                }
-                aria-label="Last image"
-                disabled={currentIndex === totalImages - 1}
-              >
-                <ChevronsRight className="h-4 w-4" />
-              </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() =>
+                      onSelectImage(images[totalImages - 1], totalImages - 1)
+                    }
+                    aria-label="Last image"
+                    disabled={
+                      currentIndex === totalImages - 1 || images.length === 0
+                    }
+                    className="ml-1"
+                  >
+                    <ChevronsRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
             </div>
-            <div className="justify-self-end">
-              {/* Right aligned: Navigation */}
 
-              <div className="flex items-center gap-2 justify-self-end">
-                <ThemeToggle />
-                <Button variant="secondary" size="sm">
-                  <User size={18} />
-                </Button>
-              </div>
+            {/* Right aligned: Theme toggle and User icon */}
+            <div className="flex items-center gap-2 justify-self-end">
+              <ThemeToggle />
+              <Button variant="secondary" size="sm">
+                <User size={18} />
+              </Button>
             </div>
           </div>
         </CardHeader>
+
         <CardContent>
-          <div className="flex gap-4 overflow-x-auto p-4 min-h-24 items-center scrollbar-thin bg-slate-100 dark:bg-slate-900 rounded-md">
+          <div className="flex gap-4 overflow-x-auto p-4 min-h-24 items-center scrollbar-thin well rounded-md">
             {images.length > 0 ? (
               images.map((image, index) => (
                 <div
@@ -156,7 +175,7 @@ export const ThumbnailGallery: React.FC<ThumbnailGalleryProps> = ({
                   <img
                     src={image.url}
                     alt={image.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover rounded"
                   />
 
                   {/* Hover controls */}

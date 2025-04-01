@@ -36,38 +36,38 @@ export const createFileFromPaste = (blob: Blob): File => {
 };
 
 /**
- * Stores file data in session storage
+ * Stores file data in local storage
  * @param fileData Array of FileData objects
  */
 export const storeFileData = (fileData: FileData[]): void => {
-  sessionStorage.setItem("uploadedImages", JSON.stringify(fileData));
+  localStorage.setItem("uploadedImages", JSON.stringify(fileData));
 };
 
 /**
- * Retrieves file data from session storage
+ * Retrieves file data from local storage
  * @returns Array of FileData objects or null if nothing is stored
  */
 export const retrieveFileData = (): FileData[] | null => {
-  const storedData = sessionStorage.getItem("uploadedImages");
+  const storedData = localStorage.getItem("uploadedImages");
   return storedData ? JSON.parse(storedData) : null;
 };
 
 /**
- * Clears all images from session storage
+ * Clears all images from local storage
  */
 export const clearAllImagesFromStorage = (): void => {
-  sessionStorage.removeItem("uploadedImages");
+  localStorage.removeItem("uploadedImages");
 };
 
 /**
- * Updates images in session storage
+ * Updates images in local storage
  * @param images Updated array of FileData objects
  */
 export const updateImagesInStorage = (images: FileData[]): void => {
   if (images.length > 0) {
-    sessionStorage.setItem("uploadedImages", JSON.stringify(images));
+    localStorage.setItem("uploadedImages", JSON.stringify(images));
   } else {
-    sessionStorage.removeItem("uploadedImages");
+    localStorage.removeItem("uploadedImages");
   }
 };
 

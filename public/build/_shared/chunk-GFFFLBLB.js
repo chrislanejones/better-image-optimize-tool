@@ -20,7 +20,7 @@ if (import.meta) {
     //@ts-expect-error
     "app/utils/fileUtils.ts"
   );
-  import.meta.hot.lastModified = "1742549717090.0867";
+  import.meta.hot.lastModified = "1743472849975.0872";
 }
 var filterImageFiles = (files) => {
   return files.filter((file) => file.type.startsWith("image/"));
@@ -46,6 +46,125 @@ var retrieveFileData = () => {
   const storedData = sessionStorage.getItem("uploadedImages");
   return storedData ? JSON.parse(storedData) : null;
 };
+var clearAllImagesFromStorage = () => {
+  sessionStorage.removeItem("uploadedImages");
+};
+var updateImagesInStorage = (images) => {
+  if (images.length > 0) {
+    sessionStorage.setItem("uploadedImages", JSON.stringify(images));
+  } else {
+    sessionStorage.removeItem("uploadedImages");
+  }
+};
+var processImage = (image, formatOption, compressionLevel) => {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      reject(new Error("Failed to get canvas context"));
+      return;
+    }
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+    ctx.drawImage(image, 0, 0);
+    const mimeType = formatOption === "webp" ? "image/webp" : formatOption === "jpeg" ? "image/jpeg" : image.src.startsWith("data:") ? image.src.split(",")[0].split(":")[1].split(";")[0] : "image/jpeg";
+    canvas.toBlob(
+      (blob) => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error("Failed to create blob from canvas"));
+        }
+      },
+      mimeType,
+      compressionLevel / 100
+    );
+  });
+};
+var cropImage = (image, cropRect, formatOption, compressionLevel, container) => {
+  return new Promise((resolve, reject) => {
+    const displayWidth = container.clientWidth;
+    const scaleX = image.naturalWidth / displayWidth;
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      reject(new Error("Failed to get canvas context"));
+      return;
+    }
+    canvas.width = cropRect.width * scaleX;
+    canvas.height = cropRect.height * scaleX;
+    ctx.drawImage(
+      image,
+      cropRect.x * scaleX,
+      cropRect.y * scaleX,
+      cropRect.width * scaleX,
+      cropRect.height * scaleX,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+    const mimeType = formatOption === "webp" ? "image/webp" : "image/jpeg";
+    canvas.toBlob(
+      (blob) => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error("Failed to create blob from canvas"));
+        }
+      },
+      mimeType,
+      compressionLevel / 100
+    );
+  });
+};
+var resizeImage = (image, width, height, formatOption, compressionLevel) => {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      reject(new Error("Failed to get canvas context"));
+      return;
+    }
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(image, 0, 0, width, height);
+    const mimeType = formatOption === "webp" ? "image/webp" : "image/jpeg";
+    canvas.toBlob(
+      (blob) => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error("Failed to create blob from canvas"));
+        }
+      },
+      mimeType,
+      compressionLevel / 100
+    );
+  });
+};
+var createEditedFileData = (originalImage, editedBlob, formatOption) => {
+  const newUrl = URL.createObjectURL(editedBlob);
+  let newName = originalImage.name;
+  if (formatOption !== "original") {
+    const baseName = originalImage.name.split(".").slice(0, -1).join(".");
+    newName = `${baseName}.${formatOption === "webp" ? "webp" : "jpg"}`;
+  }
+  return {
+    name: newName,
+    type: formatOption === "webp" ? "image/webp" : "image/jpeg",
+    size: editedBlob.size,
+    url: newUrl
+  };
+};
+var downloadImage = (image) => {
+  const a = document.createElement("a");
+  a.href = image.url;
+  a.download = image.name;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
 
 // app/components/ui/Card.tsx
 var React = __toESM(require_react(), 1);
@@ -67,12 +186,12 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/ui/Card.tsx"
   );
-  import.meta.hot.lastModified = "1742624014962.5496";
+  import.meta.hot.lastModified = "1743473446595.0896";
 }
 var Card = React.forwardRef(_c = ({
   className,
   ...props
-}, ref) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { ref, className: `rounded-lg border shadow-sm ${className || ""}`, ...props }, void 0, false, {
+}, ref) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { ref, className: `rounded-lg border shadow-sm bg-card text-card-foreground ${className || ""}`, ...props }, void 0, false, {
   fileName: "app/components/ui/Card.tsx",
   lineNumber: 25,
   columnNumber: 12
@@ -104,7 +223,7 @@ var CardDescription = React.forwardRef(_c7 = ({
   className,
   children,
   ...props
-}, ref) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", { ref, className: `text-sm text-slate-500 dark:text-slate-300 ${className || ""}`, ...props, children }, void 0, false, {
+}, ref) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("p", { ref, className: `text-sm text-muted-foreground ${className || ""}`, ...props, children }, void 0, false, {
   fileName: "app/components/ui/Card.tsx",
   lineNumber: 47,
   columnNumber: 12
@@ -138,8 +257,8 @@ var CardWithBorderTitle = React.forwardRef(_c13 = ({
   cardClassName = "",
   contentClassName = "",
   ...props
-}, ref) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { ref, className: `relative mt-6 rounded-lg border shadow-sm ${cardClassName}`, ...props, children: [
-  /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: `absolute -top-3 left-4 px-2 bg-white dark:bg-black ${titleClassName}`, children: title }, void 0, false, {
+}, ref) => /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { ref, className: `relative mt-6 rounded-lg border shadow-sm bg-card text-card-foreground ${cardClassName}`, ...props, children: [
+  /* @__PURE__ */ (0, import_jsx_dev_runtime.jsxDEV)("div", { className: `absolute -top-3 left-4 px-2 bg-background ${titleClassName}`, children: title }, void 0, false, {
     fileName: "app/components/ui/Card.tsx",
     lineNumber: 76,
     columnNumber: 7
@@ -453,6 +572,24 @@ var Download = createLucideIcon$1("Download", [
   ["line", { x1: "12", x2: "12", y1: "15", y2: "3", key: "1vk2je" }]
 ]);
 
+// node_modules/lucide-react/dist/esm/icons/image.mjs
+var Image = createLucideIcon$1("Image", [
+  [
+    "rect",
+    {
+      width: "18",
+      height: "18",
+      x: "3",
+      y: "3",
+      rx: "2",
+      ry: "2",
+      key: "1m3agn"
+    }
+  ],
+  ["circle", { cx: "9", cy: "9", r: "2", key: "af1f0g" }],
+  ["path", { d: "m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21", key: "1xmnt7" }]
+]);
+
 // node_modules/lucide-react/dist/esm/icons/maximize.mjs
 var Maximize = createLucideIcon$1("Maximize", [
   ["path", { d: "M8 3H5a2 2 0 0 0-2 2v3", key: "1dcmit" }],
@@ -480,6 +617,19 @@ var RotateCcw = createLucideIcon$1("RotateCcw", [
     { d: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8", key: "1357e3" }
   ],
   ["path", { d: "M3 3v5h5", key: "1xhq8a" }]
+]);
+
+// node_modules/lucide-react/dist/esm/icons/save.mjs
+var Save = createLucideIcon$1("Save", [
+  [
+    "path",
+    {
+      d: "M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z",
+      key: "1owoqh"
+    }
+  ],
+  ["polyline", { points: "17 21 17 13 7 13 7 21", key: "1md35c" }],
+  ["polyline", { points: "7 3 7 8 15 8", key: "8nz8an" }]
 ]);
 
 // node_modules/lucide-react/dist/esm/icons/square.mjs
@@ -523,16 +673,22 @@ if (import.meta) {
     //@ts-expect-error
     "app/components/ThemeToggle.tsx"
   );
-  import.meta.hot.lastModified = "1742550716952.2664";
+  import.meta.hot.lastModified = "1743473791535.091";
 }
 function ThemeToggle() {
   _s();
   const [theme, setTheme] = (0, import_react3.useState)("system");
+  const [mounted, setMounted] = (0, import_react3.useState)(false);
   (0, import_react3.useEffect)(() => {
+    setMounted(true);
     const storedTheme = window.localStorage.getItem("theme");
     const initialTheme = storedTheme || "system";
     setTheme(initialTheme);
     applyTheme(initialTheme);
+  }, []);
+  (0, import_react3.useEffect)(() => {
+    if (!mounted)
+      return;
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = () => {
       if (theme === "system") {
@@ -541,14 +697,22 @@ function ThemeToggle() {
     };
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
+  }, [theme, mounted]);
   (0, import_react3.useEffect)(() => {
+    if (!mounted)
+      return;
     applyTheme(theme);
     localStorage.setItem("theme", theme);
-  }, [theme]);
+  }, [theme, mounted]);
   function applyTheme(newTheme) {
     const isDark = newTheme === "dark" || newTheme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches;
-    document.documentElement.classList.toggle("dark", isDark);
+    document.documentElement.classList.remove("dark", "light");
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.add("light");
+    }
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
   }
   function cycleTheme() {
     const themes = ["light", "dark", "system"];
@@ -556,95 +720,98 @@ function ThemeToggle() {
     const nextIndex = (currentIndex + 1) % themes.length;
     setTheme(themes[nextIndex]);
   }
+  if (!mounted) {
+    return null;
+  }
   return /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)(Button, { variant: "ghost", size: "icon", onClick: cycleTheme, "aria-label": "Toggle theme", title: `Current theme: ${theme}`, children: [
     /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", className: `h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all ${theme === "dark" ? "opacity-0" : "opacity-100"} ${theme === "system" ? "text-yellow-500" : ""}`, children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("circle", { cx: "12", cy: "12", r: "4" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 63,
+        lineNumber: 88,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("path", { d: "M12 2v2" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 64,
+        lineNumber: 89,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("path", { d: "M12 20v2" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 65,
+        lineNumber: 90,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("path", { d: "m4.93 4.93 1.41 1.41" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 66,
+        lineNumber: 91,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("path", { d: "m17.66 17.66 1.41 1.41" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 67,
+        lineNumber: 92,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("path", { d: "M2 12h2" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 68,
+        lineNumber: 93,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("path", { d: "M20 12h2" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 69,
+        lineNumber: 94,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("path", { d: "m6.34 17.66-1.41 1.41" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 70,
+        lineNumber: 95,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("path", { d: "m19.07 4.93-1.41 1.41" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 71,
+        lineNumber: 96,
         columnNumber: 9
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/ThemeToggle.tsx",
-      lineNumber: 62,
+      lineNumber: 87,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", className: `absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all ${theme === "dark" ? "rotate-0 scale-100 opacity-100" : "opacity-0"} ${theme === "system" ? "text-blue-500" : ""}`, children: /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("path", { d: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" }, void 0, false, {
       fileName: "app/components/ThemeToggle.tsx",
-      lineNumber: 76,
+      lineNumber: 101,
       columnNumber: 9
     }, this) }, void 0, false, {
       fileName: "app/components/ThemeToggle.tsx",
-      lineNumber: 75,
+      lineNumber: 100,
       columnNumber: 7
     }, this),
     /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", className: `absolute h-[1.2rem] w-[1.2rem] transition-all ${theme === "system" ? "rotate-0 scale-100 opacity-100" : "rotate-90 scale-0 opacity-0"}`, children: [
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("rect", { x: "2", y: "3", width: "20", height: "14", rx: "2", ry: "2" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 81,
+        lineNumber: 106,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("line", { x1: "8", y1: "21", x2: "16", y2: "21" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 82,
+        lineNumber: 107,
         columnNumber: 9
       }, this),
       /* @__PURE__ */ (0, import_jsx_dev_runtime3.jsxDEV)("line", { x1: "12", y1: "17", x2: "12", y2: "21" }, void 0, false, {
         fileName: "app/components/ThemeToggle.tsx",
-        lineNumber: 83,
+        lineNumber: 108,
         columnNumber: 9
       }, this)
     ] }, void 0, true, {
       fileName: "app/components/ThemeToggle.tsx",
-      lineNumber: 80,
+      lineNumber: 105,
       columnNumber: 7
     }, this)
   ] }, void 0, true, {
     fileName: "app/components/ThemeToggle.tsx",
-    lineNumber: 60,
+    lineNumber: 85,
     columnNumber: 10
   }, this);
 }
-_s(ThemeToggle, "n/DgUbJM7lqJZyc05Ei7kIgey0Q=");
+_s(ThemeToggle, "gs3fHOMo/AmKGOBkP+2NO2CmyE8=");
 _c16 = ThemeToggle;
 var _c16;
 $RefreshReg$(_c16, "ThemeToggle");
@@ -657,6 +824,13 @@ export {
   createFileFromPaste,
   storeFileData,
   retrieveFileData,
+  clearAllImagesFromStorage,
+  updateImagesInStorage,
+  processImage,
+  cropImage,
+  resizeImage,
+  createEditedFileData,
+  downloadImage,
   Card,
   CardHeader,
   CardTitle,
@@ -673,13 +847,15 @@ export {
   ChevronsRight,
   Crop,
   Download,
+  Image,
   Maximize,
   Ratio,
   RotateCcw,
+  Save,
   Square,
   Upload,
   User,
   X,
   ThemeToggle
 };
-//# sourceMappingURL=/build/_shared/chunk-T3P6NCQY.js.map
+//# sourceMappingURL=/build/_shared/chunk-GFFFLBLB.js.map
