@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent } from "~/components/ui/Card";
 import { Button } from "~/components/ui/Button";
 import {
@@ -16,15 +16,20 @@ import {
   Redo,
   ZoomIn,
   ZoomOut,
-  Lock,
 } from "lucide-react";
 import { useGallery } from "./GalleryContext";
 
 interface ImageEditorBarProps {
   onClose: () => void;
+  onZoomIn?: () => void;
+  onZoomOut?: () => void;
 }
 
-export const ImageEditorBar: React.FC<ImageEditorBarProps> = ({ onClose }) => {
+export const ImageEditorBar: React.FC<ImageEditorBarProps> = ({
+  onClose,
+  onZoomIn,
+  onZoomOut,
+}) => {
   const {
     cropMode,
     cropRect,
@@ -39,11 +44,13 @@ export const ImageEditorBar: React.FC<ImageEditorBarProps> = ({ onClose }) => {
     clearDrawings,
     undoDrawing,
     redoDrawing,
+    drawingPaths,
   } = useGallery();
 
-  // This is a placeholder - in a real implementation,
-  // we would need to check if there are any drawings
-  const drawingExists = true;
+  const [textValue, setTextValue] = useState("");
+
+  // Check if there are any drawings
+  const drawingExists = drawingPaths.length > 0;
 
   // Handle tool selection
   const handleToolSelect = (tool: string) => {
@@ -138,10 +145,20 @@ export const ImageEditorBar: React.FC<ImageEditorBarProps> = ({ onClose }) => {
 
             {/* Zoom controls */}
             <div className="border-l border-slate-200 dark:border-slate-700 mx-1 h-6"></div>
-            <Button variant="secondary" size="sm" title="Zoom in">
+            <Button
+              variant="secondary"
+              size="sm"
+              title="Zoom in"
+              onClick={onZoomIn}
+            >
               <ZoomIn size={18} />
             </Button>
-            <Button variant="secondary" size="sm" title="Zoom out">
+            <Button
+              variant="secondary"
+              size="sm"
+              title="Zoom out"
+              onClick={onZoomOut}
+            >
               <ZoomOut size={18} />
             </Button>
           </div>
@@ -187,7 +204,7 @@ export const ImageEditorBar: React.FC<ImageEditorBarProps> = ({ onClose }) => {
               size="sm"
               onClick={undoDrawing}
               title="Undo"
-              disabled={activeTool !== "marker" && activeTool !== "eraser"}
+              disabled={!drawingExists}
             >
               <Undo size={18} />
             </Button>
@@ -196,7 +213,7 @@ export const ImageEditorBar: React.FC<ImageEditorBarProps> = ({ onClose }) => {
               size="sm"
               onClick={redoDrawing}
               title="Redo"
-              disabled={activeTool !== "marker" && activeTool !== "eraser"}
+              disabled={drawingExists}
             >
               <Redo size={18} />
             </Button>
@@ -209,16 +226,17 @@ export const ImageEditorBar: React.FC<ImageEditorBarProps> = ({ onClose }) => {
               activeTool === "circle" ||
               activeTool === "rectangle" ||
               activeTool === "arrow" ||
-              activeTool === "text") && (
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={clearDrawings}
-                title="Clear all markings"
-              >
-                <Trash size={18} />
-              </Button>
-            )}
+              activeTool === "text") &&
+              drawingExists && (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={clearDrawings}
+                  title="Clear all markings"
+                >
+                  <Trash size={18} />
+                </Button>
+              )}
 
             {/* Apply buttons */}
             {activeTool === "crop" && cropMode && cropRect && (
@@ -233,7 +251,8 @@ export const ImageEditorBar: React.FC<ImageEditorBarProps> = ({ onClose }) => {
               </Button>
             )}
 
-            {(activeTool === "marker" ||
+            {(drawingExists ||
+              activeTool === "marker" ||
               activeTool === "eraser" ||
               activeTool === "circle" ||
               activeTool === "rectangle" ||
@@ -244,6 +263,7 @@ export const ImageEditorBar: React.FC<ImageEditorBarProps> = ({ onClose }) => {
                 size="sm"
                 onClick={applyDrawings}
                 title="Apply drawings"
+                disabled={!drawingExists}
               >
                 <Check size={18} />
                 <span className="ml-1">Apply Drawings</span>

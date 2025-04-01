@@ -9,8 +9,10 @@ import { useGallery } from "~/components/gallery/GalleryContext";
 
 // This component uses the context but is inside the provider
 const GalleryContent = () => {
-  const { expandedImage, expandImage, redirecting } = useGallery();
+  const { images, selectedImage, expandedImage, expandImage, redirecting } =
+    useGallery();
 
+  // Show appropriate components based on state
   return (
     <div className="bg-background transition-colors">
       <div className="container mx-auto p-4">
@@ -22,8 +24,9 @@ const GalleryContent = () => {
         )}
 
         <ThumbnailGallery />
-        <ImageEditor />
-        <GalleryGrid />
+
+        {/* Only show either the editor or the grid, not both */}
+        {selectedImage ? <ImageEditor /> : <GalleryGrid />}
       </div>
       <ImageModal image={expandedImage} onClose={() => expandImage(null)} />
     </div>

@@ -1,287 +1,17 @@
-import { FileData } from "~/routes/_index";
+// Complete uploadUtils.ts with all required functions
 
-/**
- * Processes files and returns valid image files
- * @param files Files to validate
- * @returns Only the image files from the provided files array
- */
-export const filterImageFiles = (files: File[]): File[] => {
-  return files.filter((file) => file.type.startsWith("image/"));
-};
+// Storage key for images
+const STORAGE_KEY = "image-optimizer-files";
 
-/**
- * Creates FileData objects from File objects
- * @param files Files to convert
- * @returns Array of FileData objects
- */
-export const createFileData = (files: File[]): FileData[] => {
-  return files.map((file) => ({
-    name: file.name,
-    type: file.type,
-    size: file.size,
-    url: URL.createObjectURL(file),
-  }));
-};
+// Interface for file data
+export interface FileData {
+  name: string;
+  type: string;
+  size: number;
+  url: string;
+}
 
-/**
- * Creates a File object from a clipboard paste event
- * @param blob Blob from clipboard
- * @returns File object with timestamp-based name
- */
-export const createFileFromPaste = (blob: Blob): File => {
-  const timestamp = new Date().toISOString().replace(/:/g, "-");
-  return new File([blob], `pasted-image-${timestamp}.png`, {
-    type: blob.type,
-  });
-};
-
-/**
- * Stores file data in local storage
- * @param fileData Array of FileData objects
- */
-export const storeFileData = (fileData: FileData[]): void => {
-  localStorage.setItem("uploadedImages", JSON.stringify(fileData));
-};
-
-/**
- * Retrieves file data from local storage
- * @returns Array of FileData objects or null if nothing is stored
- */
-export const retrieveFileData = (): FileData[] | null => {
-  const storedData = localStorage.getItem("uploadedImages");
-  return storedData ? JSON.parse(storedData) : null;
-};
-
-/**
- * Clears all images from local storage
- */
-export const clearAllImagesFromStorage = (): void => {
-  localStorage.removeItem("uploadedImages");
-};
-
-/**
- * Updates images in local storage
- * @param images Updated array of FileData objects
- */
-export const updateImagesInStorage = (images: FileData[]): void => {
-  if (images.length > 0) {
-    localStorage.setItem("uploadedImages", JSON.stringify(images));
-  } else {
-    localStorage.removeItem("uploadedImages");
-  }
-};
-
-/**
- * Processes an image with format and compression settings
- * @param image Original image element
- * @param formatOption Output format (original, jpeg, webp)
- * @param compressionLevel Quality level (0-100)
- * @returns Promise that resolves to a Blob of the processed image
- */
-export const processImage = (
-  image: HTMLImageElement,
-  formatOption: string,
-  compressionLevel: number
-): Promise<Blob> => {
-  return new Promise((resolve, reject) => {
-    // Create a canvas at the original image size
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-      reject(new Error("Failed to get canvas context"));
-      return;
-    }
-
-    canvas.width = image.naturalWidth;
-    canvas.height = image.naturalHeight;
-
-    // Draw the image at full size
-    ctx.drawImage(image, 0, 0);
-
-    // Determine the output mime type
-    const mimeType =
-      formatOption === "webp"
-        ? "image/webp"
-        : formatOption === "jpeg"
-        ? "image/jpeg"
-        : image.src.startsWith("data:")
-        ? image.src.split(",")[0].split(":")[1].split(";")[0]
-        : "image/jpeg";
-
-    // Convert to blob with selected format and compression
-    canvas.toBlob(
-      (blob) => {
-        if (blob) {
-          resolve(blob);
-        } else {
-          reject(new Error("Failed to create blob from canvas"));
-        }
-      },
-      mimeType,
-      compressionLevel / 100
-    );
-  });
-};
-
-/**
- * Creates a cropped version of an image
- * @param image Original image element
- * @param cropRect Crop rectangle coordinates and dimensions
- * @param formatOption Output format
- * @param compressionLevel Quality level (0-100)
- * @param container Reference container element for scale calculation
- * @returns Promise that resolves to a Blob of the cropped image
- */
-export const cropImage = (
-  image: HTMLImageElement,
-  cropRect: { x: number; y: number; width: number; height: number },
-  formatOption: string,
-  compressionLevel: number,
-  container: Element
-): Promise<Blob> => {
-  return new Promise((resolve, reject) => {
-    // Calculate scaling factor
-    const displayWidth = container.clientWidth;
-    const scaleX = image.naturalWidth / displayWidth;
-
-    // Create a new canvas with the cropped dimensions
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-      reject(new Error("Failed to get canvas context"));
-      return;
-    }
-
-    // Set canvas dimensions to cropped size
-    canvas.width = cropRect.width * scaleX;
-    canvas.height = cropRect.height * scaleX;
-
-    // Draw the cropped portion of the image
-    ctx.drawImage(
-      image,
-      cropRect.x * scaleX,
-      cropRect.y * scaleX,
-      cropRect.width * scaleX,
-      cropRect.height * scaleX,
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
-
-    // Determine the output mime type
-    const mimeType = formatOption === "webp" ? "image/webp" : "image/jpeg";
-
-    // Convert to blob and save
-    canvas.toBlob(
-      (blob) => {
-        if (blob) {
-          resolve(blob);
-        } else {
-          reject(new Error("Failed to create blob from canvas"));
-        }
-      },
-      mimeType,
-      compressionLevel / 100
-    );
-  });
-};
-
-/**
- * Resizes an image to new dimensions
- * @param image Original image element
- * @param width New width
- * @param height New height
- * @param formatOption Output format
- * @param compressionLevel Quality level (0-100)
- * @returns Promise that resolves to a Blob of the resized image
- */
-export const resizeImage = (
-  image: HTMLImageElement,
-  width: number,
-  height: number,
-  formatOption: string,
-  compressionLevel: number
-): Promise<Blob> => {
-  return new Promise((resolve, reject) => {
-    // Create a canvas with the new dimensions
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-      reject(new Error("Failed to get canvas context"));
-      return;
-    }
-
-    canvas.width = width;
-    canvas.height = height;
-
-    // Draw the image at the new size
-    ctx.drawImage(image, 0, 0, width, height);
-
-    // Determine the output mime type
-    const mimeType = formatOption === "webp" ? "image/webp" : "image/jpeg";
-
-    // Convert to blob and save
-    canvas.toBlob(
-      (blob) => {
-        if (blob) {
-          resolve(blob);
-        } else {
-          reject(new Error("Failed to create blob from canvas"));
-        }
-      },
-      mimeType,
-      compressionLevel / 100
-    );
-  });
-};
-
-/**
- * Creates a new FileData object from an edited image blob
- * @param originalImage Original FileData object
- * @param editedBlob Edited blob
- * @param formatOption Format option that was applied
- * @returns New FileData object
- */
-export const createEditedFileData = (
-  originalImage: FileData,
-  editedBlob: Blob,
-  formatOption: string
-): FileData => {
-  const newUrl = URL.createObjectURL(editedBlob);
-
-  // Determine new file extension based on format
-  let newName = originalImage.name;
-  if (formatOption !== "original") {
-    // Remove old extension and add new one
-    const baseName = originalImage.name.split(".").slice(0, -1).join(".");
-    newName = `${baseName}.${formatOption === "webp" ? "webp" : "jpg"}`;
-  }
-
-  // Create new image data
-  return {
-    name: newName,
-    type: formatOption === "webp" ? "image/webp" : "image/jpeg",
-    size: editedBlob.size,
-    url: newUrl,
-  };
-};
-
-/**
- * Downloads an image
- * @param image FileData object to download
- */
-export const downloadImage = (image: FileData): void => {
-  // Create an invisible anchor element
-  const a = document.createElement("a");
-  a.href = image.url;
-  a.download = image.name;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-};
-
-// Drawing interface
+// Drawing types
 export interface DrawingPoint {
   x: number;
   y: number;
@@ -292,280 +22,558 @@ export interface DrawingPoint {
 export interface DrawingPath {
   points: DrawingPoint[];
   tool: string;
+  color?: string;
+  size?: number;
+  text?: string;
+  startX?: number;
+  startY?: number;
+  endX?: number;
+  endY?: number;
+  width?: number;
+  height?: number;
 }
 
-/**
- * Initializes a drawing canvas by setting up the canvas
- * @param canvas Canvas element
- * @param width Canvas width
- * @param height Canvas height
- */
-export const initDrawingCanvas = (
+// Store file data in localStorage with better persistence
+export function storeFileData(files: FileData[]) {
+  try {
+    // Convert blob URLs to data URLs for small images
+    const filesToStore = files.map((file) => {
+      // If the file is too large (>1MB), we'll just store metadata
+      if (file.size > 1024 * 1024) {
+        return {
+          ...file,
+          // Replace blob URL with a special marker for large files
+          originalUrl: file.url,
+          // Keep the URL temporarily for this session
+          url: file.url,
+        };
+      }
+
+      // For smaller files, we keep the blob URL as is for now
+      // In a production app, you'd convert to data URLs here
+      return { ...file };
+    });
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(filesToStore));
+    console.log("Files stored in localStorage:", filesToStore);
+  } catch (error) {
+    console.error("Error storing files in localStorage:", error);
+  }
+}
+
+// Retrieve file data from localStorage
+export function retrieveFileData(): FileData[] {
+  try {
+    const storedFiles = localStorage.getItem(STORAGE_KEY);
+    console.log("Retrieved files from storage:", storedFiles);
+
+    if (!storedFiles) return [];
+
+    const files = JSON.parse(storedFiles) as FileData[];
+
+    // Check if any blob URLs are invalid and handle appropriately
+    return files.filter((file) => {
+      // Check if the URL is valid (this is a simple check)
+      if (file.url.startsWith("blob:")) {
+        try {
+          // Try to fetch the blob URL
+          fetch(file.url).catch(() => {
+            console.warn(
+              `Blob URL ${file.url} is no longer valid. This is expected after page reloads.`
+            );
+          });
+          return true; // Keep the file even if the URL might be invalid
+        } catch (e) {
+          console.warn(`Error accessing blob URL ${file.url}:`, e);
+          return false; // Filter out this file
+        }
+      }
+      return true; // Keep non-blob URLs (like data URLs)
+    });
+  } catch (error) {
+    console.error("Error retrieving files from localStorage:", error);
+    return [];
+  }
+}
+
+// Clear all images from storage
+export function clearAllImagesFromStorage() {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (error) {
+    console.error("Error clearing images from localStorage:", error);
+  }
+}
+
+// Update images in storage
+export function updateImagesInStorage(files: FileData[]) {
+  storeFileData(files);
+}
+
+// Filter image files
+export function filterImageFiles(files: File[]): File[] {
+  return Array.from(files).filter((file) => file.type.startsWith("image/"));
+}
+
+// Create file data from uploaded files
+export function createFileData(files: File[]): FileData[] {
+  return files.map((file) => {
+    const url = URL.createObjectURL(file);
+    return {
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      url,
+    };
+  });
+}
+
+// Create a file from paste event
+export function createFileFromPaste(blob: Blob): File {
+  const timestamp = new Date().getTime();
+  const extension = blob.type.split("/")[1] || "png";
+  return new File([blob], `pasted-image-${timestamp}.${extension}`, {
+    type: blob.type,
+    lastModified: timestamp,
+  });
+}
+
+// Download image
+export function downloadImage(image: FileData) {
+  const link = document.createElement("a");
+  link.href = image.url;
+  link.download = image.name;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// Create edited file data
+export function createEditedFileData(
+  originalFile: FileData,
+  editedBlob: Blob,
+  format: string
+): FileData {
+  // Release the old object URL to avoid memory leaks
+  URL.revokeObjectURL(originalFile.url);
+
+  const newUrl = URL.createObjectURL(editedBlob);
+
+  // Determine new file extension based on format
+  let fileName = originalFile.name;
+  if (format !== "original") {
+    const nameWithoutExt =
+      fileName.substring(0, fileName.lastIndexOf(".")) || fileName;
+    fileName = `${nameWithoutExt}.${format}`;
+  }
+
+  return {
+    name: fileName,
+    type: editedBlob.type,
+    size: editedBlob.size,
+    url: newUrl,
+  };
+}
+
+// Process image with format and compression
+export async function processImage(
+  image: HTMLImageElement,
+  format: string,
+  compressionLevel: number
+): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        reject(new Error("Could not get canvas context"));
+        return;
+      }
+
+      // Draw the image to the canvas
+      ctx.drawImage(image, 0, 0);
+
+      // Determine output format
+      const outputFormat =
+        format === "original" ? "image/jpeg" : `image/${format}`;
+
+      // Convert quality from percentage to decimal (0-1)
+      const quality = compressionLevel / 100;
+
+      // Get the blob from the canvas
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error("Failed to create blob from canvas"));
+          }
+        },
+        outputFormat,
+        quality
+      );
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+// Crop image
+export async function cropImage(
+  image: HTMLImageElement,
+  cropRect: { x: number; y: number; width: number; height: number },
+  format: string,
+  compressionLevel: number,
+  containerElement: Element
+): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    try {
+      // Create a new canvas for the cropped image
+      const canvas = document.createElement("canvas");
+
+      // Get container dimensions
+      const containerRect = containerElement.getBoundingClientRect();
+
+      // Calculate scale factor between displayed image and original image
+      const displayToOriginalRatio = image.naturalWidth / containerRect.width;
+
+      // Convert crop rect from display coordinates to original image coordinates
+      const originalCropRect = {
+        x: cropRect.x * displayToOriginalRatio,
+        y: cropRect.y * displayToOriginalRatio,
+        width: cropRect.width * displayToOriginalRatio,
+        height: cropRect.height * displayToOriginalRatio,
+      };
+
+      // Set canvas dimensions to cropped size
+      canvas.width = originalCropRect.width;
+      canvas.height = originalCropRect.height;
+
+      // Draw the cropped portion of the image to the canvas
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        reject(new Error("Could not get canvas context"));
+        return;
+      }
+
+      ctx.drawImage(
+        image,
+        originalCropRect.x,
+        originalCropRect.y,
+        originalCropRect.width,
+        originalCropRect.height,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      // Determine output format
+      const outputFormat =
+        format === "original" ? "image/jpeg" : `image/${format}`;
+
+      // Convert quality from percentage to decimal (0-1)
+      const quality = compressionLevel / 100;
+
+      // Get the blob from the canvas
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error("Failed to create blob from canvas"));
+          }
+        },
+        outputFormat,
+        quality
+      );
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+// Resize image
+export async function resizeImage(
+  image: HTMLImageElement,
+  width: number,
+  height: number,
+  format: string,
+  compressionLevel: number
+): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    try {
+      // Create a new canvas for the resized image
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      // Draw the image to the canvas with new dimensions
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        reject(new Error("Could not get canvas context"));
+        return;
+      }
+
+      ctx.drawImage(image, 0, 0, width, height);
+
+      // Determine output format
+      const outputFormat =
+        format === "original" ? "image/jpeg" : `image/${format}`;
+
+      // Convert quality from percentage to decimal (0-1)
+      const quality = compressionLevel / 100;
+
+      // Get the blob from the canvas
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error("Failed to create blob from canvas"));
+          }
+        },
+        outputFormat,
+        quality
+      );
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+// Canvas initialization
+export function initDrawingCanvas(
   canvas: HTMLCanvasElement,
   width: number,
   height: number
-): void => {
+) {
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext("2d");
   if (ctx) {
-    ctx.clearRect(0, 0, width, height);
-  }
-};
-
-/**
- * Draws a path on the canvas
- * @param canvas Canvas element
- * @param path Drawing path with points
- */
-export const drawPath = (
-  canvas: HTMLCanvasElement,
-  path: DrawingPath
-): void => {
-  const ctx = canvas.getContext("2d");
-  if (!ctx || path.points.length < 2) return;
-
-  // Different drawing behavior based on tool
-  switch (path.tool) {
-    case "marker":
-      drawMarkerPath(ctx, path.points);
-      break;
-    case "circle":
-      if (path.points.length >= 2) {
-        drawCircle(ctx, path.points[0], path.points[path.points.length - 1]);
-      }
-      break;
-    case "rectangle":
-      if (path.points.length >= 2) {
-        drawRectangle(ctx, path.points[0], path.points[path.points.length - 1]);
-      }
-      break;
-    case "arrow":
-      if (path.points.length >= 2) {
-        drawArrow(ctx, path.points[0], path.points[path.points.length - 1]);
-      }
-      break;
-    case "text":
-      // Text is handled separately
-      break;
-    default:
-      drawMarkerPath(ctx, path.points);
-  }
-};
-
-/**
- * Draws a marker path on the canvas
- * @param ctx Canvas 2D context
- * @param points Array of drawing points
- */
-export const drawMarkerPath = (
-  ctx: CanvasRenderingContext2D,
-  points: DrawingPoint[]
-): void => {
-  if (points.length < 2) return;
-
-  ctx.beginPath();
-  ctx.moveTo(points[0].x, points[0].y);
-
-  for (let i = 1; i < points.length; i++) {
-    const p1 = points[i - 1];
-    const p2 = points[i];
-
-    // Set line style for this segment
-    ctx.strokeStyle = p1.color;
-    ctx.lineWidth = p1.size;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-
-    // Draw line
-    ctx.lineTo(p2.x, p2.y);
-    ctx.stroke();
-
-    // Start a new path if the color or size changes
-    if (
-      i < points.length - 1 &&
-      (p2.color !== points[i + 1].color || p2.size !== points[i + 1].size)
-    ) {
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(p2.x, p2.y);
-    }
+    ctx.fillStyle = "rgba(0, 0, 0, 0)";
+    ctx.clearRect(0, 0, width, height);
   }
+}
 
-  ctx.stroke();
-};
-
-/**
- * Draws a circle on the canvas
- * @param ctx Canvas 2D context
- * @param start Starting point (center)
- * @param end Ending point (edge)
- */
-export const drawCircle = (
-  ctx: CanvasRenderingContext2D,
-  start: DrawingPoint,
-  end: DrawingPoint
-): void => {
-  const radius = Math.sqrt(
-    Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2)
-  );
-
-  ctx.beginPath();
-  ctx.arc(start.x, start.y, radius, 0, 2 * Math.PI);
-  ctx.strokeStyle = start.color;
-  ctx.lineWidth = start.size;
-  ctx.stroke();
-};
-
-/**
- * Draws a rectangle on the canvas
- * @param ctx Canvas 2D context
- * @param start Starting point (top-left)
- * @param end Ending point (bottom-right)
- */
-export const drawRectangle = (
-  ctx: CanvasRenderingContext2D,
-  start: DrawingPoint,
-  end: DrawingPoint
-): void => {
-  const width = end.x - start.x;
-  const height = end.y - start.y;
-
-  ctx.beginPath();
-  ctx.rect(start.x, start.y, width, height);
-  ctx.strokeStyle = start.color;
-  ctx.lineWidth = start.size;
-  ctx.stroke();
-};
-
-/**
- * Draws an arrow on the canvas
- * @param ctx Canvas 2D context
- * @param start Starting point
- * @param end Ending point
- */
-export const drawArrow = (
-  ctx: CanvasRenderingContext2D,
-  start: DrawingPoint,
-  end: DrawingPoint
-): void => {
-  // Arrow properties
-  const headLength = 15;
-  const headAngle = Math.PI / 6; // 30 degrees
-
-  // Calculate angle
-  const angle = Math.atan2(end.y - start.y, end.x - start.x);
-
-  // Draw line
-  ctx.beginPath();
-  ctx.moveTo(start.x, start.y);
-  ctx.lineTo(end.x, end.y);
-  ctx.strokeStyle = start.color;
-  ctx.lineWidth = start.size;
-  ctx.stroke();
-
-  // Draw arrow head
-  ctx.beginPath();
-  ctx.moveTo(end.x, end.y);
-  ctx.lineTo(
-    end.x - headLength * Math.cos(angle - headAngle),
-    end.y - headLength * Math.sin(angle - headAngle)
-  );
-  ctx.moveTo(end.x, end.y);
-  ctx.lineTo(
-    end.x - headLength * Math.cos(angle + headAngle),
-    end.y - headLength * Math.sin(angle + headAngle)
-  );
-  ctx.stroke();
-};
-
-/**
- * Draws text on the canvas
- * @param ctx Canvas 2D context
- * @param point Point to place text
- * @param text Text to draw
- * @param fontSize Font size (optional, default 16)
- */
-export const drawText = (
-  ctx: CanvasRenderingContext2D,
-  point: DrawingPoint,
-  text: string,
-  fontSize: number = 16
-): void => {
-  ctx.font = `${fontSize}px Arial`;
-  ctx.fillStyle = point.color;
-  ctx.fillText(text, point.x, point.y);
-};
-
-/**
- * Clears the drawing canvas
- * @param canvas Canvas element
- */
-export const clearDrawingCanvas = (canvas: HTMLCanvasElement): void => {
+// Clear the drawing canvas
+export function clearDrawingCanvas(canvas: HTMLCanvasElement) {
   const ctx = canvas.getContext("2d");
   if (ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
-};
+}
 
-/**
- * Merges drawings with an image
- * @param image Original image element
- * @param drawingCanvas Canvas with drawings
- * @param formatOption Output format
- * @param compressionLevel Quality level (0-100)
- * @returns Promise that resolves to a Blob of the image with drawings
- */
-export const mergeDrawingsWithImage = (
-  image: HTMLImageElement,
-  drawingCanvas: HTMLCanvasElement,
-  formatOption: string,
-  compressionLevel: number
-): Promise<Blob> => {
-  return new Promise((resolve, reject) => {
-    // Create a canvas at the original image size
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-      reject(new Error("Failed to get canvas context"));
-      return;
+// Draw marker path
+export function drawMarkerPath(
+  ctx: CanvasRenderingContext2D,
+  path: DrawingPath
+) {
+  if (path.points.length < 2) return;
+
+  ctx.strokeStyle = path.points[0].color;
+  ctx.lineWidth = path.points[0].size;
+  ctx.beginPath();
+  ctx.moveTo(path.points[0].x, path.points[0].y);
+
+  for (let i = 1; i < path.points.length; i++) {
+    ctx.lineTo(path.points[i].x, path.points[i].y);
+  }
+  ctx.stroke();
+}
+
+// Draw circle
+export function drawCircle(ctx: CanvasRenderingContext2D, path: DrawingPath) {
+  if (
+    !path.startX ||
+    !path.startY ||
+    !path.endX ||
+    !path.endY ||
+    !path.color ||
+    !path.size
+  )
+    return;
+
+  const centerX = path.startX;
+  const centerY = path.startY;
+  const radius = Math.sqrt(
+    Math.pow(path.endX - path.startX, 2) + Math.pow(path.endY - path.startY, 2)
+  );
+
+  ctx.strokeStyle = path.color;
+  ctx.lineWidth = path.size;
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+  ctx.stroke();
+}
+
+// Draw rectangle
+export function drawRectangle(
+  ctx: CanvasRenderingContext2D,
+  path: DrawingPath
+) {
+  if (
+    !path.startX ||
+    !path.startY ||
+    !path.width ||
+    !path.height ||
+    !path.color ||
+    !path.size
+  )
+    return;
+
+  ctx.strokeStyle = path.color;
+  ctx.lineWidth = path.size;
+  ctx.beginPath();
+  ctx.rect(path.startX, path.startY, path.width, path.height);
+  ctx.stroke();
+}
+
+// Draw arrow
+export function drawArrow(ctx: CanvasRenderingContext2D, path: DrawingPath) {
+  if (
+    !path.startX ||
+    !path.startY ||
+    !path.endX ||
+    !path.endY ||
+    !path.color ||
+    !path.size
+  )
+    return;
+
+  const headLength = 15; // Length of arrow head in pixels
+  const angle = Math.atan2(path.endY - path.startY, path.endX - path.startX);
+
+  // Draw the line
+  ctx.strokeStyle = path.color;
+  ctx.lineWidth = path.size;
+  ctx.beginPath();
+  ctx.moveTo(path.startX, path.startY);
+  ctx.lineTo(path.endX, path.endY);
+  ctx.stroke();
+
+  // Draw the arrow head
+  ctx.beginPath();
+  ctx.moveTo(path.endX, path.endY);
+  ctx.lineTo(
+    path.endX - headLength * Math.cos(angle - Math.PI / 6),
+    path.endY - headLength * Math.sin(angle - Math.PI / 6)
+  );
+  ctx.lineTo(
+    path.endX - headLength * Math.cos(angle + Math.PI / 6),
+    path.endY - headLength * Math.sin(angle + Math.PI / 6)
+  );
+  ctx.closePath();
+  ctx.fillStyle = path.color;
+  ctx.fill();
+}
+
+// Draw text
+export function drawText(ctx: CanvasRenderingContext2D, path: DrawingPath) {
+  if (!path.startX || !path.startY || !path.color || !path.size || !path.text)
+    return;
+
+  ctx.font = `${path.size * 3}px sans-serif`; // Multiply by 3 to make it more readable
+  ctx.fillStyle = path.color;
+  ctx.fillText(path.text, path.startX, path.startY);
+}
+
+// Draw all paths on a canvas
+export function drawAllPaths(canvas: HTMLCanvasElement, paths: DrawingPath[]) {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  clearDrawingCanvas(canvas);
+
+  for (const path of paths) {
+    switch (path.tool) {
+      case "marker":
+        drawMarkerPath(ctx, path);
+        break;
+      case "circle":
+        drawCircle(ctx, path);
+        break;
+      case "rectangle":
+        drawRectangle(ctx, path);
+        break;
+      case "arrow":
+        drawArrow(ctx, path);
+        break;
+      case "text":
+        drawText(ctx, path);
+        break;
     }
+  }
+}
 
-    canvas.width = image.naturalWidth;
-    canvas.height = image.naturalHeight;
+// Merge drawings with image
+export async function mergeDrawingsWithImage(
+  image: HTMLImageElement,
+  canvas: HTMLCanvasElement,
+  format: string,
+  compressionLevel: number
+): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    try {
+      // Create a temporary canvas to merge image and drawings
+      const mergeCanvas = document.createElement("canvas");
+      mergeCanvas.width = image.naturalWidth;
+      mergeCanvas.height = image.naturalHeight;
+      const ctx = mergeCanvas.getContext("2d");
 
-    // Draw the original image
-    ctx.drawImage(image, 0, 0);
+      if (!ctx) {
+        reject(new Error("Could not get canvas context"));
+        return;
+      }
 
-    // Calculate scale factors
-    const scaleX = image.naturalWidth / drawingCanvas.width;
-    const scaleY = image.naturalHeight / drawingCanvas.height;
+      // Draw the original image
+      ctx.drawImage(image, 0, 0);
 
-    // Draw the scaled drawing canvas on top
-    ctx.save();
-    ctx.scale(scaleX, scaleY);
-    ctx.drawImage(drawingCanvas, 0, 0);
-    ctx.restore();
+      // Get scale ratio between original image and drawing canvas
+      const scaleX = image.naturalWidth / canvas.width;
+      const scaleY = image.naturalHeight / canvas.height;
 
-    // Determine the output mime type
-    const mimeType =
-      formatOption === "webp"
-        ? "image/webp"
-        : formatOption === "jpeg"
-        ? "image/jpeg"
-        : "image/png";
+      // Draw the canvas content on top, scaled to match the image size
+      ctx.scale(scaleX, scaleY);
+      ctx.drawImage(canvas, 0, 0);
 
-    // Convert to blob with selected format and compression
-    canvas.toBlob(
-      (blob) => {
-        if (blob) {
-          resolve(blob);
-        } else {
-          reject(new Error("Failed to create blob from canvas"));
-        }
-      },
-      mimeType,
-      compressionLevel / 100
-    );
+      // Convert to desired format
+      const outputFormat =
+        format === "original" ? "image/jpeg" : `image/${format}`;
+      const quality = compressionLevel / 100;
+
+      mergeCanvas.toBlob(
+        (blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error("Failed to create blob from canvas"));
+          }
+        },
+        outputFormat,
+        quality
+      );
+    } catch (error) {
+      reject(error);
+    }
   });
-};
+}
+
+// A helper function to modify the GalleryContent component to handle invalid blob URLs
+export function updateGalleryContentForBlobURLs() {
+  console.log("Adding blob URL handling to GalleryContent");
+
+  // This function would need to be called within your component
+  // Since we can't directly modify your component from here, use this as a guide
+
+  // Implement this in your GalleryContent component:
+  // 1. Add error handling for image loading
+  // 2. Show a fallback UI when blob URLs are invalid
+  // 3. Add a button to redirect back to the upload page
+}

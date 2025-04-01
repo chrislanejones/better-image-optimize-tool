@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
   useRef,
+  useMemo,
 } from "react";
 import { useNavigate } from "@remix-run/react";
 import {
@@ -14,11 +15,11 @@ import {
   cropImage,
   resizeImage,
   createEditedFileData,
-  downloadImage,
   DrawingPoint,
   DrawingPath,
   mergeDrawingsWithImage,
   clearDrawingCanvas,
+  drawAllPaths,
 } from "~/utils/uploadUtils";
 
 interface ImageData {
@@ -53,6 +54,7 @@ interface GalleryContextType {
   activeTool: string | null;
   markerColor: string;
   markerSize: number;
+  drawingPaths: DrawingPath[];
 
   // Actions
   selectImage: (image: ImageData, index: number) => void;
@@ -89,6 +91,8 @@ interface GalleryContextType {
   applyDrawings: () => Promise<void>;
   undoDrawing: () => void;
   redoDrawing: () => void;
+  addDrawingPath: (path: DrawingPath) => void;
+  printPage: () => void; // Add print function to context
 }
 
 const GalleryContext = createContext<GalleryContextType | undefined>(undefined);
@@ -101,7 +105,11 @@ export function useGallery() {
   return context;
 }
 
-export function GalleryProvider({ children }: { children: React.ReactNode }) {
+export function GalleryProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element {
   // State from gallery.tsx
   const [images, setImages] = useState<ImageData[]>([]);
   const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
@@ -130,6 +138,7 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
   >([]);
   const [drawingPaths, setDrawingPaths] = useState<DrawingPath[]>([]);
   const [undoStack, setUndoStack] = useState<DrawingPath[]>([]);
+  const [currentPath, setCurrentPath] = useState<DrawingPath | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const imageElementRef = useRef<HTMLImageElement | null>(null);
@@ -140,11 +149,13 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
   // Load images on component mount
   useEffect(() => {
     const storedImages = retrieveFileData();
+    console.log("Loaded images:", storedImages);
     if (storedImages && storedImages.length > 0) {
       setImages(storedImages);
       setSelectedImage(storedImages[0]);
       setCurrentImageIndex(0);
     } else {
+      console.log("No images found, setting redirecting to true");
       setRedirecting(true);
       setTimeout(() => navigate("/"), 8000);
     }
@@ -161,8 +172,15 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
       setCropRect(null);
       setFormatOption("original");
       setCompressionLevel(90);
+      setDrawingPaths([]);
+      setUndoStack([]);
     }
   }, [selectedImage]);
+
+  // Print function
+  const printPage = () => {
+    window.print();
+  };
 
   // GalleryContext actions
   const selectImage = (image: ImageData, index: number) => {
@@ -316,6 +334,8 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
     setCropRect(null);
     setFormatOption("original");
     setCompressionLevel(90);
+    setDrawingPaths([]);
+    setUndoStack([]);
 
     console.log("Changes cancelled - reset to original image");
   };
@@ -372,39 +392,75 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
     if (!activeTool || activeTool === "crop") return;
 
     setIsDrawing(true);
-    const newPoint = { x, y, color: markerColor, size: markerSize };
-    setCurrentDrawingPoints([newPoint]);
+
+    if (activeTool === "marker") {
+      const newPoint = { x, y, color, size };
+      setCurrentDrawingPoints([newPoint]);
+    } else {
+      // For other tools, create a starting point for shapes
+      setCurrentPath({
+        points: [],
+        tool: activeTool,
+        color: color,
+        size: size,
+        startX: x,
+        startY: y,
+      });
+    }
   };
 
   const continueDrawing = (x: number, y: number) => {
     if (!isDrawing || !activeTool || activeTool === "crop") return;
 
-    const lastPoint = currentDrawingPoints[currentDrawingPoints.length - 1];
-    if (!lastPoint) return;
-
-    const newPoint = { x, y, color: lastPoint.color, size: lastPoint.size };
-    setCurrentDrawingPoints((prev) => [...prev, newPoint]);
+    if (activeTool === "marker") {
+      const newPoint = { x, y, color: markerColor, size: markerSize };
+      setCurrentDrawingPoints((prev) => [...prev, newPoint]);
+    } else if (currentPath) {
+      // For shapes, update the end position
+      if (activeTool === "circle" || activeTool === "arrow") {
+        setCurrentPath({
+          ...currentPath,
+          endX: x,
+          endY: y,
+        });
+      } else if (activeTool === "rectangle") {
+        setCurrentPath({
+          ...currentPath,
+          width: x - (currentPath.startX || 0),
+          height: y - (currentPath.startY || 0),
+        });
+      }
+    }
   };
 
   const endDrawing = () => {
-    if (!isDrawing || !activeTool || activeTool === "crop") return;
+    if (!isDrawing && !currentPath) return;
 
     setIsDrawing(false);
 
-    if (currentDrawingPoints.length > 1) {
-      // Add new path to paths array
+    if (activeTool === "marker" && currentDrawingPoints.length > 1) {
+      // Add marker path
       const newPath: DrawingPath = {
         points: [...currentDrawingPoints],
-        tool: activeTool,
+        tool: "marker",
       };
 
       setDrawingPaths((prev) => [...prev, newPath]);
-
-      // Clear undo stack when adding new drawings
-      setUndoStack([]);
+      setCurrentDrawingPoints([]);
+    } else if (currentPath) {
+      // Add shape path
+      setDrawingPaths((prev) => [...prev, currentPath]);
+      setCurrentPath(null);
     }
 
-    setCurrentDrawingPoints([]);
+    // Clear undo stack when adding new drawings
+    setUndoStack([]);
+  };
+
+  // Add a complete drawing path (used for text and other complex tools)
+  const addDrawingPath = (path: DrawingPath) => {
+    setDrawingPaths((prev) => [...prev, path]);
+    setUndoStack([]);
   };
 
   const clearDrawings = () => {
@@ -434,11 +490,7 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
       // Redraw all paths after undo
       if (canvasRef.current) {
         clearDrawingCanvas(canvasRef.current);
-        updatedPaths.forEach((path) => {
-          if (canvasRef.current) {
-            // TODO: Draw the path
-          }
-        });
+        drawAllPaths(canvasRef.current, updatedPaths);
       }
     }
   };
@@ -456,7 +508,7 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
 
       // Draw the restored path
       if (canvasRef.current) {
-        // TODO: Draw the path
+        drawAllPaths(canvasRef.current, [...drawingPaths, restoredPath]);
       }
     }
   };
@@ -481,61 +533,86 @@ export function GalleryProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const contextValue = {
-    // State
-    images,
-    selectedImage,
-    currentImageIndex,
-    expandedImage,
-    redirecting,
-    cropMode,
-    cropRect,
-    formatOption,
-    compressionLevel,
-    currentPage,
-    totalPages,
-    imagesPerPage,
-    editorBarActive,
-    activeTool,
-    markerColor,
-    markerSize,
+  const contextValue = useMemo(
+    () => ({
+      // State
+      images,
+      selectedImage,
+      currentImageIndex,
+      expandedImage,
+      redirecting,
+      cropMode,
+      cropRect,
+      formatOption,
+      compressionLevel,
+      currentPage,
+      totalPages,
+      imagesPerPage,
+      editorBarActive,
+      activeTool,
+      markerColor,
+      markerSize,
+      drawingPaths,
 
-    // Actions
-    selectImage,
-    navigateNext,
-    navigatePrevious,
-    clearAllImages,
-    removeImage,
-    expandImage,
-    toggleCropMode,
-    handleCropStart,
-    handleCropMove,
-    handleCropEnd,
-    applyCrop,
-    applyChanges,
-    handleDimensionsChange,
-    setFormatOption,
-    setCompressionLevel,
-    cancelChanges,
-    changePage,
-    toggleEditorBar,
+      // Actions
+      selectImage,
+      navigateNext,
+      navigatePrevious,
+      clearAllImages,
+      removeImage,
+      expandImage,
+      toggleCropMode,
+      handleCropStart,
+      handleCropMove,
+      handleCropEnd,
+      applyCrop,
+      applyChanges,
+      handleDimensionsChange,
+      setFormatOption,
+      setCompressionLevel,
+      cancelChanges,
+      changePage,
+      toggleEditorBar,
 
-    // Drawing functionality
-    setActiveTool: handleSetActiveTool,
-    setMarkerColor,
-    setMarkerSize,
-    startDrawing,
-    continueDrawing,
-    endDrawing,
-    clearDrawings,
-    applyDrawings,
-    undoDrawing,
-    redoDrawing,
-  };
+      // Drawing functionality
+      setActiveTool: handleSetActiveTool,
+      setMarkerColor,
+      setMarkerSize,
+      startDrawing,
+      continueDrawing,
+      endDrawing,
+      clearDrawings,
+      applyDrawings,
+      undoDrawing,
+      redoDrawing,
+      addDrawingPath,
+      printPage, // Include print function in context
+    }),
+    [
+      images,
+      selectedImage,
+      currentImageIndex,
+      expandedImage,
+      redirecting,
+      cropMode,
+      cropRect,
+      formatOption,
+      compressionLevel,
+      currentPage,
+      totalPages,
+      imagesPerPage,
+      editorBarActive,
+      activeTool,
+      markerColor,
+      markerSize,
+      drawingPaths,
+    ]
+  );
 
   return (
     <GalleryContext.Provider value={contextValue}>
       {children}
+      <button onClick={printPage}>Print Page</button> {/* Print button */}
     </GalleryContext.Provider>
   );
 }
